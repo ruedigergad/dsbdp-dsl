@@ -13,6 +13,16 @@
   (:require [clojure.test :refer :all]
             [dsbdp.byte-array-conversion :refer :all]))
 
+(deftest int16-conversion-test
+  (let [ba (byte-array (map byte [1 2]))
+        expected 258]
+    (is (= expected (int16 ba 0)))))
+
+(deftest int16be-conversion-test
+  (let [ba (byte-array (map byte [2 1]))
+        expected 258]
+    (is (= expected (int16be ba 0)))))
+
 (deftest int32-conversion-test
   (let [ba (byte-array (map byte [1 2 3 4]))
         expected 16909060]

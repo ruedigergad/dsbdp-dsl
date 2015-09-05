@@ -12,6 +12,16 @@
   dsbdp.byte-array-conversion
   (:import (dsbdp ByteArrayHelper)))
 
+(defn int16
+  "Get the Int16 value of the two bytes starting at index idx in the byte-array ba."
+  [ba idx]
+  (ByteArrayHelper/getInt16 ba idx))
+
+(defn int16be
+  "Get the big endian Int16 value of the two bytes starting at index idx in the byte-array ba."
+  [ba idx]
+  (ByteArrayHelper/getInt16BigEndian ba idx))
+
 (defn int32
   "Get the Int32 value of the four bytes starting at index idx in the byte-array ba."
   [ba idx]
