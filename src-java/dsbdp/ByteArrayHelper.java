@@ -17,20 +17,6 @@ package dsbdp;
  */
 public class ByteArrayHelper {
 
-    public static void addToInt(byte[] array, int index, int value) {
-        int tmp = array[index+3] & 0xFF |
-            (array[index+2] & 0xFF) << 8 |
-            (array[index+1] & 0xFF) << 16 |
-            (array[index] & 0xFF) << 24;
-
-        tmp += value;
-
-        array[index+3] = (byte) (0xFF & tmp);
-        array[index+2] = (byte) ((tmp >> 8) & 0xFF);
-        array[index+1] = (byte) ((tmp >> 16) & 0xFF);
-        array[index] = (byte) ((tmp >> 24 ) & 0xFF);
-    }
-
     public static int getInt(byte[] array, int index) {
         return array[index+3] & 0xFF |
             (array[index+2] & 0xFF) << 8 |
