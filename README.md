@@ -1,6 +1,4 @@
-# dsbdp
-
-A Clojure library designed to ... well, that part is up to you.
+# Dynamic Stream and Batch Data Processing (dsbdp)
 
 
 ## License
