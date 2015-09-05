@@ -12,6 +12,16 @@
   dsbdp.byte-array-conversion
   (:import (dsbdp ByteArrayHelper)))
 
+(defn int4l
+  "Get the lower 4 bits (nibble) of the byte at the given index idx in the provided byte-array ba."
+  [ba idx]
+  (ByteArrayHelper/getNibbleLow ba idx))
+
+(defn int4h
+  "Get the higher 4 bits (nibble) of the byte at the given index idx in the provided byte-array ba."
+  [ba idx]
+  (ByteArrayHelper/getNibbleHigh ba idx))
+
 (defn int8
   "Get the byte at the index idx in the byte-array ba."
   [ba idx]
