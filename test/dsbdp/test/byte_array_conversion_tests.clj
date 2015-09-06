@@ -9,7 +9,7 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Unit tests for byte array conversion"}
-  dsbdp.test.byte-array-conversion
+  dsbdp.test.byte-array-conversion-tests
   (:require [clojure.test :refer :all]
             [dsbdp.byte-array-conversion :refer :all]))
 
