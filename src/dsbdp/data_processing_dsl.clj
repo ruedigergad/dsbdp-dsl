@@ -22,14 +22,15 @@
           (cond
             (symbol? data-proc-def-element)
               (let [s data-proc-def-element]
-                (condp not= nil
+                (cond
                   (ns-resolve 'clojure.core s)
                     (conj v (ns-resolve 'clojure.core s))
                   (ns-resolve 'dsbdp.byte-array-conversion s)
                     (conj v (ns-resolve 'dsbdp.byte-array-conversion s) 'input)
-                  (do
-                    (println "Could not resolve symbol:" s)
-                    v)))
+                  :default
+                    (do
+                      (println "Could not resolve symbol:" s)
+                      v)))
             (list? data-proc-def-element)
               (conj v (into '() (reverse (create-data-processing-sub-fn data-proc-def-element input offset))))
             :default (conj v data-proc-def-element)))
