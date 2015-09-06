@@ -71,11 +71,11 @@
   [input offset rules]
   (let [extracted-strings (reduce
                             (fn [v rule]
-                              (let [transf-fn (create-data-processing-sub-fn (second rule) input offset)
-                                    transf-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input ~offset] ~transf-fn)))]
-                                (conj v (if (= java.lang.String transf-ret-type)
-                                          `(str "\"" ~transf-fn "\"")
-                                          transf-fn))))
+                              (let [data-proc-sub-fn (create-data-processing-sub-fn (second rule) input offset)
+                                    data-proc-sub-fn-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input ~offset] ~data-proc-sub-fn)))]
+                                (conj v (if (= java.lang.String data-proc-sub-fn-ret-type)
+                                          `(str "\"" ~data-proc-sub-fn "\"")
+                                          data-proc-sub-fn))))
                             '[str] rules)
         commas (reduce into [] ["." (repeat (- (count rules) 1) ",") "."])]
     (vec (filter #(not= \. %) (interleave extracted-strings commas)))))
@@ -86,12 +86,12 @@
   (let [extracted-strings (conj
                             (reduce
                               (fn [v rule]
-                                (let [transf-fn (create-data-processing-sub-fn (second rule) input offset)
-                                      transf-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input ~offset] ~transf-fn)))]
+                                (let [data-proc-sub-fn (create-data-processing-sub-fn (second rule) input offset)
+                                      data-proc-sub-fn-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input ~offset] ~data-proc-sub-fn)))]
                                   (conj v "\"" (name (first rule)) "\":"
-                                          (if (= java.lang.String transf-ret-type)
-                                            `(str "\"" ~transf-fn "\"")
-                                            transf-fn))))
+                                          (if (= java.lang.String data-proc-sub-fn-ret-type)
+                                            `(str "\"" ~data-proc-sub-fn "\"")
+                                            data-proc-sub-fn))))
                               '[str "{"] rules)
                             "}")
         commas (reduce into [] ["." "." "." "." "." (reduce into [] (repeat (- (count rules) 1) ["," "." "." "."])) "." "."])]
