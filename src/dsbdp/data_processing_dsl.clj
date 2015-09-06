@@ -47,7 +47,7 @@
     (type ret)))
 
 (defn create-data-processing-fn-body-for-java-map-output-type
-  "Create a data processing function body for extracting data into a Java map."
+  "Create a data processing function body for emitting data into a Java map."
   [input offset rules]
   (reduce
     (fn [v rule]
@@ -57,7 +57,7 @@
     '[doto (java.util.HashMap.)] rules))
 
 (defn create-data-processing-fn-body-for-clj-map-output-type
-  "Create a data processing function body for extracting data into a Clojure map."
+  "Create a data processing function body for emitting data into a Clojure map."
   [input offset rules]
   (reduce
     (fn [v rule]
@@ -67,7 +67,7 @@
     '[-> {}] rules))
 
 (defn create-data-processing-fn-body-for-csv-str-output-type
-  "Create a data processing function body for extracting data into a CSV string."
+  "Create a data processing function body for emitting data into a CSV string."
   [input offset rules]
   (let [extracted-strings (reduce
                             (fn [v rule]
