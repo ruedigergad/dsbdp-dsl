@@ -105,7 +105,6 @@
   (let [input-sym 'input
         offset-sym 'offset
         fn-body-vec (let [rules (:rules dsl-expression)
-                          input-type (:input-type dsl-expression)
                           output-type (:output-type dsl-expression)]
                       (condp = (name output-type)
                         "java-map" (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules)
