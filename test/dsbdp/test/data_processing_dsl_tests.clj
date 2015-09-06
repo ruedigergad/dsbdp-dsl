@@ -125,6 +125,16 @@
     (is (= java.util.HashMap (type result)))
     (is (= expected result))))
 
+(deftest java-list-to-java-map-with-additional-operation-and-two-data-values-test
+  (let [expected {"quotient" 2}
+        input-data (reduce (fn [l v] (.add l v) l) (java.util.ArrayList.) [1 8 1 1 1 4 1 1])
+        dsl-expression {:output-type :java-map
+                        :rules [['quotient '(/ (nth 1) (nth 5))]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn input-data 0)]
+    (is (= java.util.HashMap (type result)))
+    (is (= expected result))))
+
 (deftest clojure-map-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
         input-data {"x" 12, "y" 42, :z 6}
