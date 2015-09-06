@@ -104,8 +104,8 @@
 ;  (println "Got DSL expression:" dsl-expression)
   (let [input-sym 'input
         offset-sym 'offset
-        fn-body-vec (let [rules (:rules dsl-expression)
-                          output-type (:output-type dsl-expression)]
+        fn-body-vec (let [output-type (:output-type dsl-expression)
+                          rules (:rules dsl-expression)]
                       (condp = (name output-type)
                         "java-map" (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules)
                         "clj-map" (create-data-processing-fn-body-for-clj-map-output-type input-sym offset-sym rules)
