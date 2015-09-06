@@ -15,17 +15,17 @@
 (defn int4l
   "Get the lower 4 bits (nibble) of the byte at the given index idx in the provided byte-array ba."
   [ba idx]
-  (ByteArrayHelper/getNibbleLow ba idx))
+  (ByteArrayHelper/getInt4L ba idx))
 
 (defn int4h
   "Get the higher 4 bits (nibble) of the byte at the given index idx in the provided byte-array ba."
   [ba idx]
-  (ByteArrayHelper/getNibbleHigh ba idx))
+  (ByteArrayHelper/getInt4H ba idx))
 
 (defn int8
   "Get the byte at the index idx in the byte-array ba."
   [ba idx]
-  (ByteArrayHelper/getByte ba idx))
+  (ByteArrayHelper/getInt8 ba idx))
 
 (defn int16
   "Get the Int16 value of the two bytes starting at index idx in the byte-array ba."
@@ -40,20 +40,20 @@
 (defn int32
   "Get the Int32 value of the four bytes starting at index idx in the byte-array ba."
   [ba idx]
-  (ByteArrayHelper/getInt ba idx))
+  (ByteArrayHelper/getInt32 ba idx))
 
 (defn int32be
   "Get the big endian Int32 value of the four bytes starting at index idx in the byte-array ba."
   [ba idx]
-  (ByteArrayHelper/getIntBigEndian ba idx))
+  (ByteArrayHelper/getInt32BigEndian ba idx))
 
 (defn timestamp
   "Get the (pcap) timestamp value of the four bytes starting at index idx in the byte-array ba."
   [ba idx]
-  (+ (* (ByteArrayHelper/getInt ba idx) 1000000000) (* (ByteArrayHelper/getInt ba (+ idx 4)) 1000)))
+  (+ (* (ByteArrayHelper/getInt32 ba idx) 1000000000) (* (ByteArrayHelper/getInt32 ba (+ idx 4)) 1000)))
 
 (defn timestamp-be
   "Get the (pcap) big endian timestamp value of the four bytes starting at index idx in the byte-array ba."
   [ba idx]
-  (+ (* (ByteArrayHelper/getIntBigEndian ba idx) 1000000000) (* (ByteArrayHelper/getIntBigEndian ba (+ idx 4)) 1000)))
+  (+ (* (ByteArrayHelper/getInt32BigEndian ba idx) 1000000000) (* (ByteArrayHelper/getInt32BigEndian ba (+ idx 4)) 1000)))
 

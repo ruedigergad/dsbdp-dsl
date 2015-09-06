@@ -17,14 +17,14 @@ package dsbdp;
  */
 public class ByteArrayHelper {
 
-    public static int getInt(byte[] array, int index) {
+    public static int getInt32(byte[] array, int index) {
         return array[index+3] & 0xFF |
             (array[index+2] & 0xFF) << 8 |
             (array[index+1] & 0xFF) << 16 |
             (array[index] & 0xFF) << 24;
     }
 
-    public static int getIntBigEndian(byte[] array, int index) {
+    public static int getInt32BigEndian(byte[] array, int index) {
         return array[index] & 0xFF |
             (array[index+1] & 0xFF) << 8 |
             (array[index+2] & 0xFF) << 16 |
@@ -41,27 +41,16 @@ public class ByteArrayHelper {
             (array[index+1] & 0xFF) << 8;
     }
 
-    public static int getByte(byte[] array, int index) {
+    public static int getInt8(byte[] array, int index) {
         return array[index] & 0xFF;
     }
 
-    public static int getNibbleLow(byte[] array, int index) {
+    public static int getInt4L(byte[] array, int index) {
         return array[index] & 0x0F;
     }
 
-    public static int getNibbleHigh(byte[] array, int index) {
+    public static int getInt4H(byte[] array, int index) {
         return (array[index] & 0xF0) >> 4;
-    }
-
-    public static long getLong(byte[] array, int index) {
-        return array[index+7] & 0xFF |
-            (array[index+6] & 0xFF) << 8 |
-            (array[index+5] & 0xFF) << 16 |
-            (array[index+4] & 0xFF) << 24 |
-            (array[index+3] & 0xFF) << 32 |
-            (array[index+2] & 0xFF) << 40 |
-            (array[index+1] & 0xFF) << 48 |
-            (array[index] & 0xFF) << 56;
     }
 }
 
