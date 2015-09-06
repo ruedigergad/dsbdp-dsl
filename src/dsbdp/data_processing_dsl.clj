@@ -35,6 +35,9 @@
             :default (conj v data-proc-def-element)))
         [] data-processing-definition))))
 
+;;; TODO: This function only supports byte array based functions yet.
+;;; This will become problematic once other input data types,
+;;; such as vectors or maps shall be processed to, e.g., CSV string format.
 (defn get-data-processing-sub-fn-ret-type
   "Get the return type of a data processing sub-function data-proc-sub-fn.
    For determining the type, this function calls data-proc-sub-fn with a 1530 byte dummy byte-array filled with 0."
@@ -90,7 +93,6 @@
                         "java-map" (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules)
                         "clj-map" (create-data-processing-fn-body-for-clj-map-output-type input-sym offset-sym rules)
                         "csv-str" (create-data-processing-fn-body-for-csv-str-output-type input-sym offset-sym rules)
-;                        "csv-str" (create-data-processing-fn-body-for-csv-str-type input-sym offset-sym rules)
 ;                        "json-str" (create-data-processing-fn-body-for-json-str-type input-sym offset-sym rules)
                         (do
                           (println "Unknown output type:" output-type)
