@@ -27,7 +27,7 @@
                                                  (ns-resolve 'dsbdp.byte-array-conversion s)
                                                    (conj v (ns-resolve 'dsbdp.byte-array-conversion s) 'input)
                                                  (do
-                                                   (println "Could not resolve keyword/symbol:" s)
+                                                   (println "Could not resolve symbol:" s)
                                                     v)))
             (list? data-proc-def-element) (conj v (into '() (reverse (create-data-processing-sub-fn data-proc-def-element input offset))))
             :default (conj v data-proc-def-element)))
