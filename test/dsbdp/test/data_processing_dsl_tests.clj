@@ -104,7 +104,6 @@
 ;;;
 ;;; Tests for other input data types.
 ;;;
-
 (deftest clojure-vector-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
         input-data [1 8 1 1 1 4 1 1]
