@@ -42,3 +42,12 @@
     (is (map? result))
     (is (= expected result))))
 
+(deftest byte-array-to-csv-str-test
+  (let [expected "2048,4096"
+        dsl-expression {:output-type :csv-str
+                        :rules [['udpSrc '(int16 50)]
+                                ['udpDst '(int16 52)]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn byte-array-test-data 0)]
+    (is (= expected result))))
+

@@ -35,6 +35,14 @@
             :default (conj v data-proc-def-element)))
         [] data-processing-definition))))
 
+(defn get-data-processing-sub-fn-ret-type
+  "Get the return type of a data processing sub-function data-proc-sub-fn.
+   For determining the type, this function calls data-proc-sub-fn with a 1530 byte dummy byte-array filled with 0."
+  [data-proc-sub-fn]
+  (let [dummy-ba (byte-array 1530 (byte 0))
+        ret (data-proc-sub-fn dummy-ba 0)]
+    (type ret)))
+
 (defn create-data-processing-fn-body-for-java-map-output-type
   "Create a data processing function body for extracting data into a Java map."
   [input offset rules]
@@ -55,6 +63,20 @@
                  ~(create-data-processing-sub-fn (second rule) input offset))))
     '[-> {}] rules))
 
+(defn create-data-processing-fn-body-for-csv-str-output-type
+  "Create a data processing function body for extracting data into a CSV string."
+  [input offset rules]
+  (let [extracted-strings (reduce
+                            (fn [v rule]
+                              (let [transf-fn (create-data-processing-sub-fn (second rule) input offset)
+                                    transf-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input ~offset] ~transf-fn)))]
+                                (conj v (if (= java.lang.String transf-ret-type)
+                                          `(str "\"" ~transf-fn "\"")
+                                          transf-fn))))
+                            '[str] rules)
+        commas (reduce into [] ["." (repeat (- (count rules) 1) ",") "."])]
+    (vec (filter #(not= \. %) (interleave extracted-strings commas)))))
+
 (defn create-data-processing-fn
   "Create a data processing function based on the given dsl-expression."
   [dsl-expression]
@@ -67,6 +89,7 @@
                       (condp = (name output-type)
                         "java-map" (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules)
                         "clj-map" (create-data-processing-fn-body-for-clj-map-output-type input-sym offset-sym rules)
+                        "csv-str" (create-data-processing-fn-body-for-csv-str-output-type input-sym offset-sym rules)
 ;                        "csv-str" (create-data-processing-fn-body-for-csv-str-type input-sym offset-sym rules)
 ;                        "json-str" (create-data-processing-fn-body-for-json-str-type input-sym offset-sym rules)
                         (do
