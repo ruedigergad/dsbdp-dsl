@@ -80,6 +80,24 @@
         commas (reduce into [] ["." (repeat (- (count rules) 1) ",") "."])]
     (vec (filter #(not= \. %) (interleave extracted-strings commas)))))
 
+(defn create-data-processing-fn-body-for-json-str-output-type
+  "Create a data processing function body for emitting data into a JSON string."
+  [input offset rules]
+  (let [extracted-strings (conj
+                            (reduce
+                              (fn [v rule]
+                                (let [transf-fn (create-data-processing-sub-fn (second rule) input offset)
+                                      transf-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input ~offset] ~transf-fn)))]
+                                  (conj v "\"" (name (first rule)) "\":"
+                                          (if (= java.lang.String transf-ret-type)
+                                            `(str "\"" ~transf-fn "\"")
+                                            transf-fn))))
+                              '[str "{"] rules)
+                            "}")
+        commas (reduce into [] ["." "." "." "." "." (reduce into [] (repeat (- (count rules) 1) ["," "." "." "."])) "." "."])]
+;    (println (interleave extracted-strings commas))
+    (vec (filter (fn [x] (and (not= \. x) (not= "." x))) (interleave extracted-strings commas)))))
+
 (defn create-data-processing-fn
   "Create a data processing function based on the given dsl-expression."
   [dsl-expression]
@@ -93,7 +111,7 @@
                         "java-map" (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules)
                         "clj-map" (create-data-processing-fn-body-for-clj-map-output-type input-sym offset-sym rules)
                         "csv-str" (create-data-processing-fn-body-for-csv-str-output-type input-sym offset-sym rules)
-;                        "json-str" (create-data-processing-fn-body-for-json-str-type input-sym offset-sym rules)
+                        "json-str" (create-data-processing-fn-body-for-json-str-output-type input-sym offset-sym rules)
                         (do
                           (println "Unknown output type:" output-type)
                           (println "Defaulting to :java-maps as output type.")

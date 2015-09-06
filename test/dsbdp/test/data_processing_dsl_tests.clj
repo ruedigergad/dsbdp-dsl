@@ -51,3 +51,12 @@
         result (data-processing-fn byte-array-test-data 0)]
     (is (= expected result))))
 
+(deftest byte-array-to-json-str-test
+  (let [expected "{\"udpSrc\":2048,\"udpDst\":4096}"
+        dsl-expression {:output-type :json-str
+                        :rules [['udpSrc '(int16 50)]
+                                ['udpDst '(int16 52)]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn byte-array-test-data 0)]
+    (is (= expected result))))
+
