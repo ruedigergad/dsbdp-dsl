@@ -18,21 +18,21 @@
     '()
     (reverse
       (reduce
-        (fn [v data-processing-element]
+        (fn [v data-proc-def-element]
           (cond
             (or
-              (keyword? data-processing-element)
-              (symbol? data-processing-element)) (let [s (symbol (name data-processing-element))]
-                                                   (condp not= nil
-                                                     (ns-resolve 'clojure.core s)
-                                                       (conj v (ns-resolve 'clojure.core s))
-                                                     (ns-resolve 'dsbdp.byte-array-conversion s)
-                                                       (conj v (ns-resolve 'dsbdp.byte-array-conversion s) 'input)
-                                                     (do
-                                                       (println "Could not resolve keyword/symbol:" s)
-                                                        v)))
-            (list? data-processing-element) (conj v (into '() (reverse (create-data-processing-sub-fn data-processing-element input offset))))
-            :default (conj v data-processing-element)))
+              (keyword? data-proc-def-element)
+              (symbol? data-proc-def-element)) (let [s (symbol (name data-proc-def-element))]
+                                                 (condp not= nil
+                                                   (ns-resolve 'clojure.core s)
+                                                     (conj v (ns-resolve 'clojure.core s))
+                                                   (ns-resolve 'dsbdp.byte-array-conversion s)
+                                                     (conj v (ns-resolve 'dsbdp.byte-array-conversion s) 'input)
+                                                   (do
+                                                     (println "Could not resolve keyword/symbol:" s)
+                                                      v)))
+            (list? data-proc-def-element) (conj v (into '() (reverse (create-data-processing-sub-fn data-proc-def-element input offset))))
+            :default (conj v data-proc-def-element)))
         [] data-processing-definition))))
 
 (defn create-data-processing-fn-body-for-java-map-type
