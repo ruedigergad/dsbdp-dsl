@@ -99,3 +99,29 @@
     (is (= java.util.HashMap (type result)))
     (is (= expected result))))
 
+
+
+;;;
+;;; Tests for other input data types.
+;;;
+
+(deftest clojure-vector-to-java-map-with-additional-operation-and-two-data-values-test
+  (let [expected {"quotient" 2}
+        input-data [1 8 1 1 1 4 1 1]
+        dsl-expression {:output-type :java-map
+                        :rules [['quotient '(/ (nth 1) (nth 5))]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn input-data 0)]
+    (is (= java.util.HashMap (type result)))
+    (is (= expected result))))
+
+(deftest clojure-list-to-java-map-with-additional-operation-and-two-data-values-test
+  (let [expected {"quotient" 2}
+        input-data '(1 8 1 1 1 4 1 1)
+        dsl-expression {:output-type :java-map
+                        :rules [['quotient '(/ (nth 1) (nth 5))]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn input-data 0)]
+    (is (= java.util.HashMap (type result)))
+    (is (= expected result))))
+

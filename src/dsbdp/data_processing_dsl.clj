@@ -23,6 +23,8 @@
             (symbol? data-proc-def-element)
               (let [s data-proc-def-element]
                 (cond
+                  (= s 'nth)
+                    (conj v (ns-resolve 'clojure.core s) 'input)
                   (ns-resolve 'clojure.core s)
                     (conj v (ns-resolve 'clojure.core s))
                   (ns-resolve 'dsbdp.byte-array-conversion s)
