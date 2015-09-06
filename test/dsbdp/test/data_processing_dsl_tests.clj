@@ -22,6 +22,11 @@
                8 0 16 0 0 4 -25 -26                                  ; 8 byte UDP header
                97 98 99 100])))                                      ; 4 byte data "abcd"
 
+
+
+;;;
+;;; Tests for byte array input and various output types.
+;;;
 (deftest byte-array-to-java-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096}
         dsl-expression {:output-type :java-map
@@ -60,6 +65,11 @@
         result (data-processing-fn byte-array-test-data 0)]
     (is (= expected result))))
 
+
+
+;;;
+;;; Tests for more complex data processing definitions/functions.
+;;;
 (deftest byte-array-to-java-map-with-additional-operation-test
   (let [expected {"udpSrc" 1024, "udpDst" 2048}
         dsl-expression {:output-type :java-map
@@ -75,6 +85,15 @@
         dsl-expression {:output-type :java-map
                         :rules [['udpSrc '(float (/ (int16 50) 65535))]
                                 ['udpDst '(float (/ (int16 52) 65535))]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn byte-array-test-data 0)]
+    (is (= java.util.HashMap (type result)))
+    (is (= expected result))))
+
+(deftest byte-array-to-java-map-with-additional-operation-and-two-data-values-test
+  (let [expected {"quotient" 2}
+        dsl-expression {:output-type :java-map
+                        :rules [['quotient '(/ (int16 52) (int16 50))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn byte-array-test-data 0)]
     (is (= java.util.HashMap (type result)))
