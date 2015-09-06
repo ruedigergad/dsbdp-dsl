@@ -60,3 +60,23 @@
         result (data-processing-fn byte-array-test-data 0)]
     (is (= expected result))))
 
+(deftest byte-array-to-java-map-with-additional-operation-test
+  (let [expected {"udpSrc" 1024, "udpDst" 2048}
+        dsl-expression {:output-type :java-map
+                        :rules [['udpSrc '(/ (int16 50) 2)]
+                                ['udpDst '(/ (int16 52) 2)]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn byte-array-test-data 0)]
+    (is (= java.util.HashMap (type result)))
+    (is (= expected result))))
+
+(deftest byte-array-to-java-map-with-additional-operation-and-float-type-test
+  (let [expected {"udpSrc" (float 0.031250477), "udpDst" (float 0.06250095)}
+        dsl-expression {:output-type :java-map
+                        :rules [['udpSrc '(float (/ (int16 50) 65535))]
+                                ['udpDst '(float (/ (int16 52) 65535))]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn byte-array-test-data 0)]
+    (is (= java.util.HashMap (type result)))
+    (is (= expected result))))
+
