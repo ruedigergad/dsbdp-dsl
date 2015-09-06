@@ -23,7 +23,7 @@
             (symbol? data-proc-def-element)
               (let [s data-proc-def-element]
                 (cond
-                  (= s 'nth)
+                  (or (= s 'nth) (= s 'get))
                     (conj v (ns-resolve 'clojure.core s) 'input)
                   (ns-resolve 'clojure.core s)
                     (conj v (ns-resolve 'clojure.core s))
