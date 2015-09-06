@@ -24,12 +24,21 @@
 
 (deftest byte-array-to-java-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096}
-        dsl-expression {:input-type :byte-array
-                        :output-type :java-map
+        dsl-expression {:output-type :java-map
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn byte-array-test-data 0)]
     (is (= java.util.HashMap (type result)))
+    (is (= expected result))))
+
+(deftest byte-array-to-clj-map-test
+  (let [expected {"udpSrc" 2048, "udpDst" 4096}
+        dsl-expression {:output-type :clj-map
+                        :rules [['udpSrc '(int16 50)]
+                                ['udpDst '(int16 52)]]}
+        data-processing-fn (create-data-processing-fn dsl-expression)
+        result (data-processing-fn byte-array-test-data 0)]
+    (is (map? result))
     (is (= expected result))))
 
