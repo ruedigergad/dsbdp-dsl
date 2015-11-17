@@ -12,7 +12,7 @@
   dsbdp.test.data-processing-dsl-tests
   (:require [clojure.test :refer :all]
             [dsbdp.data-processing-dsl :refer :all])
-  (import (java.util ArrayList HashMap List)))
+  (import (java.util ArrayList HashMap List Map)))
 
 (def byte-array-test-data
   "We use the byte array representation of a captured UDP packet as byte array test data."
@@ -35,7 +35,7 @@
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn byte-array-test-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? Map result))
     (is (= expected result))))
 
 (deftest byte-array-to-clj-map-test
@@ -78,7 +78,7 @@
                                 ['udpDst '(/ (int16 52) 2)]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn byte-array-test-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? Map result))
     (is (= expected result))))
 
 (deftest byte-array-to-java-map-with-additional-operation-and-float-type-test
@@ -88,7 +88,7 @@
                                 ['udpDst '(float (/ (int16 52) 65535))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn byte-array-test-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? Map result))
     (is (= expected result))))
 
 (deftest byte-array-to-java-map-with-additional-operation-and-two-data-values-test
@@ -97,7 +97,7 @@
                         :rules [['quotient '(/ (int16 52) (int16 50))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn byte-array-test-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? HashMap result))
     (is (= expected result))))
 
 
@@ -112,7 +112,7 @@
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn input-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? HashMap result))
     (is (= expected result))))
 
 (deftest clojure-list-to-java-map-with-additional-operation-and-two-data-values-test
@@ -122,7 +122,7 @@
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn input-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? Map result))
     (is (= expected result))))
 
 (deftest java-list-to-java-map-with-additional-operation-and-two-data-values-test
@@ -132,7 +132,7 @@
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn input-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? Map result))
     (is (= expected result))))
 
 (deftest clojure-map-to-java-map-with-additional-operation-and-two-data-values-test
@@ -142,7 +142,7 @@
                         :rules [['quotient '(/ (get "x") (get :z))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn input-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? Map result))
     (is (= expected result))))
 
 (deftest java-map-to-java-map-with-additional-operation-and-two-data-values-test
@@ -152,6 +152,6 @@
                         :rules [['quotient '(/ (get "x") (get :z))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn input-data 0)]
-    (is (= HashMap (type result)))
+    (is (instance? Map result))
     (is (= expected result))))
 
