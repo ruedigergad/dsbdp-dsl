@@ -97,7 +97,7 @@
                         :rules [['quotient '(/ (int16 52) (int16 50))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn byte-array-test-data 0)]
-    (is (instance? HashMap result))
+    (is (instance? Map result))
     (is (= expected result))))
 
 
@@ -112,7 +112,7 @@
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
         result (data-processing-fn input-data 0)]
-    (is (instance? HashMap result))
+    (is (instance? Map result))
     (is (= expected result))))
 
 (deftest clojure-list-to-java-map-with-additional-operation-and-two-data-values-test
