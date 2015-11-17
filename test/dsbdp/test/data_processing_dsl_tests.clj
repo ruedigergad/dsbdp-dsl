@@ -11,7 +11,8 @@
     :doc "Unit tests for data processing DSL"}
   dsbdp.test.data-processing-dsl-tests
   (:require [clojure.test :refer :all]
-            [dsbdp.data-processing-dsl :refer :all]))
+            [dsbdp.data-processing-dsl :refer :all])
+  (import (java.util ArrayList List)))
 
 (def byte-array-test-data
   "We use the byte array representation of a captured UDP packet as byte array test data."
@@ -126,7 +127,7 @@
 
 (deftest java-list-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
-        input-data (reduce (fn [l v] (.add l v) l) (java.util.ArrayList.) [1 8 1 1 1 4 1 1])
+        input-data (reduce (fn [l v] (.add ^List l v) l) (ArrayList.) [1 8 1 1 1 4 1 1])
         dsl-expression {:output-type :java-map
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
