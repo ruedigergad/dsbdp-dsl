@@ -25,7 +25,7 @@ public class Counter {
 
     public void inc() {
         /*
-         * In the current use case we prefer to miss an increment in favor of performance.
+         * In the current use case, we prefer to miss an increment in favor of performance.
          */
         if (lock.tryLock()) {
             val++;
