@@ -21,7 +21,7 @@ public class Counter {
     private final static long INITIAL_VALUE = 0L;
 
     private long val = INITIAL_VALUE;
-    private Lock lock = new ReentrantLock();
+    private final Lock lock = new ReentrantLock();
 
     public void inc() {
         /*
