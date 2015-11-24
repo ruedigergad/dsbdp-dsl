@@ -31,5 +31,9 @@ public class LocalTransferContainer {
         return out;
     }
 
+    public void setOut (Object out) {
+        this.out = out;
+    }
+
 }
 

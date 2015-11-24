@@ -21,3 +21,9 @@
     (is (= "foo" (.getIn container)))
     (is (= "bar" (.getOut container)))))
 
+(deftest local-transfer-container-set-out-test
+  (let [container (LocalTransferContainer. "foo" "bar")]
+    (is (= "bar" (.getOut container)))
+    (.setOut container "baz")
+    (is (= "baz" (.getOut container)))))
+
