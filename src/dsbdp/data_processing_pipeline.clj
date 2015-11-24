@@ -27,7 +27,7 @@
                         (.offer out-queue c))))]
     (.start proc-loop)
     {:interrupt (fn []
-                 (.interrupt proc-loop))}))
+                  (.interrupt proc-loop))}))
 
 (defn interrupt
   [obj]
