@@ -13,10 +13,12 @@
   (:require [dsbdp.data-processing-dsl :refer :all])
   (:import
     (dsbdp LocalTransferContainer ProcessingLoop)
-    (java.util.concurrent LinkedTransferQueue)))
+    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedTransferQueue)))
+
+(def ^:dynamic *queue-size* 100000)
 
 (defn create-local-processing-element
-  [^LinkedTransferQueue in-queue f]
+  [^BlockingQueue in-queue f]
   (let [out-queue (LinkedTransferQueue.)
         proc-loop (ProcessingLoop.
                     (fn []
