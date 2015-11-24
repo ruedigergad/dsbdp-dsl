@@ -14,7 +14,9 @@
     [clj-assorted-utils.util :refer :all]
     [clojure.test :refer :all]
     [dsbdp.data-processing-pipeline :refer :all])
-  (:import (dsbdp Counter LocalTransferContainer)))
+  (:import
+    (dsbdp Counter LocalTransferContainer)
+    (java.util.concurrent LinkedTransferQueue)))
 
 (deftest local-transfer-container-constructor-test
   (let [container (LocalTransferContainer. "foo" "bar")]
@@ -26,4 +28,15 @@
     (is (= "bar" (.getOut container)))
     (.setOut container "baz")
     (is (= "baz" (.getOut container)))))
+
+(deftest create-local-processing-element-test
+  (let [in-queue (LinkedTransferQueue.)
+        flag (prepare-flag)
+        proc-element (create-local-processing-element in-queue
+                                                      (fn [_ _] (set-flag flag)))]
+    (.put in-queue (LocalTransferContainer. "in" "out"))
+    (await-flag flag)
+    (is (flag-set? flag))
+    (interrupt proc-element)))
+
 
