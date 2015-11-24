@@ -69,3 +69,21 @@
       (is (= "foobar" (.getOut out))))
     (interrupt proc-element)))
 
+(deftest simple-local-processing-element-chaining-test
+  (let [in-queue (LinkedTransferQueue.)
+        flag (prepare-flag)
+        proc-element-1 (create-local-processing-element in-queue
+                                                        (fn [in out]
+                                                          (str in "foo")))
+        proc-element-2 (create-local-processing-element (get-out-queue proc-element-1)
+                                                        (fn [in out]
+                                                          (set-flag flag)
+                                                          (str out "bar")))]
+    (.put in-queue (LocalTransferContainer. "in" "out"))
+    (await-flag flag)
+    (let [out (.take (get-out-queue proc-element-2))]
+      (is (= "in" (.getIn out)))
+      (is (= "infoobar" (.getOut out))))
+    (interrupt proc-element-1)
+    (interrupt proc-element-2)))
+
