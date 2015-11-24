@@ -39,4 +39,19 @@
     (is (flag-set? flag))
     (interrupt proc-element)))
 
+(deftest simple-local-processing-element-in-args-test
+  (let [in-queue (LinkedTransferQueue.)
+        flag (prepare-flag)
+        in-arg (atom nil)
+        out-arg (atom nil)
+        proc-element (create-local-processing-element in-queue
+                                                      (fn [in out]
+                                                        (reset! in-arg in)
+                                                        (reset! out-arg out)
+                                                        (set-flag flag)))]
+    (.put in-queue (LocalTransferContainer. "in" "out"))
+    (await-flag flag)
+    (is (= "in" @in-arg))
+    (is (= "out" @out-arg))
+    (interrupt proc-element)))
 
