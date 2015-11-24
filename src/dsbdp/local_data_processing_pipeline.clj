@@ -9,7 +9,7 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Pipeline for processing data"}
-  dsbdp.data-processing-pipeline
+  dsbdp.local-data-processing-pipeline
   (:require [dsbdp.data-processing-dsl :refer :all])
   (:import
     (dsbdp LocalTransferContainer ProcessingLoop)

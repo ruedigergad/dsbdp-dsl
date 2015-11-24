@@ -9,11 +9,11 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Unit tests for the data processing pipeline"}
-  dsbdp.test.data-processing-pipeline-tests
+  dsbdp.test.local-data-processing-pipeline-tests
   (:require
     [clj-assorted-utils.util :refer :all]
     [clojure.test :refer :all]
-    [dsbdp.data-processing-pipeline :refer :all])
+    [dsbdp.local-data-processing-pipeline :refer :all])
   (:import
     (dsbdp Counter LocalTransferContainer)
     (java.util.concurrent LinkedTransferQueue)))
