@@ -24,12 +24,17 @@
                             new-out (f (.getIn c) (.getOut c))]
                         (if (not (nil? new-out))
                           (.setOut c new-out))
-                        (.offer out-queue c))))]
+                        (.put out-queue c))))]
     (.start proc-loop)
     {:interrupt (fn []
-                  (.interrupt proc-loop))}))
+                  (.interrupt proc-loop))
+     :get-out-queue out-queue}))
 
 (defn interrupt
   [obj]
   ((obj :interrupt)))
+
+(defn get-out-queue
+  [obj]
+  (obj :get-out-queue))
 
