@@ -14,5 +14,10 @@
     [clj-assorted-utils.util :refer :all]
     [clojure.test :refer :all]
     [dsbdp.data-processing-pipeline :refer :all])
-  (:import (dsbdp Counter)))
+  (:import (dsbdp Counter LocalTransferContainer)))
+
+(deftest local-transfer-container-constructor-test
+  (let [container (LocalTransferContainer. "foo" "bar")]
+    (is (= "foo" (.getIn container)))
+    (is (= "bar" (.getOut container)))))
 
