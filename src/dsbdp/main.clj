@@ -25,7 +25,7 @@
         delta-cntr (delta-counter)
         stats-fn (fn []
                    (println
-                     "in:" (delta-cntr :in (.value in-cntr))))
+                     "in:" (long (/ (delta-cntr :in (.value in-cntr)) 1000)) "k;"))
         in-loop (ProcessingLoop. (fn [] (.inc in-cntr)))]
     (.start in-loop)
     (run-repeat (executor) stats-fn 1000)))
