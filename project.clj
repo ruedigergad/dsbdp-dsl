@@ -7,4 +7,5 @@
                  [clj-assorted-utils "1.11.0"]]
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["src-java"]
-  :javac-options     ["-target" "1.6" "-source" "1.6"])
+  :javac-options     ["-target" "1.6" "-source" "1.6"]
+  :main dsbdp.main)
