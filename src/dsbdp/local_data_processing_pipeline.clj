@@ -79,8 +79,6 @@
                     (interrupt pe))
                   (.interrupt out-proc-loop))
      :in-fn (fn [in]
-              (println in)
-              (println in-queue)
               (.put in-queue (LocalTransferContainer. in nil)))}))
 
 (defn get-in-fn
