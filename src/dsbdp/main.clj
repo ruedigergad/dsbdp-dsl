@@ -22,11 +22,24 @@
 (defn -main [& args]
   (println "Starting dsbdp main...")
   (let [in-cntr (Counter.)
+        out-cntr (Counter.)
         delta-cntr (delta-counter)
         stats-fn (fn []
                    (println
-                     "in:" (long (/ (delta-cntr :in (.value in-cntr)) 1000)) "k;"))
-        in-loop (ProcessingLoop. (fn [] (.inc in-cntr)))]
+                     "in:" (long (/ (delta-cntr :in (.value in-cntr)) 1000)) "k;"
+                     "out:" (long (/ (delta-cntr :out (.value out-cntr)) 1000)) "k;"))
+        out-fn (fn [_ _]
+                 (.inc out-cntr))
+        in-data 1
+        proc-fns [(fn [i _] (inc i)) (fn [_ o] (inc o))]
+        pipeline (create-local-processing-pipeline
+                   proc-fns
+                   out-fn)
+        in-fn (get-in-fn pipeline)
+        in-loop (ProcessingLoop.
+                  (fn []
+                    (in-fn in-data)
+                    (.inc in-cntr)))]
     (.start in-loop)
     (run-repeat (executor) stats-fn 1000)))
 
