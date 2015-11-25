@@ -105,3 +105,14 @@
     (is (flag-set? flag-out))
     (interrupt pipeline)))
 
+(deftest simple-three-staged-local-pipeline-send-test
+  (let [flag-out (prepare-flag)
+        out (atom nil)
+        proc-fns [(fn [in _] (inc in)) (fn [_ out] (inc out)) (fn [_ out] (inc out))]
+        pipeline (create-local-processing-pipeline proc-fns (fn [_ o] (reset! out o) (set-flag flag-out)))]
+    ((get-in-fn pipeline) 0)
+    (await-flag flag-out)
+    (is (flag-set? flag-out))
+    (is (= 3 @out))
+    (interrupt pipeline)))
+
