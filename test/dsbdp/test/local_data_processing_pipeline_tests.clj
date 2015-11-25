@@ -18,6 +18,8 @@
     (dsbdp Counter LocalTransferContainer)
     (java.util.concurrent LinkedTransferQueue)))
 
+
+
 (deftest local-transfer-container-constructor-test
   (let [container (LocalTransferContainer. "foo" "bar")]
     (is (= "foo" (.getIn container)))
@@ -28,6 +30,8 @@
     (is (= "bar" (.getOut container)))
     (.setOut container "baz")
     (is (= "baz" (.getOut container)))))
+
+
 
 (deftest create-local-processing-element-test
   (let [in-queue (LinkedTransferQueue.)
@@ -86,4 +90,18 @@
       (is (= "infoobar" (.getOut out))))
     (interrupt proc-element-1)
     (interrupt proc-element-2)))
+
+
+
+(deftest simple-local-pipeline-send-test
+  (let [flag-proc (prepare-flag)
+        flag-out (prepare-flag)
+        proc-fns [(fn [_ _] (set-flag flag-proc))]
+        pipeline (create-local-processing-pipeline proc-fns (fn [_ _] (set-flag flag-out)))]
+    ((get-in-fn pipeline) "foo")
+    (await-flag flag-proc)
+    (await-flag flag-out)
+    (is (flag-set? flag-proc))
+    (is (flag-set? flag-out))
+    (interrupt pipeline)))
 

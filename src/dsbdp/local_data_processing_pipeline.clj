@@ -15,12 +15,16 @@
     (dsbdp LocalTransferContainer ProcessingLoop)
     (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedTransferQueue)))
 
+
+
 (def ^:dynamic *queue-size* 100000)
+
+
 
 (defn create-local-processing-element
   [^BlockingQueue in-queue f]
-  (let [out-queue (LinkedTransferQueue.)
-        running (atom true)
+  (let [running (atom true)
+        out-queue (LinkedTransferQueue.)
         proc-loop (ProcessingLoop.
                     (fn []
                       (try
@@ -36,7 +40,7 @@
     {:interrupt (fn []
                   (reset! running false)
                   (.interrupt proc-loop))
-     :get-out-queue out-queue}))
+     :out-queue out-queue}))
 
 (defn interrupt
   [obj]
@@ -44,5 +48,42 @@
 
 (defn get-out-queue
   [obj]
-  (obj :get-out-queue))
+  (obj :out-queue))
+
+
+
+(defn create-local-processing-pipeline
+  [fns out-fn]
+  (let [running (atom true)
+        in-queue (LinkedTransferQueue.)
+        proc-elements (reduce
+                        (fn [v f]
+                          (conj v (create-local-processing-element (get-out-queue (last v)) f)))
+                        [(create-local-processing-element in-queue (first fns))]
+                        (rest fns))
+        ^BlockingQueue out-queue (get-out-queue (last proc-elements))
+        out-proc-loop (ProcessingLoop.
+                        (fn []
+                          (try
+                            (let [^LocalTransferContainer c (.take out-queue)]
+                              (if (not (nil? c))
+                                (out-fn (.getIn c) (.getOut c))
+                                (out-fn nil nil)))
+                            (catch InterruptedException e
+                              (if @running
+                                (throw e))))))]
+    (.start out-proc-loop)
+    {:interrupt (fn []
+                  (reset! running false)
+                  (doseq [pe proc-elements]
+                    (interrupt pe))
+                  (.interrupt out-proc-loop))
+     :in-fn (fn [in]
+              (println in)
+              (println in-queue)
+              (.put in-queue (LocalTransferContainer. in nil)))}))
+
+(defn get-in-fn
+  [obj]
+  (obj :in-fn))
 
