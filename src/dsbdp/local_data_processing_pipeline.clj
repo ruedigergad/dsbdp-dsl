@@ -13,7 +13,7 @@
   (:require [dsbdp.data-processing-dsl :refer :all])
   (:import
     (dsbdp LocalTransferContainer ProcessingLoop)
-    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedTransferQueue)))
+    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedTransferQueue TransferQueue)))
 
 
 
@@ -21,10 +21,23 @@
 
 
 
+(defmacro create-queue
+  []
+  `(LinkedTransferQueue.))
+;  `(ArrayBlockingQueue. *queue-size*))
+
+(defn enqueue
+  [^TransferQueue queue data]
+;  [^BlockingQueue queue data]
+;  (.offer queue data))
+  (.tryTransfer queue data))
+
+
+
 (defn create-local-processing-element
   [^BlockingQueue in-queue f]
   (let [running (atom true)
-        out-queue (LinkedTransferQueue.)
+        out-queue (create-queue)
         proc-loop (ProcessingLoop.
                     (fn []
                       (try
@@ -32,7 +45,7 @@
                               new-out (f (.getIn c) (.getOut c))]
                           (if (not (nil? new-out))
                             (.setOut c new-out))
-                          (.put out-queue c))
+                          (enqueue out-queue c))
                         (catch InterruptedException e
                           (if @running
                             (throw e))))))]
@@ -55,7 +68,7 @@
 (defn create-local-processing-pipeline
   [fns out-fn]
   (let [running (atom true)
-        in-queue (LinkedTransferQueue.)
+        in-queue (create-queue)
         proc-elements (reduce
                         (fn [v f]
                           (conj v (create-local-processing-element (get-out-queue (last v)) f)))
@@ -79,7 +92,7 @@
                     (interrupt pe))
                   (.interrupt out-proc-loop))
      :in-fn (fn [in]
-              (.put in-queue (LocalTransferContainer. in nil)))}))
+              (enqueue in-queue (LocalTransferContainer. in nil)))}))
 
 (defn get-in-fn
   [obj]
