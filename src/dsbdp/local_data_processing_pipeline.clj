@@ -13,7 +13,7 @@
   (:require [dsbdp.data-processing-dsl :refer :all])
   (:import
     (dsbdp LocalTransferContainer ProcessingLoop)
-    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedTransferQueue TransferQueue)))
+    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedBlockingQueue LinkedTransferQueue TransferQueue)))
 
 
 
@@ -24,13 +24,18 @@
 (defmacro create-queue
   []
   `(LinkedTransferQueue.))
+;  `(LinkedBlockingQueue.))
 ;  `(ArrayBlockingQueue. *queue-size*))
 
-(defn enqueue
+(defmacro enqueue
   [^TransferQueue queue data]
 ;  [^BlockingQueue queue data]
-;  (.offer queue data))
-  (.tryTransfer queue data))
+;  `(.put ~queue ~data))
+  `(.tryTransfer ~queue ~data))
+
+(defmacro take-from-queue
+  [^BlockingQueue queue]
+  `(.take ~queue))
 
 
 
@@ -41,7 +46,7 @@
         proc-loop (ProcessingLoop.
                     (fn []
                       (try
-                        (let [^LocalTransferContainer c (.take in-queue)
+                        (let [^LocalTransferContainer c (take-from-queue in-queue)
                               new-out (f (.getIn c) (.getOut c))]
                           (if (not (nil? new-out))
                             (.setOut c new-out))
@@ -78,7 +83,7 @@
         out-proc-loop (ProcessingLoop.
                         (fn []
                           (try
-                            (let [^LocalTransferContainer c (.take out-queue)]
+                            (let [^LocalTransferContainer c (take-from-queue out-queue)]
                               (if (not (nil? c))
                                 (out-fn (.getIn c) (.getOut c))
                                 (out-fn nil nil)))
