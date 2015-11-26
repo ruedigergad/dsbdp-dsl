@@ -31,10 +31,14 @@
         out-fn (fn [_ _]
                  (.inc out-cntr))
         in-data 1
-        proc-fns [(fn [i _] i)]
-        ;proc-fns [(fn [i _] i)(fn [_ o] o)]
-        ;proc-fns [(fn [i _] i)(fn [_ o] o)(fn [_ o] o)]
-        ;proc-fns [(fn [i _] (inc i)) (fn [_ o] (inc o))]
+;        proc-fns [(fn [_ _])]
+;        proc-fns [(fn [_ _])(fn [_ _])]
+;        proc-fns [(fn [_ _])(fn [_ _])(fn [_ _])]
+;        proc-fns [(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])]
+;        proc-fns [(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])]
+        proc-fns [(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])]
+;        proc-fns [(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])(fn [_ _])]
+;        proc-fns [(fn [i _] (inc i)) (fn [_ o] (inc o))]
         pipeline (create-local-processing-pipeline
                    proc-fns
                    out-fn)
