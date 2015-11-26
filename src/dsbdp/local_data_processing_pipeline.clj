@@ -28,9 +28,10 @@
 ;  `(ArrayBlockingQueue. *queue-size*))
 
 (defmacro enqueue
-;  [^TransferQueue queue data]
-  [^BlockingQueue queue data]
-  `(.put ~queue ~data))
+  [^TransferQueue queue data]
+;  [^BlockingQueue queue data]
+;  `(.put ~queue ~data))
+  `(.transfer ~queue ~data))
 ;  `(.tryTransfer ~queue ~data))
 
 (defmacro take-from-queue
