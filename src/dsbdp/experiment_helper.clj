@@ -12,3 +12,10 @@
   dsbdp.experiment-helper
   (:require [dsbdp.byte-array-conversion :refer :all]))
 
+(defn create-proc-fns
+  [fn-1 fn-n n]
+  (loop [fns [fn-1]]
+    (if (< (count fns) n)
+      (recur (conj fns fn-n))
+      fns)))
+
