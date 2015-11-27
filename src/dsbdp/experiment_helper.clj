@@ -21,3 +21,11 @@
         (println "proc-fns:" fns)
         fns))))
 
+(defmacro create-no-op-proc-fns
+  [n]
+  `(create-proc-fns (fn [~'_ ~'_]) (fn [~'_ ~'_]) ~n))
+
+(defmacro create-inc-proc-fns
+  [n]
+  `(create-proc-fns (fn [~'i ~'_] (inc ~'i)) (fn [~'_ ~'o] (inc ~'o)) ~n))
+

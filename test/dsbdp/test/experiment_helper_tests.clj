@@ -21,3 +21,17 @@
     (is (= "n" ((nth proc-fns 1) nil nil)))
     (is (= "n" ((last proc-fns) nil nil)))))
 
+(deftest create-no-op-proc-fns-test
+  (let [proc-fns (create-no-op-proc-fns 4)]
+    (is (= 4 (count proc-fns)))
+    (is (= nil ((first proc-fns) nil nil)))
+    (is (= nil ((nth proc-fns 1) nil nil)))
+    (is (= nil ((last proc-fns) nil nil)))))
+
+(deftest create-inc-proc-fns-test
+  (let [proc-fns (create-inc-proc-fns 4)]
+    (is (= 4 (count proc-fns)))
+    (is (= 2 ((first proc-fns) 1 nil)))
+    (is (= 2 ((nth proc-fns 1) nil 1)))
+    (is (= 2 ((last proc-fns) nil 1)))))
+
