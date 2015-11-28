@@ -41,25 +41,32 @@
 
 
 (defn create-local-processing-element
-  [^BlockingQueue in-queue f]
-  (let [running (atom true)
-        out-queue (create-queue)
-        proc-loop (ProcessingLoop.
-                    (fn []
-                      (try
-                        (let [^LocalTransferContainer c (take-from-queue in-queue)
-                              new-out (f (.getIn c) (.getOut c))]
-                          (if (not (nil? new-out))
-                            (.setOut c new-out))
-                          (enqueue out-queue c))
-                        (catch InterruptedException e
-                          (if @running
-                            (throw e))))))]
-    (.start proc-loop)
-    {:interrupt (fn []
-                  (reset! running false)
-                  (.interrupt proc-loop))
-     :out-queue out-queue}))
+  ([^BlockingQueue in-queue f]
+    (create-local-processing-element in-queue f nil))
+  ([^BlockingQueue in-queue f id]
+    (let [running (atom true)
+          out-queue (create-queue)
+          f (fn []
+              (try
+                (let [^LocalTransferContainer c (take-from-queue in-queue)
+                      new-out (f (.getIn c) (.getOut c))]
+                  (if (not (nil? new-out))
+                    (.setOut c new-out))
+                  (enqueue out-queue c))
+                (catch InterruptedException e
+                  (if @running
+                    (throw e)))))
+          proc-loop (if (not (nil? id))
+                      (ProcessingLoop.
+                        (str "ProcessingElement_" id)
+                        f)
+                      (ProcessingLoop.
+                        f))]
+      (.start proc-loop)
+      {:interrupt (fn []
+                    (reset! running false)
+                    (.interrupt proc-loop))
+       :out-queue out-queue})))
 
 (defn interrupt
   [obj]
@@ -77,11 +84,12 @@
         in-queue (create-queue)
         proc-elements (reduce
                         (fn [v f]
-                          (conj v (create-local-processing-element (get-out-queue (last v)) f)))
-                        [(create-local-processing-element in-queue (first fns))]
+                          (conj v (create-local-processing-element (get-out-queue (last v)) f (count v))))
+                        [(create-local-processing-element in-queue (first fns) 0)]
                         (rest fns))
         ^BlockingQueue out-queue (get-out-queue (last proc-elements))
         out-proc-loop (ProcessingLoop.
+                        "PipelineOut"
                         (fn []
                           (try
                             (let [^LocalTransferContainer c (take-from-queue out-queue)]

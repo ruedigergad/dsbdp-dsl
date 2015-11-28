@@ -21,6 +21,10 @@ public class ProcessingLoop {
     private volatile boolean running;
 
     public ProcessingLoop (final Runnable runnable) {
+        this(null, runnable);
+    }
+
+    public ProcessingLoop (final String id, final Runnable runnable) {
         this.thread = new Thread (new Runnable () {
             @Override
             public void run () {
@@ -29,6 +33,9 @@ public class ProcessingLoop {
                 }
             }
         });
+        if (id != null) {
+            this.thread.setName(id);
+        }
     }
 
     public void start () {
