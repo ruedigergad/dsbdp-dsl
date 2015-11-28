@@ -29,7 +29,7 @@
         delta-cntr (delta-counter)]
     (.setThreadContentionMonitoringEnabled tmxb true)
     (fn []
-      (let [t-ids (vec (.getAllThreadIds tmxb))]
+      (let [t-ids (sort (vec (.getAllThreadIds tmxb)))]
         (doseq [t-id t-ids]
           (let [^ThreadInfo t-info (.getThreadInfo tmxb ^long t-id)
                 t-name (.getThreadName t-info)
