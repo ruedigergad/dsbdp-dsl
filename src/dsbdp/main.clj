@@ -8,7 +8,7 @@
 
 (ns
   ^{:author "Ruediger Gad",
-    :doc "Main class for launching experiments"}    
+    :doc "Main class for launching experiments"}
   dsbdp.main
   (:use
     clj-assorted-utils.util
@@ -34,7 +34,7 @@
                  (.inc out-cntr))
         in-data 1
         pipeline (create-local-processing-pipeline
-                   (create-hashmap-inc-put-proc-fns 4)
+                   (create-hashmap-inc-put-proc-fns 6)
                    out-fn)
         in-fn (get-in-fn pipeline)
         in-loop (ProcessingLoop.
