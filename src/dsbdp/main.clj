@@ -24,23 +24,28 @@
 
 (defn create-thread-info-fn
   []
-  (let [tmxb (ManagementFactory/getThreadMXBean)
+  (let [^ThreadMXBean tmxb (ManagementFactory/getThreadMXBean)
+        cpu-time-supported (.isThreadCpuTimeSupported tmxb)
         delta-cntr (delta-counter)]
-;    (println (.isThreadCpuTimeSupported tmxb))
-;    (println (.isThreadContentionMonitoringSupported tmxb))
     (.setThreadContentionMonitoringEnabled tmxb true)
     (fn []
       (let [t-ids (vec (.getAllThreadIds tmxb))]
         (doseq [t-id t-ids]
-          (let [t-info (.getThreadInfo tmxb t-id)
+          (let [^ThreadInfo t-info (.getThreadInfo tmxb ^long t-id)
                 t-name (.getThreadName t-info)
+                cpu-time (if cpu-time-supported
+                           (.getThreadCpuTime tmxb t-id)
+                           -1)
+                user-time (if cpu-time-supported
+                            (.getThreadUserTime tmxb t-id)
+                            -1)
                 waited (.getWaitedTime t-info)
-                blocked (.getBlockedTime t-info)
-                kw-w (keyword (str "waited" t-id))]
-            (print kw-w)
-            (println (str t-name "," waited "," blocked ","
-                          (delta-cntr kw-w waited) ","
-                          (delta-cntr (keyword t-name) blocked)))))))))
+                blocked (.getBlockedTime t-info)]
+            (println (str t-id "," t-name "," cpu-time "," user-time "," waited "," blocked ","
+                          (delta-cntr (keyword (str "cpu" t-id)) cpu-time) ","
+                          (delta-cntr (keyword (str "user" t-id)) user-time) ","
+                          (delta-cntr (keyword (str "waited" t-id)) waited) ","
+                          (delta-cntr (keyword (str "blocked" t-id)) blocked)))))))))
 
 
 (defn -main [& args]
