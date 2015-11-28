@@ -40,10 +40,12 @@
      (fn [~'_ ~'o] (inc ~'o))
      ~n))
 
-(defmacro create-hashmap-put-proc-fns
+(defmacro create-hashmap-inc-put-proc-fns
   [n]
-  `(create-proc-fns
-     (fn [~'i ~'_] (doto (HashMap.) (.put :idx ~'i)))
-     (fn [~'i ~'o] (.put ~'o :idx (inc ~'i)))
-     ~n))
+  (let [o-sym 'o]
+    (let [o-meta (vary-meta o-sym assoc :tag 'Map)]
+     `(create-proc-fns
+        (fn [~'i ~'_] (doto (HashMap.) (.put (str :idx) (inc ~'i))))
+        (fn [~'_ ~o-meta] (.put ~o-meta (str :idx) (inc (.get ~o-meta (str (dec :idx))))))
+        ~n))))
 
