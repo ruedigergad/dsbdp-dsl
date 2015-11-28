@@ -42,10 +42,10 @@
                 waited (.getWaitedTime t-info)
                 blocked (.getBlockedTime t-info)]
             (println (str t-id "," t-name "," cpu-time "," user-time "," waited "," blocked ","
-                          (delta-cntr (str "cpu" t-id) cpu-time) ","
-                          (delta-cntr (str "user" t-id) user-time) ","
-                          (delta-cntr (str "waited" t-id) waited) ","
-                          (delta-cntr (str "blocked" t-id) blocked)))))))))
+                       (delta-cntr (str "cpu" t-id) cpu-time) ","
+                       (delta-cntr (str "user" t-id) user-time) ","
+                       (delta-cntr (str "waited" t-id) waited) ","
+                       (delta-cntr (str "blocked" t-id) blocked)))))))))
 
 (defn -main [& args]
   (println "Starting dsbdp main...")
