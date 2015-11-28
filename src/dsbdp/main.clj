@@ -25,6 +25,7 @@
   (println "Starting dsbdp main...")
   (let [in-cntr (Counter.)
         out-cntr (Counter.)
+        no-op true
         delta-cntr (delta-counter)
         stats-fn (fn []
                    (println
@@ -33,16 +34,23 @@
         out-fn (fn [_ _]
                  (.inc out-cntr))
 ;        in-data 24N
-        in-data 1
-        pipeline (create-local-processing-pipeline
-                   (create-no-op-proc-fns 2)
-;                   (create-factorial-proc-fns 2)
-                   out-fn)
-        in-fn (get-in-fn pipeline)
-        in-loop (ProcessingLoop.
-                  (fn []
-                    (in-fn in-data)
-                    (.inc in-cntr)))]
+        in-data (if (not no-op)
+                  1)
+        pipeline (if (not no-op)
+                   (create-local-processing-pipeline
+                     (create-no-op-proc-fns 2)
+;                     (create-factorial-proc-fns 2)
+                     out-fn))
+        in-fn (if (not (nil? pipeline))
+                (get-in-fn pipeline))
+        in-loop (if (not (nil? in-fn))
+                  (ProcessingLoop.
+                    (fn []
+                      (in-fn in-data)
+                      (.inc in-cntr)))
+                  (ProcessingLoop.
+                    (fn []
+                      (.inc in-cntr))))]
     (.start in-loop)
     (run-repeat (executor) stats-fn 1000)))
 
