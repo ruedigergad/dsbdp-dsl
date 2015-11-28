@@ -32,9 +32,9 @@
                      "out:" (long (/ (delta-cntr :out (.value out-cntr)) 1000)) "k;"))
         out-fn (fn [_ _]
                  (.inc out-cntr))
-        in-data 20
+        in-data 24N
         pipeline (create-local-processing-pipeline
-                   (create-factorial-proc-fns 1)
+                   (create-factorial-proc-fns 2)
                    out-fn)
         in-fn (get-in-fn pipeline)
         in-loop (ProcessingLoop.

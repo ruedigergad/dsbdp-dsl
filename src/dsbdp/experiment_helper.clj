@@ -52,10 +52,17 @@
         (fn [~'_ ~o-meta] (.put ~o-meta (str :idx) (inc (.get ~o-meta (str (dec :idx))))))
         ~n))))
 
+(defn factorial
+  [n]
+  (loop [result 1N i 1N]
+    (if (<= i n)
+      (recur (* result i) (inc i))
+      result)))
+
 (defmacro create-factorial-proc-fns
   [n]
   `(create-proc-fns
-     (fn [~'i ~'_] (CombinatoricsUtils/factorial ~'i))
-     (fn [~'i ~'_] (CombinatoricsUtils/factorial ~'i))
+     (fn [~'i ~'_] (factorial ~'i))
+     (fn [~'i ~'_] (factorial ~'i))
      ~n))
 

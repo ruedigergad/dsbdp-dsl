@@ -57,6 +57,12 @@
       (is (= 3 (.get m "2")))
       (is (= 4 (.get m "3"))))))
 
+(deftest factorial-test
+  (is (= 1 (factorial 1)))
+  (is (= 2 (factorial 2)))
+  (is (= 6 (factorial 3)))
+  (is (= 24 (factorial 4))))
+
 (deftest create-factorial-proc-fns-test
   (let [proc-fns (create-factorial-proc-fns 4)]
     (is (= 4 (count proc-fns)))
