@@ -12,7 +12,9 @@
   dsbdp.experiment-helper
   (:require
     [clojure.walk :refer :all]
-    [dsbdp.byte-array-conversion :refer :all]))
+    [dsbdp.byte-array-conversion :refer :all])
+  (:import
+    (java.util HashMap Map)))
 
 (defmacro create-proc-fns
   [fn-1 fn-n n]
@@ -26,9 +28,22 @@
 
 (defmacro create-no-op-proc-fns
   [n]
-  `(create-proc-fns (fn [~'_ ~'_]) (fn [~'_ ~'_]) ~n))
+  `(create-proc-fns
+     (fn [~'_ ~'_])
+     (fn [~'_ ~'_])
+     ~n))
 
 (defmacro create-inc-proc-fns
   [n]
-  `(create-proc-fns (fn [~'i ~'_] (inc ~'i)) (fn [~'_ ~'o] (inc ~'o)) ~n))
+  `(create-proc-fns
+     (fn [~'i ~'_] (inc ~'i))
+     (fn [~'_ ~'o] (inc ~'o))
+     ~n))
+
+(defmacro create-hashmap-put-proc-fns
+  [n]
+  `(create-proc-fns
+     (fn [~'i ~'_] (doto (HashMap.) (.put :idx ~'i)))
+     (fn [~'i ~'o] (.put ~'o :idx (inc ~'i)))
+     ~n))
 

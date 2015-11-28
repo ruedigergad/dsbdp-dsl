@@ -12,7 +12,9 @@
   dsbdp.test.experiment-helper-tests
   (:require
     [clojure.test :refer :all]
-    [dsbdp.experiment-helper :refer :all]))
+    [dsbdp.experiment-helper :refer :all])
+  (:import
+    (java.util HashMap)))
 
 (deftest simple-create-proc-fns-test
   (let [proc-fns (create-proc-fns (fn [_ _] "1") (fn [_ _] "n") 4)]
@@ -41,4 +43,9 @@
     (is (= 0 ((first proc-fns) nil nil)))
     (is (= 1 ((nth proc-fns 1) nil nil)))
     (is (= 3 ((last proc-fns) nil nil)))))
+
+(deftest create-hashmap-put-proc-fns-test
+  (let [proc-fns (create-hashmap-put-proc-fns 4)]
+    (is (= 4 (count proc-fns)))
+    (is (= HashMap (type ((first proc-fns) 1 nil))))))
 
