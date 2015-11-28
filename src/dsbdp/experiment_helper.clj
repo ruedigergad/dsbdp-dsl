@@ -14,12 +14,14 @@
 
 (defmacro create-proc-fns
   [fn-1 fn-n n]
+  (println fn-n (type fn-n))
   (loop [fns [fn-1]]
     (if (< (count fns) n)
-      (recur (conj fns fn-n))
+      (recur (conj fns `(let [~'idx ~(count fns)]
+                          ~fn-n)))
       (do
         (println "proc-fns:" fns)
-        fns))))
+        `~fns))))
 
 (defmacro create-no-op-proc-fns
   [n]
