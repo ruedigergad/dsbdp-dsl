@@ -16,13 +16,12 @@
 
 (defmacro create-proc-fns
   [fn-1 fn-n n]
-  (println fn-n (type fn-n))
   (loop [fns (prewalk-replace {:idx 0} [fn-1])]
     (if (< (count fns) n)
       (recur (conj fns (prewalk-replace {:idx (count fns)} fn-n)))
       (do
-        (println "proc-fns:" fns)
-        `~fns))))
+        (println "proc-fns-full:" fns)
+        fns))))
 
 (defmacro create-no-op-proc-fns
   [n]
