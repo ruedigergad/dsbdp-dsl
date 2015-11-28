@@ -18,14 +18,37 @@
     dsbdp.local-data-processing-pipeline)
   (:import
     (dsbdp Counter ProcessingLoop)
+    (java.lang.management ManagementFactory ThreadInfo ThreadMXBean)
     (java.util HashMap Map))
   (:gen-class))
 
+(defn create-thread-info-fn
+  []
+  (let [tmxb (ManagementFactory/getThreadMXBean)
+        delta-cntr (delta-counter)]
+;    (println (.isThreadCpuTimeSupported tmxb))
+;    (println (.isThreadContentionMonitoringSupported tmxb))
+    (.setThreadContentionMonitoringEnabled tmxb true)
+    (fn []
+      (let [t-ids (vec (.getAllThreadIds tmxb))]
+        (doseq [t-id t-ids]
+          (let [t-info (.getThreadInfo tmxb t-id)
+                t-name (.getThreadName t-info)
+                waited (.getWaitedTime t-info)
+                blocked (.getBlockedTime t-info)
+                kw-w (keyword (str "waited" t-id))]
+            (print kw-w)
+            (println (str t-name "," waited "," blocked ","
+                          (delta-cntr kw-w waited) ","
+                          (delta-cntr (keyword t-name) blocked)))))))))
+
+
 (defn -main [& args]
   (println "Starting dsbdp main...")
+  (.setName (Thread/currentThread) "Main")
   (let [in-cntr (Counter.)
         out-cntr (Counter.)
-        no-op true
+        no-op false
         delta-cntr (delta-counter)
         stats-fn (fn []
                    (println
@@ -43,14 +66,14 @@
                      out-fn))
         in-fn (if (not (nil? pipeline))
                 (get-in-fn pipeline))
-        in-loop (if (not (nil? in-fn))
-                  (ProcessingLoop.
+        in-loop (ProcessingLoop.
+                  "InLoop"
+                  (if (not (nil? in-fn))
                     (fn []
                       (in-fn in-data)
-                      (.inc in-cntr)))
-                  (ProcessingLoop.
+                      (.inc in-cntr))
                     (fn []
                       (.inc in-cntr))))]
     (.start in-loop)
-    (run-repeat (executor) stats-fn 1000)))
+    (run-repeat (executor) (fn [] (stats-fn) ((create-thread-info-fn)) (println)) 1000)))
 
