@@ -21,6 +21,7 @@
       (recur (conj fns (prewalk-replace {:idx (count fns)} fn-n)))
       (do
         (println "proc-fns-full:" fns)
+        (println "proc-fns-short:" (.replaceAll (str fns) "(?<=\\()([a-zA-Z\\.\\-]++/)" ""))
         fns))))
 
 (defmacro create-no-op-proc-fns
