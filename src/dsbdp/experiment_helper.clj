@@ -15,7 +15,8 @@
     [clojure.pprint :refer :all]
     [dsbdp.byte-array-conversion :refer :all])
   (:import
-    (java.util HashMap Map)))
+    (java.util HashMap Map)
+    (org.apache.commons.math3.util CombinatoricsUtils)))
 
 (defmacro create-proc-fns
   [fn-1 fn-n n]
@@ -50,4 +51,11 @@
         (fn [~'i ~'_] (doto (HashMap.) (.put (str :idx) (inc ~'i))))
         (fn [~'_ ~o-meta] (.put ~o-meta (str :idx) (inc (.get ~o-meta (str (dec :idx))))))
         ~n))))
+
+(defmacro create-factorial-proc-fns
+  [n]
+  `(create-proc-fns
+     (fn [~'i ~'_] (CombinatoricsUtils/factorial ~'i))
+     (fn [~'i ~'_] (CombinatoricsUtils/factorial ~'i))
+     ~n))
 
