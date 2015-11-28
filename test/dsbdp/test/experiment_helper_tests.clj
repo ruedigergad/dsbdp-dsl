@@ -36,7 +36,7 @@
     (is (= 2 ((last proc-fns) nil 1)))))
 
 (deftest create-idx-proc-fns-test
-  (let [proc-fns (create-proc-fns (fn [_ _] 0) (fn [_ _] idx) 4)]
+  (let [proc-fns (create-proc-fns (fn [_ _] :idx) (fn [_ _] :idx) 4)]
     (is (= 4 (count proc-fns)))
     (is (= 0 ((first proc-fns) nil nil)))
     (is (= 1 ((nth proc-fns 1) nil nil)))

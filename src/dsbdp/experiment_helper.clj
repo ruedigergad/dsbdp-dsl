@@ -10,15 +10,16 @@
   ^{:author "Ruediger Gad",
     :doc "Helper that are primarily used during experiments"}
   dsbdp.experiment-helper
-  (:require [dsbdp.byte-array-conversion :refer :all]))
+  (:require
+    [clojure.walk :refer :all]
+    [dsbdp.byte-array-conversion :refer :all]))
 
 (defmacro create-proc-fns
   [fn-1 fn-n n]
   (println fn-n (type fn-n))
-  (loop [fns [fn-1]]
+  (loop [fns (prewalk-replace {:idx 0} [fn-1])]
     (if (< (count fns) n)
-      (recur (conj fns `(let [~'idx ~(count fns)]
-                          ~fn-n)))
+      (recur (conj fns (prewalk-replace {:idx (count fns)} fn-n)))
       (do
         (println "proc-fns:" fns)
         `~fns))))
