@@ -56,6 +56,7 @@
         delta-cntr (delta-counter)
         stats-fn (fn []
                    (println
+                     "time-delta:" (delta-cntr :time (System/currentTimeMillis)) ";"
                      "in:" (long (/ (delta-cntr :in (.value in-cntr)) 1000)) "k;"
                      "out:" (long (/ (delta-cntr :out (.value out-cntr)) 1000)) "k;"))
         out-fn (fn [_ _]
