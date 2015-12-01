@@ -10,12 +10,13 @@
   ^{:author "Ruediger Gad",
     :doc "Main class for launching experiments"}
   dsbdp.main
-  (:use
-    clj-assorted-utils.util
-    dsbdp.data-processing-dsl
-    dsbdp.byte-array-conversion
-    dsbdp.experiment-helper
-    dsbdp.local-data-processing-pipeline)
+  (:require
+    (clj-assorted-utils [util :refer :all])
+    (dsbdp
+      [data-processing-dsl :refer :all]
+      [byte-array-conversion :refer :all]
+      [experiment-helper :refer :all]
+      [local-data-processing-pipeline :refer :all]))
   (:import
     (dsbdp Counter ProcessingLoop)
     (java.lang.management ManagementFactory ThreadInfo ThreadMXBean)

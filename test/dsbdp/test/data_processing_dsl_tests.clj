@@ -12,7 +12,7 @@
   dsbdp.test.data-processing-dsl-tests
   (:require [clojure.test :refer :all]
             [dsbdp.data-processing-dsl :refer :all])
-  (import (java.util ArrayList HashMap List Map)))
+  (:import (java.util ArrayList HashMap List Map)))
 
 (def byte-array-test-data
   "We use the byte array representation of a captured UDP packet as byte array test data."
