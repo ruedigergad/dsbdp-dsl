@@ -13,7 +13,7 @@
   (:require [dsbdp.byte-array-conversion :refer :all]))
 
 (defn create-data-processing-sub-fn
-  [data-processing-definition input offset]
+  [data-processing-definition input]
   (into
     '()
     (reverse
@@ -34,7 +34,7 @@
                       (println "Could not resolve symbol:" s)
                       v)))
             (list? data-proc-def-element)
-              (conj v (into '() (reverse (create-data-processing-sub-fn data-proc-def-element input offset))))
+              (conj v (into '() (reverse (create-data-processing-sub-fn data-proc-def-element input))))
             :default (conj v data-proc-def-element)))
         [] data-processing-definition))))
 
@@ -46,36 +46,36 @@
    For determining the type, this function calls data-proc-sub-fn with a 1530 byte dummy byte-array filled with 0."
   [data-proc-sub-fn]
   (let [dummy-ba (byte-array 1530 (byte 0))
-        ret (data-proc-sub-fn dummy-ba 0)]
+        ret (data-proc-sub-fn dummy-ba)]
     (type ret)))
 
 (defn create-data-processing-fn-body-for-java-map-output-type
   "Create a data processing function body for emitting data into a Java map."
-  [input offset rules]
+  [input rules]
   (reduce
     (fn [v rule]
       (conj v `(.put
                 ~(name (first rule))
-                ~(create-data-processing-sub-fn (second rule) input offset))))
+                ~(create-data-processing-sub-fn (second rule) input))))
     '[doto (java.util.HashMap.)] rules))
 
 (defn create-data-processing-fn-body-for-clj-map-output-type
   "Create a data processing function body for emitting data into a Clojure map."
-  [input offset rules]
+  [input rules]
   (reduce
     (fn [v rule]
       (conj v `(assoc
                  ~(name (first rule))
-                 ~(create-data-processing-sub-fn (second rule) input offset))))
+                 ~(create-data-processing-sub-fn (second rule) input))))
     '[-> {}] rules))
 
 (defn create-data-processing-fn-body-for-csv-str-output-type
   "Create a data processing function body for emitting data into a CSV string."
-  [input offset rules]
+  [input rules]
   (let [extracted-strings (reduce
                             (fn [v rule]
-                              (let [data-proc-sub-fn (create-data-processing-sub-fn (second rule) input offset)
-                                    data-proc-sub-fn-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input ~offset] ~data-proc-sub-fn)))]
+                              (let [data-proc-sub-fn (create-data-processing-sub-fn (second rule) input)
+                                    data-proc-sub-fn-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input] ~data-proc-sub-fn)))]
                                 (conj v (if (= java.lang.String data-proc-sub-fn-ret-type)
                                           `(str "\"" ~data-proc-sub-fn "\"")
                                           data-proc-sub-fn))))
@@ -85,12 +85,12 @@
 
 (defn create-data-processing-fn-body-for-json-str-output-type
   "Create a data processing function body for emitting data into a JSON string."
-  [input offset rules]
+  [input rules]
   (let [extracted-strings (conj
                             (reduce
                               (fn [v rule]
-                                (let [data-proc-sub-fn (create-data-processing-sub-fn (second rule) input offset)
-                                      data-proc-sub-fn-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input ~offset] ~data-proc-sub-fn)))]
+                                (let [data-proc-sub-fn (create-data-processing-sub-fn (second rule) input)
+                                      data-proc-sub-fn-ret-type (get-data-processing-sub-fn-ret-type (eval `(fn [~input] ~data-proc-sub-fn)))]
                                   (conj v "\"" (name (first rule)) "\":"
                                           (if (= java.lang.String data-proc-sub-fn-ret-type)
                                             `(str "\"" ~data-proc-sub-fn "\"")
@@ -106,18 +106,17 @@
   [dsl-expression]
 ;  (println "Got DSL expression:" dsl-expression)
   (let [input-sym 'input
-        offset-sym 'offset
         fn-body-vec (let [output-type (:output-type dsl-expression)
                           rules (:rules dsl-expression)]
                       (condp = (name output-type)
-                        "java-map" (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules)
-                        "clj-map" (create-data-processing-fn-body-for-clj-map-output-type input-sym offset-sym rules)
-                        "csv-str" (create-data-processing-fn-body-for-csv-str-output-type input-sym offset-sym rules)
-                        "json-str" (create-data-processing-fn-body-for-json-str-output-type input-sym offset-sym rules)
+                        "java-map" (create-data-processing-fn-body-for-java-map-output-type input-sym rules)
+                        "clj-map" (create-data-processing-fn-body-for-clj-map-output-type input-sym rules)
+                        "csv-str" (create-data-processing-fn-body-for-csv-str-output-type input-sym rules)
+                        "json-str" (create-data-processing-fn-body-for-json-str-output-type input-sym rules)
                         (do
                           (println "Unknown output type:" output-type)
                           (println "Defaulting to :java-map as output type.")
-                          (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules))))
+                          (create-data-processing-fn-body-for-java-map-output-type input-sym rules))))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
         _ (println "Created data processing function body:" fn-body)
