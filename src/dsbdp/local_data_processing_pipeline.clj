@@ -46,22 +46,22 @@
   ([^BlockingQueue in-queue f id]
     (let [running (atom true)
           out-queue (create-queue)
-          f (fn []
-              (try
-                (let [^LocalTransferContainer c (take-from-queue in-queue)
-                      new-out (f (.getIn c) (.getOut c))]
-                  (if (not (nil? new-out))
-                    (.setOut c new-out))
-                  (enqueue out-queue c))
-                (catch InterruptedException e
-                  (if @running
-                    (throw e)))))
+          proc-fn (fn []
+                    (try
+                      (let [^LocalTransferContainer c (take-from-queue in-queue)
+                            new-out (f (.getIn c) (.getOut c))]
+                        (if (not (nil? new-out))
+                          (.setOut c new-out))
+                        (enqueue out-queue c))
+                      (catch InterruptedException e
+                        (if @running
+                          (throw e)))))
           proc-loop (if (not (nil? id))
                       (ProcessingLoop.
                         (str "ProcessingElement_" id)
-                        f)
+                        proc-fn)
                       (ProcessingLoop.
-                        f))]
+                        proc-fn))]
       (.start proc-loop)
       {:interrupt (fn []
                     (reset! running false)
