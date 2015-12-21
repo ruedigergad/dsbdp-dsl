@@ -116,7 +116,7 @@
                         "json-str" (create-data-processing-fn-body-for-json-str-output-type input-sym offset-sym rules)
                         (do
                           (println "Unknown output type:" output-type)
-                          (println "Defaulting to :java-maps as output type.")
+                          (println "Defaulting to :java-map as output type.")
                           (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules))))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
