@@ -120,7 +120,7 @@
                           (create-data-processing-fn-body-for-java-map-output-type input-sym offset-sym rules))))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
-;        _ (println "Created data processing function body:" fn-body)
-        data-processing-fn (eval `(fn [~input-sym ~offset-sym] ~fn-body))]
+        _ (println "Created data processing function body:" fn-body)
+        data-processing-fn (eval `(fn [~input-sym] ~fn-body))]
     data-processing-fn))
 

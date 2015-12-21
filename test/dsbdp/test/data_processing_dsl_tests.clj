@@ -34,7 +34,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data 0)]
+        result (data-processing-fn byte-array-test-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -44,7 +44,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data 0)]
+        result (data-processing-fn byte-array-test-data)]
     (is (map? result))
     (is (= expected result))))
 
@@ -54,7 +54,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data 0)]
+        result (data-processing-fn byte-array-test-data)]
     (is (= expected result))))
 
 (deftest byte-array-to-json-str-test
@@ -63,7 +63,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data 0)]
+        result (data-processing-fn byte-array-test-data)]
     (is (= expected result))))
 
 
@@ -77,7 +77,7 @@
                         :rules [['udpSrc '(/ (int16 50) 2)]
                                 ['udpDst '(/ (int16 52) 2)]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data 0)]
+        result (data-processing-fn byte-array-test-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -87,7 +87,7 @@
                         :rules [['udpSrc '(float (/ (int16 50) 65535))]
                                 ['udpDst '(float (/ (int16 52) 65535))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data 0)]
+        result (data-processing-fn byte-array-test-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -96,7 +96,7 @@
         dsl-expression {:output-type :java-map
                         :rules [['quotient '(/ (int16 52) (int16 50))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data 0)]
+        result (data-processing-fn byte-array-test-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -111,7 +111,7 @@
         dsl-expression {:output-type :java-map
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn input-data 0)]
+        result (data-processing-fn input-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -121,7 +121,7 @@
         dsl-expression {:output-type :java-map
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn input-data 0)]
+        result (data-processing-fn input-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -131,7 +131,7 @@
         dsl-expression {:output-type :java-map
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn input-data 0)]
+        result (data-processing-fn input-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -141,7 +141,7 @@
         dsl-expression {:output-type :java-map
                         :rules [['quotient '(/ (get "x") (get :z))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn input-data 0)]
+        result (data-processing-fn input-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -151,7 +151,7 @@
         dsl-expression {:output-type :java-map
                         :rules [['quotient '(/ (get "x") (get :z))]]}
         data-processing-fn (create-data-processing-fn dsl-expression)
-        result (data-processing-fn input-data 0)]
+        result (data-processing-fn input-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
