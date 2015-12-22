@@ -136,7 +136,7 @@
       (conj v `(.put
                 ~(name (first rule))
                 ~(create-data-processing-sub-fn (second rule) input))))
-    '[doto output] rules))
+    '[doto ^java.util.Map output] rules))
 
 (defn create-incremental-data-processing-fn-body-for-clj-map-output-type
   "Create a data processing function body for incrementally emitting data into a Clojure map."
