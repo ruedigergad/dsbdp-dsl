@@ -112,14 +112,13 @@
   [dsl-expression]
 ;  (println "Got DSL expression:" dsl-expression)
   (let [input-sym 'input
-        output-sym 'output
         output-type (name (:output-type dsl-expression))
         rules (:rules dsl-expression)
-        fn-body-vec (condp = output-type
-                      "java-map" (create-proc-fn-body-java-map-out input-sym rules nil)
-                      "java-map-inc" (create-proc-fn-body-java-map-out input-sym rules output-sym)
-                      "clj-map" (create-proc-fn-body-clj-map-out input-sym rules nil)
-                      "clj-map-inc" (create-proc-fn-body-clj-map-out input-sym rules output-sym)
+        output-sym (if (.endsWith output-type "-inc")
+                     'output)
+        fn-body-vec (condp (fn [v s] (.startsWith s v)) output-type
+                      "java-map" (create-proc-fn-body-java-map-out input-sym rules output-sym)
+                      "clj-map" (create-proc-fn-body-clj-map-out input-sym rules output-sym)
                       "csv-str" (create-proc-fn-body-csv-str-out input-sym rules)
                       "json-str" (create-proc-fn-body-json-str-out input-sym rules)
                       (do
@@ -129,7 +128,7 @@
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
 ;        _ (println "Created data processing function body:" fn-body)
-        data-processing-fn (if (.endsWith output-type "-inc")
+        data-processing-fn (if (not (nil? output-sym))
                              (eval `(fn [~input-sym ~output-sym] ~fn-body))
                              (eval `(fn [~input-sym] ~fn-body)))]
     data-processing-fn))
