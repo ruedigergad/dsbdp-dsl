@@ -49,7 +49,7 @@
         ret (data-proc-sub-fn dummy-ba)]
     (type ret)))
 
-(defmacro java-map-out-reduce-fn
+(defmacro reduce-fn-java-map-out
   []
   `(fn [v# rule#]
     (conj v# `(.put
@@ -60,10 +60,10 @@
   "Create a data processing function body for emitting data into a Java map."
   [input rules]
   (reduce
-    (java-map-out-reduce-fn)
+    (reduce-fn-java-map-out)
     '[doto (java.util.HashMap.)] rules))
 
-(defmacro clojure-map-out-reduce-fn
+(defmacro reduce-fn-clojure-map-out
   []
   `(fn [v# rule#]
      (conj v# `(assoc
@@ -74,7 +74,7 @@
   "Create a data processing function body for emitting data into a Clojure map."
   [input rules]
   (reduce
-    (clojure-map-out-reduce-fn)
+    (reduce-fn-clojure-map-out)
     '[-> {}] rules))
 
 (defn create-proc-fn-body-csv-str-out
@@ -140,14 +140,14 @@
   "Create a data processing function body for incrementally emitting data into a Java map."
   [input output rules]
   (reduce
-    (java-map-out-reduce-fn)
+    (reduce-fn-java-map-out)
     '[doto ^java.util.Map output] rules))
 
 (defn create-incremental-proc-fn-body-clj-map-out
   "Create a data processing function body for incrementally emitting data into a Clojure map."
   [input output rules]
   (reduce
-    (clojure-map-out-reduce-fn)
+    (reduce-fn-clojure-map-out)
     '[-> output] rules))
 
 (defn create-incremental-proc-fn
