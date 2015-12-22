@@ -167,7 +167,7 @@
                           (create-incremental-proc-fn-body-java-map-out input-sym output-sym rules))))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
-        _ (println "Created data processing function body:" fn-body)
+;        _ (println "Created data processing function body:" fn-body)
         data-processing-fn (eval `(fn [~input-sym ~output-sym] ~fn-body))]
     data-processing-fn))
 
