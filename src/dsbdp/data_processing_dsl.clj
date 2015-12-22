@@ -56,7 +56,7 @@
               ~(name (first rule#))
               ~(create-proc-sub-fn (second rule#) ~'input)))))
 
-(defn create-proc-fn-body-java-map-out
+(defn- create-proc-fn-body-java-map-out
   "Create a data processing function body for emitting data into a Java map."
   [input rules]
   (reduce
@@ -70,14 +70,14 @@
                 ~(name (first rule#))
                 ~(create-proc-sub-fn (second rule#) ~'input)))))
 
-(defn create-proc-fn-body-clj-map-out
+(defn- create-proc-fn-body-clj-map-out
   "Create a data processing function body for emitting data into a Clojure map."
   [input rules]
   (reduce
     (reduce-fn-clojure-map-out)
     '[-> {}] rules))
 
-(defn create-proc-fn-body-csv-str-out
+(defn- create-proc-fn-body-csv-str-out
   "Create a data processing function body for emitting data into a CSV string."
   [input rules]
   (let [extracted-strings (reduce
@@ -91,7 +91,7 @@
         commas (reduce into [] ["." (repeat (- (count rules) 1) ",") "."])]
     (vec (filter #(not= \. %) (interleave extracted-strings commas)))))
 
-(defn create-proc-fn-body-json-str-out
+(defn- create-proc-fn-body-json-str-out
   "Create a data processing function body for emitting data into a JSON string."
   [input rules]
   (let [extracted-strings (conj
