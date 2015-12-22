@@ -63,14 +63,18 @@
     (java-map-out-reduce-fn)
     '[doto (java.util.HashMap.)] rules))
 
+(defmacro clojure-map-out-reduce-fn
+  []
+  `(fn [v# rule#]
+     (conj v# `(assoc
+                ~(name (first rule#))
+                ~(create-proc-sub-fn (second rule#) ~'input)))))
+
 (defn create-proc-fn-body-clj-map-out
   "Create a data processing function body for emitting data into a Clojure map."
   [input rules]
   (reduce
-    (fn [v rule]
-      (conj v `(assoc
-                 ~(name (first rule))
-                 ~(create-proc-sub-fn (second rule) input))))
+    (clojure-map-out-reduce-fn)
     '[-> {}] rules))
 
 (defn create-proc-fn-body-csv-str-out
@@ -143,10 +147,7 @@
   "Create a data processing function body for incrementally emitting data into a Clojure map."
   [input output rules]
   (reduce
-    (fn [v rule]
-      (conj v `(assoc
-                 ~(name (first rule))
-                 ~(create-proc-sub-fn (second rule) input))))
+    (clojure-map-out-reduce-fn)
     '[-> output] rules))
 
 (defn create-incremental-proc-fn
@@ -168,7 +169,7 @@
                           (create-incremental-proc-fn-body-java-map-out input-sym output-sym rules))))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
-java-map-out-reduce-fn;        _ (println "Created data processing function body:" fn-body)
+;        _ (println "Created data processing function body:" fn-body)
         data-processing-fn (eval `(fn [~input-sym ~output-sym] ~fn-body))]
     data-processing-fn))
 
