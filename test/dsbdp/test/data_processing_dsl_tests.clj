@@ -83,16 +83,18 @@
     (is (identical? input result))
     (is (= expected result))))
 
-;(deftest byte-array-to-clj-map-test
-;  (let [expected {"udpSrc" 2048, "udpDst" 4096}
-;        dsl-expression {:output-type :clj-map
-;                        :rules [['udpSrc '(int16 50)]
-;                                ['udpDst '(int16 52)]]}
-;        data-processing-fn (create-data-processing-fn dsl-expression)
-;        result (data-processing-fn byte-array-test-data)]
-;    (is (map? result))
-;    (is (= expected result))))
-;
+(deftest incremental-byte-array-to-clj-map-test
+  (let [expected {"udpSrc" 2048, "udpDst" 4096, "foo" :bar}
+        dsl-expression {:output-type :clj-map
+                        :rules [['udpSrc '(int16 50)]
+                                ['udpDst '(int16 52)]]}
+        data-processing-fn (create-incremental-data-processing-fn dsl-expression)
+        input  {"foo" :bar}
+        result (data-processing-fn byte-array-test-data input)]
+    (is (map? result))
+    (is (not (identical? input result)))
+    (is (= expected result))))
+
 ;(deftest byte-array-to-csv-str-test
 ;  (let [expected "2048,4096"
 ;        dsl-expression {:output-type :csv-str

@@ -129,7 +129,7 @@
 ;;; Incremental data processing functions.
 ;;;
 (defn create-incremental-data-processing-fn-body-for-java-map-output-type
-  "Create a data processing function body for emitting data into a Java map."
+  "Create a data processing function body for incrementally emitting data into a Java map."
   [input output rules]
   (reduce
     (fn [v rule]
@@ -137,6 +137,16 @@
                 ~(name (first rule))
                 ~(create-data-processing-sub-fn (second rule) input))))
     '[doto output] rules))
+
+(defn create-incremental-data-processing-fn-body-for-clj-map-output-type
+  "Create a data processing function body for incrementally emitting data into a Clojure map."
+  [input output rules]
+  (reduce
+    (fn [v rule]
+      (conj v `(assoc
+                 ~(name (first rule))
+                 ~(create-data-processing-sub-fn (second rule) input))))
+    '[-> output] rules))
 
 (defn create-incremental-data-processing-fn
   "Create an incremental data processing function based on the given dsl-expression."
@@ -148,7 +158,7 @@
                           rules (:rules dsl-expression)]
                       (condp = (name output-type)
                         "java-map" (create-incremental-data-processing-fn-body-for-java-map-output-type input-sym output-sym rules)
-                        "clj-map" (create-data-processing-fn-body-for-clj-map-output-type input-sym rules)
+                        "clj-map" (create-incremental-data-processing-fn-body-for-clj-map-output-type input-sym output-sym rules)
                         "csv-str" (create-data-processing-fn-body-for-csv-str-output-type input-sym rules)
                         "json-str" (create-data-processing-fn-body-for-json-str-output-type input-sym rules)
                         (do
