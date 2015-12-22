@@ -49,33 +49,31 @@
         ret (data-proc-sub-fn dummy-ba)]
     (type ret)))
 
-(defmacro reduce-fn-java-map-out
-  []
-  `(fn [v# rule#]
-    (conj v# `(.put
-              ~(name (first rule#))
-              ~(create-proc-sub-fn (second rule#) ~'input)))))
-
 (defn- create-proc-fn-body-java-map-out
   "Create a data processing function body for emitting data into a Java map."
-  [input rules]
+  [input rules output]
   (reduce
-    (reduce-fn-java-map-out)
-    '[doto (java.util.HashMap.)] rules))
-
-(defmacro reduce-fn-clojure-map-out
-  []
-  `(fn [v# rule#]
-     (conj v# `(assoc
-                ~(name (first rule#))
-                ~(create-proc-sub-fn (second rule#) ~'input)))))
+    (fn [v rule]
+      (conj v `(.put
+                ~(name (first rule))
+                ~(create-proc-sub-fn (second rule) input))))
+    (if (nil? output)
+      '[doto (java.util.HashMap.)]
+      '[doto ^java.util.Map output])
+    rules))
 
 (defn- create-proc-fn-body-clj-map-out
   "Create a data processing function body for emitting data into a Clojure map."
-  [input rules]
+  [input rules output]
   (reduce
-    (reduce-fn-clojure-map-out)
-    '[-> {}] rules))
+    (fn [v rule]
+      (conj v `(assoc
+                ~(name (first rule))
+                ~(create-proc-sub-fn (second rule) input))))
+    (if (nil? output)
+      '[-> {}]
+      '[-> output])
+    rules))
 
 (defn- create-proc-fn-body-csv-str-out
   "Create a data processing function body for emitting data into a CSV string."
@@ -114,62 +112,25 @@
   [dsl-expression]
 ;  (println "Got DSL expression:" dsl-expression)
   (let [input-sym 'input
-        fn-body-vec (let [output-type (:output-type dsl-expression)
-                          rules (:rules dsl-expression)]
-                      (condp = (name output-type)
-                        "java-map" (create-proc-fn-body-java-map-out input-sym rules)
-                        "clj-map" (create-proc-fn-body-clj-map-out input-sym rules)
-                        "csv-str" (create-proc-fn-body-csv-str-out input-sym rules)
-                        "json-str" (create-proc-fn-body-json-str-out input-sym rules)
-                        (do
-                          (println "Unknown output type:" output-type)
-                          (println "Defaulting to :java-map as output type.")
-                          (create-proc-fn-body-java-map-out input-sym rules))))
-;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
-        fn-body (reverse (into '() fn-body-vec))
-;        _ (println "Created data processing function body:" fn-body)
-        data-processing-fn (eval `(fn [~input-sym] ~fn-body))]
-    data-processing-fn))
-
-
-
-;;;
-;;; Incremental data processing functions.
-;;;
-(defn create-incremental-proc-fn-body-java-map-out
-  "Create a data processing function body for incrementally emitting data into a Java map."
-  [input output rules]
-  (reduce
-    (reduce-fn-java-map-out)
-    '[doto ^java.util.Map output] rules))
-
-(defn create-incremental-proc-fn-body-clj-map-out
-  "Create a data processing function body for incrementally emitting data into a Clojure map."
-  [input output rules]
-  (reduce
-    (reduce-fn-clojure-map-out)
-    '[-> output] rules))
-
-(defn create-incremental-proc-fn
-  "Create an incremental data processing function based on the given dsl-expression."
-  [dsl-expression]
-;  (println "Got DSL expression:" dsl-expression)
-  (let [input-sym 'input
         output-sym 'output
-        fn-body-vec (let [output-type (:output-type dsl-expression)
-                          rules (:rules dsl-expression)]
-                      (condp = (name output-type)
-                        "java-map" (create-incremental-proc-fn-body-java-map-out input-sym output-sym rules)
-                        "clj-map" (create-incremental-proc-fn-body-clj-map-out input-sym output-sym rules)
-                        "csv-str" (create-proc-fn-body-csv-str-out input-sym rules)
-                        "json-str" (create-proc-fn-body-json-str-out input-sym rules)
-                        (do
-                          (println "Unknown output type:" output-type)
-                          (println "Defaulting to :java-map as output type.")
-                          (create-incremental-proc-fn-body-java-map-out input-sym output-sym rules))))
+        output-type (name (:output-type dsl-expression))
+        rules (:rules dsl-expression)
+        fn-body-vec (condp = output-type
+                      "java-map" (create-proc-fn-body-java-map-out input-sym rules nil)
+                      "java-map-inc" (create-proc-fn-body-java-map-out input-sym rules output-sym)
+                      "clj-map" (create-proc-fn-body-clj-map-out input-sym rules nil)
+                      "clj-map-inc" (create-proc-fn-body-clj-map-out input-sym rules output-sym)
+                      "csv-str" (create-proc-fn-body-csv-str-out input-sym rules)
+                      "json-str" (create-proc-fn-body-json-str-out input-sym rules)
+                      (do
+                        (println "Unknown output type:" output-type)
+                        (println "Defaulting to :java-map as output type.")
+                        (create-proc-fn-body-java-map-out input-sym nil rules)))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
 ;        _ (println "Created data processing function body:" fn-body)
-        data-processing-fn (eval `(fn [~input-sym ~output-sym] ~fn-body))]
+        data-processing-fn (if (.endsWith output-type "-inc")
+                             (eval `(fn [~input-sym ~output-sym] ~fn-body))
+                             (eval `(fn [~input-sym] ~fn-body)))]
     data-processing-fn))
 
