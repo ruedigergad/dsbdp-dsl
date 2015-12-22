@@ -69,6 +69,51 @@
 
 
 ;;;
+;;; Tests for incremental data processing.
+;;;
+(deftest incremental-byte-array-to-java-map-test
+  (let [expected {"udpSrc" 2048, "udpDst" 4096, "foo" :bar}
+        dsl-expression {:output-type :java-map
+                        :rules [['udpSrc '(int16 50)]
+                                ['udpDst '(int16 52)]]}
+        data-processing-fn (create-incremental-data-processing-fn dsl-expression)
+        input  (HashMap. {"foo" :bar})
+        result (data-processing-fn byte-array-test-data input)]
+    (is (instance? Map result))
+    (is (identical? input result))
+    (is (= expected result))))
+
+;(deftest byte-array-to-clj-map-test
+;  (let [expected {"udpSrc" 2048, "udpDst" 4096}
+;        dsl-expression {:output-type :clj-map
+;                        :rules [['udpSrc '(int16 50)]
+;                                ['udpDst '(int16 52)]]}
+;        data-processing-fn (create-data-processing-fn dsl-expression)
+;        result (data-processing-fn byte-array-test-data)]
+;    (is (map? result))
+;    (is (= expected result))))
+;
+;(deftest byte-array-to-csv-str-test
+;  (let [expected "2048,4096"
+;        dsl-expression {:output-type :csv-str
+;                        :rules [['udpSrc '(int16 50)]
+;                                ['udpDst '(int16 52)]]}
+;        data-processing-fn (create-data-processing-fn dsl-expression)
+;        result (data-processing-fn byte-array-test-data)]
+;    (is (= expected result))))
+;
+;(deftest byte-array-to-json-str-test
+;  (let [expected "{\"udpSrc\":2048,\"udpDst\":4096}"
+;        dsl-expression {:output-type :json-str
+;                        :rules [['udpSrc '(int16 50)]
+;                                ['udpDst '(int16 52)]]}
+;        data-processing-fn (create-data-processing-fn dsl-expression)
+;        result (data-processing-fn byte-array-test-data)]
+;    (is (= expected result))))
+
+
+
+;;;
 ;;; Tests for more complex data processing definitions/functions.
 ;;;
 (deftest byte-array-to-java-map-with-additional-operation-test

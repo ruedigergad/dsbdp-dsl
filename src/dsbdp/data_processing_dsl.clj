@@ -119,7 +119,45 @@
                           (create-data-processing-fn-body-for-java-map-output-type input-sym rules))))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
-        _ (println "Created data processing function body:" fn-body)
+;        _ (println "Created data processing function body:" fn-body)
         data-processing-fn (eval `(fn [~input-sym] ~fn-body))]
+    data-processing-fn))
+
+
+
+;;;
+;;; Incremental data processing functions.
+;;;
+(defn create-incremental-data-processing-fn-body-for-java-map-output-type
+  "Create a data processing function body for emitting data into a Java map."
+  [input output rules]
+  (reduce
+    (fn [v rule]
+      (conj v `(.put
+                ~(name (first rule))
+                ~(create-data-processing-sub-fn (second rule) input))))
+    '[doto output] rules))
+
+(defn create-incremental-data-processing-fn
+  "Create an incremental data processing function based on the given dsl-expression."
+  [dsl-expression]
+;  (println "Got DSL expression:" dsl-expression)
+  (let [input-sym 'input
+        output-sym 'output
+        fn-body-vec (let [output-type (:output-type dsl-expression)
+                          rules (:rules dsl-expression)]
+                      (condp = (name output-type)
+                        "java-map" (create-incremental-data-processing-fn-body-for-java-map-output-type input-sym output-sym rules)
+                        "clj-map" (create-data-processing-fn-body-for-clj-map-output-type input-sym rules)
+                        "csv-str" (create-data-processing-fn-body-for-csv-str-output-type input-sym rules)
+                        "json-str" (create-data-processing-fn-body-for-json-str-output-type input-sym rules)
+                        (do
+                          (println "Unknown output type:" output-type)
+                          (println "Defaulting to :java-map as output type.")
+                          (create-incremental-data-processing-fn-body-for-java-map-output-type input-sym output-sym rules))))
+;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
+        fn-body (reverse (into '() fn-body-vec))
+        _ (println "Created data processing function body:" fn-body)
+        data-processing-fn (eval `(fn [~input-sym ~output-sym] ~fn-body))]
     data-processing-fn))
 
