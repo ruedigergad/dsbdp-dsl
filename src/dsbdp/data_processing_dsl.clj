@@ -68,7 +68,7 @@
 
 (defn- create-proc-fn-body-csv-str-out
   "Create a data processing function body for emitting data into a CSV string."
-  [input rules]
+  [input rules output]
   (reduce
     (fn [v rule]
       (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)
@@ -78,7 +78,9 @@
         (if (not= rule (last rules))
           (conj tmp-v `(.append ","))
           tmp-v)))
-    '[doto (java.lang.StringBuilder.)]
+    (if (nil? output)
+      '[doto (java.lang.StringBuilder.)]
+      '[doto ^java.lang.StringBuilder output])
     rules))
 
 (defn- create-proc-fn-body-json-str-out
@@ -109,7 +111,7 @@
         fn-body-vec (condp (fn [^String v ^String s] (.startsWith s v)) output-type
                       "java-map" (create-proc-fn-body-java-map-out input-sym rules output-sym)
                       "clj-map" (create-proc-fn-body-clj-map-out input-sym rules output-sym)
-                      "csv-str" (create-proc-fn-body-csv-str-out input-sym rules)
+                      "csv-str" (create-proc-fn-body-csv-str-out input-sym rules output-sym)
                       "json-str" (create-proc-fn-body-json-str-out input-sym rules)
                       (do
                         (println "Unknown output type:" output-type)

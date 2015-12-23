@@ -113,15 +113,16 @@
     (is (not (identical? input result)))
     (is (= expected result))))
 
-;(deftest byte-array-to-csv-str-test
-;  (let [expected "2048,4096"
-;        dsl-expression {:output-type :csv-str
-;                        :rules [['udpSrc '(int16 50)]
-;                                ['udpDst '(int16 52)]]}
-;        data-processing-fn (create-proc-fn dsl-expression)
-;        result (data-processing-fn byte-array-test-data)]
-;    (is (= expected result))))
-;
+(deftest byte-array-to-csv-str-test
+  (let [expected "foo,bar,2048,4096"
+        dsl-expression {:output-type :csv-str#inc
+                        :rules [['udpSrc '(int16 50)]
+                                ['udpDst '(int16 52)]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        input (doto (java.lang.StringBuilder.) (.append "foo,bar,"))
+        result (data-processing-fn byte-array-test-data input)]
+    (is (= expected (str result)))))
+
 ;(deftest byte-array-to-json-str-test
 ;  (let [expected "{\"udpSrc\":2048,\"udpDst\":4096}"
 ;        dsl-expression {:output-type :json-str
