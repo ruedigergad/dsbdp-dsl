@@ -85,7 +85,7 @@
 
 (defn- create-proc-fn-body-json-str-out
   "Create a data processing function body for emitting data into a JSON string."
-  [input rules]
+  [input rules output]
   (reduce
     (fn [v rule]
       (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)
@@ -96,7 +96,9 @@
         (if (not= rule (last rules))
           (conj tmp-v `(.append ","))
           (conj tmp-v `(.append "}")))))
-    '[doto (java.lang.StringBuilder.) (.append "{")]
+    (if (nil? output)
+      '[doto (java.lang.StringBuilder.) (.append "{")]
+      '[doto ^java.lang.StringBuilder output (.deleteCharAt (- (.length ^java.lang.StringBuilder output) 1)) (.append ",")])
     rules))
 
 (defn create-proc-fn
@@ -112,7 +114,7 @@
                       "java-map" (create-proc-fn-body-java-map-out input-sym rules output-sym)
                       "clj-map" (create-proc-fn-body-clj-map-out input-sym rules output-sym)
                       "csv-str" (create-proc-fn-body-csv-str-out input-sym rules output-sym)
-                      "json-str" (create-proc-fn-body-json-str-out input-sym rules)
+                      "json-str" (create-proc-fn-body-json-str-out input-sym rules output-sym)
                       (do
                         (println "Unknown output type:" output-type)
                         (println "Defaulting to :java-map as output type.")
