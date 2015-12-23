@@ -12,6 +12,8 @@
   dsbdp.data-processing-dsl
   (:require [dsbdp.byte-array-conversion :refer :all]))
 
+(def ^:dynamic *incremental-indicator-suffix* "#inc")
+
 (defn create-proc-sub-fn
   [data-processing-definition input]
   (into
@@ -114,7 +116,7 @@
   (let [input-sym 'input
         output-type (name (:output-type dsl-expression))
         rules (:rules dsl-expression)
-        output-sym (if (.endsWith output-type "-inc")
+        output-sym (if (.endsWith output-type *incremental-indicator-suffix*)
                      'output)
         fn-body-vec (condp (fn [v s] (.startsWith s v)) output-type
                       "java-map" (create-proc-fn-body-java-map-out input-sym rules output-sym)

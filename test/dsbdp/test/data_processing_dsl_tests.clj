@@ -73,7 +73,7 @@
 ;;;
 (deftest incremental-byte-array-to-java-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096, "foo" :bar}
-        dsl-expression {:output-type :java-map-inc
+        dsl-expression {:output-type :java-map#inc
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
@@ -85,7 +85,7 @@
 
 (deftest incremental-byte-array-to-clj-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096, "foo" :bar}
-        dsl-expression {:output-type :clj-map-inc
+        dsl-expression {:output-type :clj-map#inc
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
