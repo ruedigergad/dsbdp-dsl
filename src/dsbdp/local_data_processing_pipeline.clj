@@ -69,12 +69,12 @@
        :out-queue out-queue})))
 
 (defn interrupt
-  [obj]
-  ((obj :interrupt)))
+  [proc-element]
+  ((proc-element :interrupt)))
 
 (defn get-out-queue
-  [obj]
-  (obj :out-queue))
+  [proc-element]
+  (proc-element :out-queue))
 
 
 
@@ -109,6 +109,6 @@
               (enqueue in-queue (LocalTransferContainer. in nil)))}))
 
 (defn get-in-fn
-  [obj]
-  (obj :in-fn))
+  [pipeline]
+  (pipeline :in-fn))
 
