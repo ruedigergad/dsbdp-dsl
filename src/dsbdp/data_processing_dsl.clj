@@ -40,17 +40,6 @@
             :default (conj v data-proc-def-element)))
         [] data-processing-definition))))
 
-;;; TODO: This function only supports byte array based functions yet.
-;;; This will become problematic once other input data types,
-;;; such as vectors or maps shall be processed to, e.g., CSV string format.
-(defn get-proc-sub-fn-ret-type
-  "Get the return type of a data processing sub-function data-proc-sub-fn.
-   For determining the type, this function calls data-proc-sub-fn with a 1530 byte dummy byte-array filled with 0."
-  [data-proc-sub-fn]
-  (let [dummy-ba (byte-array 1530 (byte 0))
-        ret (data-proc-sub-fn dummy-ba)]
-    (type ret)))
-
 (defn- create-proc-fn-body-java-map-out
   "Create a data processing function body for emitting data into a Java map."
   [input rules output]
