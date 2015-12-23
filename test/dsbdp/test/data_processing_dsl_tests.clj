@@ -113,7 +113,7 @@
     (is (not (identical? input result)))
     (is (= expected result))))
 
-(deftest byte-array-to-csv-str-test
+(deftest incremental-byte-array-to-csv-str-test
   (let [expected "foo,bar,2048,4096"
         dsl-expression {:output-type :csv-str#inc
                         :rules [['udpSrc '(int16 50)]
@@ -123,7 +123,7 @@
         result (data-processing-fn byte-array-test-data input)]
     (is (= expected (str result)))))
 
-(deftest byte-array-to-json-str-test
+(deftest incremental-byte-array-to-json-str-test
   (let [expected "{\"foo\":\"bar\",\"udpSrc\":2048,\"udpDst\":4096}"
         dsl-expression {:output-type :json-str#inc
                         :rules [['udpSrc '(int16 50)]
