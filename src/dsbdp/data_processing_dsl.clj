@@ -107,7 +107,7 @@
         rules (:rules dsl-expression)
         output-sym (if (.endsWith output-type *incremental-indicator-suffix*)
                      'output)
-        fn-body-vec (condp (fn [v s] (.startsWith s v)) output-type
+        fn-body-vec (condp (fn [^String v ^String s] (.startsWith s v)) output-type
                       "java-map" (create-proc-fn-body-java-map-out input-sym rules output-sym)
                       "clj-map" (create-proc-fn-body-clj-map-out input-sym rules output-sym)
                       "csv-str" (create-proc-fn-body-csv-str-out input-sym rules)
