@@ -84,19 +84,18 @@
 (defn- create-proc-fn-body-json-str-out
   "Create a data processing function body for emitting data into a JSON string."
   [input rules]
-  (let [extracted-strings (conj
-                            (reduce
-                              (fn [v rule]
-                                (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)]
-                                  (conj v "\"" (name (first rule)) "\":"
-                                          (if (some #{:qm} rule)
-                                            `(str "\"" ~data-proc-sub-fn "\"")
-                                            data-proc-sub-fn))))
-                              '[str "{"] rules)
-                            "}")
-        commas (reduce into [] ["." "." "." "." "." (reduce into [] (repeat (- (count rules) 1) ["," "." "." "."])) "." "."])]
-;    (println (interleave extracted-strings commas))
-    (vec (filter (fn [x] (and (not= \. x) (not= "." x))) (interleave extracted-strings commas)))))
+  (reduce
+    (fn [v rule]
+      (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)
+            tmp-k (conj v `(.append "\"") `(.append ~(name (first rule))) `(.append "\":"))
+            tmp-v (if (some #{:qm} rule)
+                    (conj tmp-k `(.append "\"") `(.append ~data-proc-sub-fn) `(.append "\""))
+                    (conj tmp-k `(.append ~data-proc-sub-fn)))]
+        (if (not= rule (last rules))
+          (conj tmp-v `(.append ","))
+          (conj tmp-v `(.append "}")))))
+    '[doto (java.lang.StringBuilder.) (.append "{")]
+    rules))
 
 (defn create-proc-fn
   "Create a data processing function based on the given dsl-expression."

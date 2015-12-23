@@ -64,7 +64,7 @@
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn byte-array-test-data)]
-    (is (= expected result))))
+    (is (= expected (str result)))))
 
 (deftest byte-array-to-csv-str-qm-test
   (let [expected "\"2048\",4096"
@@ -82,7 +82,7 @@
                                 ['udpDst '(int16 52) :qm]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn byte-array-test-data)]
-    (is (= expected result))))
+    (is (= expected (str result)))))
 
 
 
