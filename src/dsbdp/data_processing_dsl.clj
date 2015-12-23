@@ -83,7 +83,10 @@
   (let [extracted-strings (reduce
                             (fn [v rule]
                               (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)]
-                                (conj v data-proc-sub-fn)))
+                                (conj v
+                                      (if (some #{:qm} rule)
+                                          `(str "\"" ~data-proc-sub-fn "\"")
+                                          data-proc-sub-fn))))
                             '[str] rules)
         commas (reduce into [] ["." (repeat (- (count rules) 1) ",") "."])]
     (vec (filter #(not= \. %) (interleave extracted-strings commas)))))
@@ -94,10 +97,9 @@
   (let [extracted-strings (conj
                             (reduce
                               (fn [v rule]
-                                (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)
-                                      data-proc-sub-fn-ret-type (get-proc-sub-fn-ret-type (eval `(fn [~input] ~data-proc-sub-fn)))]
+                                (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)]
                                   (conj v "\"" (name (first rule)) "\":"
-                                          (if (= java.lang.String data-proc-sub-fn-ret-type)
+                                          (if (some #{:qm} rule)
                                             `(str "\"" ~data-proc-sub-fn "\"")
                                             data-proc-sub-fn))))
                               '[str "{"] rules)
