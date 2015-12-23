@@ -69,16 +69,17 @@
 (defn- create-proc-fn-body-csv-str-out
   "Create a data processing function body for emitting data into a CSV string."
   [input rules]
-  (let [extracted-strings (reduce
-                            (fn [v rule]
-                              (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)]
-                                (conj v
-                                      (if (some #{:qm} rule)
-                                          `(str "\"" ~data-proc-sub-fn "\"")
-                                          data-proc-sub-fn))))
-                            '[str] rules)
-        commas (reduce into [] ["." (repeat (- (count rules) 1) ",") "."])]
-    (vec (filter #(not= \. %) (interleave extracted-strings commas)))))
+  (reduce
+    (fn [v rule]
+      (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)
+            tmp-v (if (some #{:qm} rule)
+                    (conj v `(.append "\"") `(.append ~data-proc-sub-fn) `(.append "\""))
+                    (conj v `(.append ~data-proc-sub-fn)))]
+        (if (not= rule (last rules))
+          (conj tmp-v `(.append ","))
+          tmp-v)))
+    '[doto (java.lang.StringBuilder.)]
+    rules))
 
 (defn- create-proc-fn-body-json-str-out
   "Create a data processing function body for emitting data into a JSON string."

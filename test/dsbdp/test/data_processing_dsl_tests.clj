@@ -55,7 +55,7 @@
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn byte-array-test-data)]
-    (is (= expected result))))
+    (is (= expected (str result)))))
 
 (deftest byte-array-to-json-str-test
   (let [expected "{\"udpSrc\":2048,\"udpDst\":4096}"
@@ -73,7 +73,7 @@
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn byte-array-test-data)]
-    (is (= expected result))))
+    (is (= expected (str  result)))))
 
 (deftest byte-array-to-json-str-qm-test
   (let [expected "{\"udpSrc\":2048,\"udpDst\":\"4096\"}"
