@@ -75,12 +75,12 @@
        :thread-id thread-id})))
 
 (defn interrupt
-  [proc-element]
-  ((proc-element :interrupt)))
+  [obj]
+  ((obj :interrupt)))
 
 (defn get-out-queue
-  [proc-element]
-  (proc-element :out-queue))
+  [obj]
+  (obj :out-queue))
 
 
 
@@ -117,6 +117,6 @@
               (enqueue in-queue (LocalTransferContainer. in nil) in-counter in-drop-counter))}))
 
 (defn get-in-fn
-  [pipeline]
-  (pipeline :in-fn))
+  [obj]
+  (obj :in-fn))
 
