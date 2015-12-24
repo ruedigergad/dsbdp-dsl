@@ -31,7 +31,10 @@
   [^TransferQueue queue data enqueued-counter dropped-counter]
 ;  [^BlockingQueue queue data]
 ;  `(.put ~queue ~data))
-  `(.transfer ~queue ~data))
+;  `(.transfer ~queue ~data))
+  `(if (.tryTransfer ~queue ~data)
+     (.inc ~enqueued-counter)
+     (.inc ~dropped-counter)))
 ;  `(.tryTransfer ~queue ~data))
 
 (defmacro take-from-queue
@@ -67,7 +70,10 @@
                       (ProcessingLoop.
                         proc-fn))]
       (.start proc-loop)
-      {:interrupt (fn []
+      {:get-counts-fn (fn []
+                        {:out (.value out-counter)
+                         :dropped (.value out-drop-counter)})
+       :interrupt (fn []
                     (reset! running false)
                     (.interrupt proc-loop))
        :out-queue out-queue
@@ -89,6 +95,10 @@
 (defn get-thread-name
   [obj]
   (obj :thread-name))
+
+(defn get-counts
+  [obj]
+  ((obj :get-counts-fn)))
 
 (defn create-local-processing-pipeline
   [fns out-fn]

@@ -15,7 +15,7 @@
     [clojure.test :refer :all]
     [dsbdp.local-data-processing-pipeline :refer :all])
   (:import
-    (dsbdp Counter LocalTransferContainer)
+    (dsbdp Counter LocalTransferContainer ProcessingLoop)
     (java.util.concurrent LinkedTransferQueue)))
 
 
@@ -79,20 +79,33 @@
 (deftest simple-local-processing-element-output-test
   (let [in-queue (LinkedTransferQueue.)
         flag (prepare-flag)
+        tmp-flag (prepare-flag)
+        out (atom nil)
         proc-element (create-local-processing-element in-queue
                                                       (fn [in out]
                                                         (set-flag flag)
                                                         "foobar"))]
+    (doto
+      (ProcessingLoop. (fn []
+                         (set-flag tmp-flag)
+                         (let [v (.take (get-out-queue proc-element))]
+                           (reset! out v))))
+      (.start))
+    (await-flag tmp-flag)
     (.put in-queue (LocalTransferContainer. "in" "out"))
     (await-flag flag)
-    (let [out (.take (get-out-queue proc-element))]
-      (is (= "in" (.getIn out)))
-      (is (= "foobar" (.getOut out))))
+    (is (= "in" (.getIn @out)))
+    (is (= "foobar" (.getOut @out)))
+    (let [cntr (get-counts proc-element)]
+      (is (= 1 (:out cntr)))
+      (is (= 0 (:dropped cntr))))
     (interrupt proc-element)))
 
 (deftest simple-local-processing-element-chaining-test
   (let [in-queue (LinkedTransferQueue.)
         flag (prepare-flag)
+        tmp-flag (prepare-flag)
+        out (atom nil)
         proc-element-1 (create-local-processing-element in-queue
                                                         (fn [in out]
                                                           (str in "foo")))
@@ -100,11 +113,17 @@
                                                         (fn [in out]
                                                           (set-flag flag)
                                                           (str out "bar")))]
+    (doto
+      (ProcessingLoop. (fn []
+                         (set-flag tmp-flag)
+                         (let [v (.take (get-out-queue proc-element-2))]
+                           (reset! out v))))
+      (.start))
+    (await-flag tmp-flag)
     (.put in-queue (LocalTransferContainer. "in" "out"))
     (await-flag flag)
-    (let [out (.take (get-out-queue proc-element-2))]
-      (is (= "in" (.getIn out)))
-      (is (= "infoobar" (.getOut out))))
+    (is (= "in" (.getIn @out)))
+    (is (= "infoobar" (.getOut @out)))
     (interrupt proc-element-1)
     (interrupt proc-element-2)))
 
