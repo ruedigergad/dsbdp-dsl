@@ -58,11 +58,11 @@
                       (catch InterruptedException e
                         (if @running
                           (throw e)))))
-          thread-id (if (not (nil? id))
-                      (str "ProcessingElement_" id))
-          proc-loop (if (not (nil? thread-id))
+          thread-name (if (not (nil? id))
+                        (str "ProcessingElement_" id))
+          proc-loop (if (not (nil? thread-name))
                       (ProcessingLoop.
-                        thread-id
+                        thread-name
                         proc-fn)
                       (ProcessingLoop.
                         proc-fn))]
@@ -72,7 +72,7 @@
                     (.interrupt proc-loop))
        :out-queue out-queue
        :id id
-       :thread-id thread-id})))
+       :thread-name thread-name})))
 
 (defn interrupt
   [obj]
@@ -82,7 +82,13 @@
   [obj]
   (obj :out-queue))
 
+(defn get-id
+  [obj]
+  (obj :id))
 
+(defn get-thread-name
+  [obj]
+  (obj :thread-name))
 
 (defn create-local-processing-pipeline
   [fns out-fn]

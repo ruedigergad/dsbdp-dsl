@@ -43,6 +43,23 @@
     (is (flag-set? flag))
     (interrupt proc-element)))
 
+(deftest create-local-processing-element-id-test
+  (let [in-queue (LinkedTransferQueue.)
+        proc-element (create-local-processing-element in-queue
+                                                      (fn [_ _])
+                                                      123)]
+    (is (= 123 (get-id proc-element)))
+    (is (= "ProcessingElement_123" (get-thread-name proc-element)))
+    (interrupt proc-element)))
+
+(deftest create-local-processing-element-no-id-test
+  (let [in-queue (LinkedTransferQueue.)
+        proc-element (create-local-processing-element in-queue
+                                                      (fn [_ _]))]
+    (is (nil? (get-id proc-element)))
+    (is (nil? (get-thread-name proc-element)))
+    (interrupt proc-element)))
+
 (deftest simple-local-processing-element-in-args-test
   (let [in-queue (LinkedTransferQueue.)
         flag (prepare-flag)
