@@ -12,7 +12,7 @@
   dsbdp.local-data-processing-pipeline
   (:require [dsbdp.data-processing-dsl :refer :all])
   (:import
-    (dsbdp LocalTransferContainer ProcessingLoop)
+    (dsbdp Counter LocalTransferContainer ProcessingLoop)
     (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedBlockingQueue LinkedTransferQueue TransferQueue)))
 
 
@@ -28,7 +28,7 @@
 ;  `(ArrayBlockingQueue. *queue-size*))
 
 (defmacro enqueue
-  [^TransferQueue queue data]
+  [^TransferQueue queue data enqueued-counter dropped-counter]
 ;  [^BlockingQueue queue data]
 ;  `(.put ~queue ~data))
   `(.transfer ~queue ~data))
@@ -46,19 +46,22 @@
   ([^BlockingQueue in-queue f id]
     (let [running (atom true)
           out-queue (create-queue)
+          out-counter (Counter.)
+          out-drop-counter (Counter.)
           proc-fn (fn []
                     (try
                       (let [^LocalTransferContainer c (take-from-queue in-queue)
                             new-out (f (.getIn c) (.getOut c))]
                         (if (not (nil? new-out))
                           (.setOut c new-out))
-                        (enqueue out-queue c))
+                        (enqueue out-queue c out-counter out-drop-counter))
                       (catch InterruptedException e
                         (if @running
                           (throw e)))))
+          thread-id (str "ProcessingElement_" id)
           proc-loop (if (not (nil? id))
                       (ProcessingLoop.
-                        (str "ProcessingElement_" id)
+                        thread-id
                         proc-fn)
                       (ProcessingLoop.
                         proc-fn))]
@@ -66,7 +69,8 @@
       {:interrupt (fn []
                     (reset! running false)
                     (.interrupt proc-loop))
-       :out-queue out-queue})))
+       :out-queue out-queue
+       :thread-id thread-id})))
 
 (defn interrupt
   [proc-element]
@@ -98,7 +102,9 @@
                                 (out-fn nil nil)))
                             (catch InterruptedException e
                               (if @running
-                                (throw e))))))]
+                                (throw e))))))
+        in-counter (Counter.)
+        in-drop-counter (Counter.)]
     (.start out-proc-loop)
     {:interrupt (fn []
                   (reset! running false)
@@ -106,7 +112,7 @@
                     (interrupt pe))
                   (.interrupt out-proc-loop))
      :in-fn (fn [in]
-              (enqueue in-queue (LocalTransferContainer. in nil)))}))
+              (enqueue in-queue (LocalTransferContainer. in nil) in-counter in-drop-counter))}))
 
 (defn get-in-fn
   [pipeline]
