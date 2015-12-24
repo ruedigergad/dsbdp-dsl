@@ -127,6 +127,19 @@
     (interrupt proc-element-1)
     (interrupt proc-element-2)))
 
+(deftest simple-local-processing-element-counter-drop-test
+  (let [in-queue (LinkedTransferQueue.)
+        proc-element (create-local-processing-element in-queue
+                                                      (fn [_ _]))]
+    (.put in-queue (LocalTransferContainer. "in" "out"))
+    (.put in-queue (LocalTransferContainer. "in" "out"))
+    (.put in-queue (LocalTransferContainer. "in" "out"))
+    (sleep 100)
+    (let [cntr (get-counts proc-element)]
+      (is (= 0 (:out cntr)))
+      (is (= 3 (:dropped cntr))))
+    (interrupt proc-element)))
+
 
 
 (deftest simple-local-pipeline-send-test
