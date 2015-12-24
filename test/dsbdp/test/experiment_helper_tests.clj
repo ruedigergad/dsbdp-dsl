@@ -47,7 +47,7 @@
 (deftest create-hashmap-inc-put-proc-fns-test
   (let [proc-fns (create-hashmap-inc-put-proc-fns 4)]
     (is (= 4 (count proc-fns)))
-    (let [m ((first proc-fns) 0 nil)]
+    (let [^Map m ((first proc-fns) 0 nil)]
       (is (= HashMap (type m)))
       (is (= 1 (.get m "0")))
       ((nth proc-fns 1) nil m)
