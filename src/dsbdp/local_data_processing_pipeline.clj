@@ -58,8 +58,9 @@
                       (catch InterruptedException e
                         (if @running
                           (throw e)))))
-          thread-id (str "ProcessingElement_" id)
-          proc-loop (if (not (nil? id))
+          thread-id (if (not (nil? id))
+                      (str "ProcessingElement_" id))
+          proc-loop (if (not (nil? thread-id))
                       (ProcessingLoop.
                         thread-id
                         proc-fn)
@@ -70,6 +71,7 @@
                     (reset! running false)
                     (.interrupt proc-loop))
        :out-queue out-queue
+       :id id
        :thread-id thread-id})))
 
 (defn interrupt
