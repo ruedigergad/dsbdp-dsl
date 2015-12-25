@@ -37,10 +37,10 @@
           (let [^ThreadInfo t-info (.getThreadInfo tmxb ^long t-id)
                 t-name (.getThreadName t-info)
                 cpu-time (if cpu-time-supported
-                           (float (/ (.getThreadCpuTime tmxb t-id) 1000000000.0))
+                           (double (/ (.getThreadCpuTime tmxb t-id) 1000000000.0))
                            -1)
                 user-time (if cpu-time-supported
-                            (float (/ (.getThreadUserTime tmxb t-id) 1000000000.0))
+                            (double (/ (.getThreadUserTime tmxb t-id) 1000000000.0))
                             -1)
                 waited (.getWaitedTime t-info)
                 blocked (.getBlockedTime t-info)]
@@ -58,10 +58,14 @@
         no-op false
         delta-cntr (delta-counter)
         stats-fn (fn []
-                   (println
-                     "time-delta:" (delta-cntr :time (System/currentTimeMillis)) "ms;"
-                     "in:" (long (/ (delta-cntr :in (.value in-cntr)) 1000)) "k;"
-                     "out:" (long (/ (delta-cntr :out (.value out-cntr)) 1000)) "k;"))
+                   (let [in (double (/ (.value in-cntr) 1000.0))
+                         out (double (/ (.value out-cntr) 1000.0))]
+                     (println
+                       "time-delta:" (delta-cntr :time (System/currentTimeMillis)) "ms;"
+                       "in:" in "k;"
+                       "out:" out "k;"
+                       "in-delta:" (delta-cntr :in in) "k/s;"
+                       "out-delta:" (delta-cntr :out out) "k/s;")))
         out-fn (fn [_ _]
                  (.inc out-cntr))
 ;        in-data 24N
@@ -89,5 +93,5 @@
                              (thread-info-fn) (println)
                              )
                 1000)
-    (run-once (executor) (fn [] (System/exit 0) 120000))))
+    (run-once (executor) (fn [] (System/exit 0)) 120000)))
 
