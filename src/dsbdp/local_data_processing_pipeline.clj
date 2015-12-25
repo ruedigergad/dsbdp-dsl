@@ -11,6 +11,7 @@
     :doc "Pipeline for processing data"}
   dsbdp.local-data-processing-pipeline
   (:require [dsbdp.data-processing-dsl :refer :all])
+  (:require [clj-assorted-utils.util :refer :all])
   (:import
     (dsbdp Counter LocalTransferContainer ProcessingLoop)
     (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedBlockingQueue LinkedTransferQueue TimeUnit TransferQueue)))
@@ -31,8 +32,16 @@
 ;  [^BlockingQueue queue data enqueued-counter dropped-counter]
 ;  `(.put ~queue ~data))
   [^TransferQueue queue data enqueued-counter dropped-counter]
-  `(.transfer ~queue ~data))
-;  `(if (.tryTransfer ~queue ~data 10 TimeUnit/MILLISECONDS)
+;  `(.transfer ~queue ~data))
+  `(if (.hasWaitingConsumer ~queue)
+     (do
+       (.transfer ~queue ~data)
+       (.inc ~enqueued-counter))
+     (do
+       (.inc ~dropped-counter)
+       ;(sleep 1)
+       )))
+;  `(if (.tryTransfer ~queue ~data 1 TimeUnit/MILLISECONDS)
 ;     (.inc ~enqueued-counter)
 ;     (.inc ~dropped-counter)))
 ;  `(.tryTransfer ~queue ~data))
