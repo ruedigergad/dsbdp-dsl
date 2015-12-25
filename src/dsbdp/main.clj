@@ -82,5 +82,9 @@
                       (.inc in-cntr))))
         thread-info-fn (create-thread-info-fn)]
     (.start in-loop)
-    (run-repeat (executor) (fn [] (stats-fn) (thread-info-fn) (println)) 1000)))
+    (run-repeat (executor) (fn []
+                             (stats-fn)
+                             ;(thread-info-fn) (println)
+                             )
+                1000)))
 
