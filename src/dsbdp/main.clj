@@ -29,16 +29,18 @@
         cpu-time-supported (.isThreadCpuTimeSupported tmxb)
         delta-cntr (delta-counter)]
     (.setThreadContentionMonitoringEnabled tmxb true)
+    (if cpu-time-supported
+      (.setThreadCpuTimeEnabled tmxb true))
     (fn []
       (let [t-ids (sort (vec (.getAllThreadIds tmxb)))]
         (doseq [t-id t-ids]
           (let [^ThreadInfo t-info (.getThreadInfo tmxb ^long t-id)
                 t-name (.getThreadName t-info)
                 cpu-time (if cpu-time-supported
-                           (.getThreadCpuTime tmxb t-id)
+                           (float (/ (.getThreadCpuTime tmxb t-id) 1000000000.0))
                            -1)
                 user-time (if cpu-time-supported
-                            (.getThreadUserTime tmxb t-id)
+                            (float (/ (.getThreadUserTime tmxb t-id) 1000000000.0))
                             -1)
                 waited (.getWaitedTime t-info)
                 blocked (.getBlockedTime t-info)]
@@ -84,7 +86,7 @@
     (.start in-loop)
     (run-repeat (executor) (fn []
                              (stats-fn)
-                             ;(thread-info-fn) (println)
+                             (thread-info-fn) (println)
                              )
                 1000)))
 
