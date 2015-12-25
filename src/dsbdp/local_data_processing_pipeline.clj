@@ -13,7 +13,7 @@
   (:require [dsbdp.data-processing-dsl :refer :all])
   (:import
     (dsbdp Counter LocalTransferContainer ProcessingLoop)
-    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedBlockingQueue LinkedTransferQueue TransferQueue)))
+    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedBlockingQueue LinkedTransferQueue TimeUnit TransferQueue)))
 
 
 
@@ -32,7 +32,7 @@
 ;  [^BlockingQueue queue data]
 ;  `(.put ~queue ~data))
 ;  `(.transfer ~queue ~data))
-  `(if (.tryTransfer ~queue ~data)
+  `(if (.tryTransfer ~queue ~data 10 TimeUnit/MILLISECONDS)
      (.inc ~enqueued-counter)
      (.inc ~dropped-counter)))
 ;  `(.tryTransfer ~queue ~data))
