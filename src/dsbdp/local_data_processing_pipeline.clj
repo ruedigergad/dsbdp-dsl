@@ -24,23 +24,24 @@
 
 (defmacro create-queue
   []
-;  `(LinkedBlockingQueue.))
+  `(LinkedBlockingQueue. *queue-size*))
 ;  `(ArrayBlockingQueue. *queue-size*))
-  `(LinkedTransferQueue.))
+;  `(LinkedTransferQueue.))
 
 (defmacro enqueue
-;  [^BlockingQueue queue data enqueued-counter dropped-counter]
-;  `(.put ~queue ~data))
-  [^TransferQueue queue data enqueued-counter dropped-counter]
+  [^BlockingQueue queue data enqueued-counter dropped-counter]
+  `(.put ~queue ~data))
+;  `(.offer ~queue ~data))
+;  [^TransferQueue queue data enqueued-counter dropped-counter]
 ;  `(.transfer ~queue ~data))
-  `(if (.hasWaitingConsumer ~queue)
-     (do
-       (.transfer ~queue ~data)
-       (.inc ~enqueued-counter))
-     (do
-       (.inc ~dropped-counter)
-       ;(sleep 1)
-       )))
+;  `(if (.hasWaitingConsumer ~queue)
+;     (do
+;       (.transfer ~queue ~data)
+;       (.inc ~enqueued-counter))
+;     (do
+;       (.inc ~dropped-counter)
+;       ;(sleep 1)
+;       )))
 ;  `(if (.tryTransfer ~queue ~data 1 TimeUnit/MILLISECONDS)
 ;     (.inc ~enqueued-counter)
 ;     (.inc ~dropped-counter)))
