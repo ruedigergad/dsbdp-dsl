@@ -9,6 +9,6 @@
                  [org.clojure/tools.cli "0.3.3"]]
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["src-java"]
-  :javac-options     ["-target" "1.6" "-source" "1.6"]
+;  :javac-options     ["-target" "1.6" "-source" "1.6"]
   :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.2" :exclusions  [org.clojure/clojure]]]}}
   :main dsbdp.main)
