@@ -19,33 +19,52 @@
 
 
 (def ^:dynamic *queue-size* 100000)
-
-
+(def ^:dynamic *queue-setup* "LinkedTransferQueue_tryTransfer-counted-10ms")
 
 (defmacro create-queue
   []
-;  `(LinkedBlockingQueue. *queue-size*))
-;  `(ArrayBlockingQueue. *queue-size*))
-  `(LinkedTransferQueue.))
+  (println "Setting up queue creation for:" *queue-setup*)
+  (let [expr (condp (fn [^String v ^String s] (.startsWith s v)) *queue-setup*
+               "LinkedBlockingQueue" `(LinkedBlockingQueue. *queue-size*)
+               "ArrayBlockingQueue" `(ArrayBlockingQueue. *queue-size*)
+               "LinkedTransferQueue" `(LinkedTransferQueue.))]
+    (println expr)
+    expr))
 
 (defmacro enqueue
   [queue data enqueued-counter dropped-counter]
-;  `(.put ~queue ~data))
-;  `(.offer ~queue ~data))
-;  `(.transfer ~queue ~data))
-;  `(if (.hasWaitingConsumer ~queue)
-;     (do
-;       (.transfer ~queue ~data)
-;       (.inc ~enqueued-counter))
-;     (do
-;       (.inc ~dropped-counter)
-;       ;(sleep 1)
-;       )))
-;  `(if (.tryTransfer ~queue ~data)
-  `(if (.tryTransfer ~queue ~data 10 TimeUnit/MILLISECONDS)
-     (.inc ~enqueued-counter)
-     (.inc ~dropped-counter)))
-;  `(.tryTransfer ~queue ~data))
+  (println "Enqueueing data via:")
+  (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) *queue-setup*
+               "put" `(.put ~queue ~data)
+               "offer" `(.offer ~queue ~data)
+               "transfer" `(.transfer ~queue ~data)
+               "transfer-counted-no-sleep" `(if (.hasWaitingConsumer ~queue)
+                                              (do
+                                                (.transfer ~queue ~data)
+                                                (.inc ~enqueued-counter))
+                                              (.inc ~dropped-counter))
+               "transfer-counted-sleep-1ms" `(if (.hasWaitingConsumer ~queue)
+                                               (do
+                                                 (.transfer ~queue ~data)
+                                                 (.inc ~enqueued-counter))
+                                               (do
+                                                 (.inc ~dropped-counter)
+                                                 (sleep 1)))
+               "tryTransfer" `(.tryTransfer ~queue ~data)
+               "tryTransfer-counted-no-timeout" `(if (.tryTransfer ~queue ~data)
+                                                   (.inc ~enqueued-counter)
+                                                   (.inc ~dropped-counter))
+               "tryTransfer-counted-1ms" `(if (.tryTransfer ~queue ~data 1 TimeUnit/MILLISECONDS)
+                                            (.inc ~enqueued-counter)
+                                            (.inc ~dropped-counter))
+               "tryTransfer-counted-10ms" `(if (.tryTransfer ~queue ~data 10 TimeUnit/MILLISECONDS)
+                                             (.inc ~enqueued-counter)
+                                             (.inc ~dropped-counter))
+               "tryTransfer-counted-100ms" `(if (.tryTransfer ~queue ~data 100 TimeUnit/MILLISECONDS)
+                                              (.inc ~enqueued-counter)
+                                              (.inc ~dropped-counter)))]
+    (println expr)
+    expr))
 
 (defmacro take-from-queue
   [^BlockingQueue queue]
