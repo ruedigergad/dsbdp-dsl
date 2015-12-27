@@ -73,7 +73,7 @@
                   1)
         pipeline (if (not no-op)
                    (create-local-processing-pipeline
-                     (create-no-op-proc-fns 2)
+                     (create-no-op-proc-fns 1)
 ;                     (create-factorial-proc-fns 2)
                      out-fn))
         in-fn (if (not (nil? pipeline))
@@ -93,5 +93,5 @@
                              (thread-info-fn) (println)
                              )
                 1000)
-    (run-once (executor) (fn [] (System/exit 0)) 120000)))
+    (run-once (executor) (fn [] (System/exit 0)) 60000)))
 
