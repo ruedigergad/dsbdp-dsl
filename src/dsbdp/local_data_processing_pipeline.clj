@@ -67,7 +67,7 @@
     expr))
 
 (defmacro take-from-queue
-  [^BlockingQueue queue]
+  [queue]
   `(.take ~queue))
 
 
