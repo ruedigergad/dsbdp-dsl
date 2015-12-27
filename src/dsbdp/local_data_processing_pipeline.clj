@@ -19,7 +19,18 @@
 
 
 (def ^:dynamic *queue-size* 100000)
-(def ^:dynamic *queue-setup* "LinkedTransferQueue_tryTransfer-counted-10ms")
+(def ^:dynamic
+  *queue-setup*
+  (let [file-name "queue-setup.cfg"
+        setup (if (file-exists? file-name)
+                (do
+                  (println "Using queue-setup defined in:" file-name)
+                  (.trim ^String (slurp file-name)))
+                (do
+                  (println file-name "not found. Using default.")
+                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
+    (println "Using queue-setup:" setup)
+    setup))
 
 (defmacro create-queue
   []
