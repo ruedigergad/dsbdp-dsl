@@ -29,10 +29,9 @@
   `(LinkedTransferQueue.))
 
 (defmacro enqueue
-;  [^BlockingQueue queue data enqueued-counter dropped-counter]
+  [queue data enqueued-counter dropped-counter]
 ;  `(.put ~queue ~data))
 ;  `(.offer ~queue ~data))
-  [^TransferQueue queue data enqueued-counter dropped-counter]
 ;  `(.transfer ~queue ~data))
 ;  `(if (.hasWaitingConsumer ~queue)
 ;     (do
