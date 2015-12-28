@@ -18,7 +18,7 @@
 
 
 
-(def ^:dynamic *queue-size* 100000)
+(def ^:dynamic ^Integer *queue-size* (int 100000))
 (def ^:dynamic
   *queue-setup*
   (let [file-name "queue-setup.cfg"
