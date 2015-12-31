@@ -18,9 +18,8 @@
 
 
 
-(def ^:dynamic ^Integer *queue-size* (int 100000))
-(def ^:dynamic
-  *queue-setup*
+(def ^Integer queue-size (int 100000))
+(def queue-setup
   (let [file-name "queue-setup.cfg"
         setup (if (file-exists? file-name)
                 (do
@@ -34,10 +33,10 @@
 
 (defmacro create-queue
   []
-  (println "Setting up queue creation for:" *queue-setup*)
-  (let [expr (condp (fn [^String v ^String s] (.startsWith s v)) *queue-setup*
-               "LinkedBlockingQueue" `(LinkedBlockingQueue. *queue-size*)
-               "ArrayBlockingQueue" `(ArrayBlockingQueue. *queue-size*)
+  (println "Setting up queue creation for:" queue-setup)
+  (let [expr (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
+               "LinkedBlockingQueue" `(LinkedBlockingQueue. queue-size)
+               "ArrayBlockingQueue" `(ArrayBlockingQueue. queue-size)
                "LinkedTransferQueue" `(LinkedTransferQueue.))]
     (println expr)
     expr))
@@ -45,7 +44,7 @@
 (defmacro enqueue
   [queue data enqueued-counter dropped-counter]
   (println "Enqueueing data via:")
-  (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) *queue-setup*
+  (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
                "put" `(.put ~queue ~data)
                "offer" `(.offer ~queue ~data)
                "transfer" `(.transfer ~queue ~data)
