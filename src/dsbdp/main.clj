@@ -89,13 +89,14 @@
                     "pcap-json" pcap-byte-array-test-data
                     "nil" nil
                     )
+          proc-fn (create-proc-fn sample-pcap-processing-definition-json)
           pipeline-length (:pipeline-length options)
           pipeline (if (not (nil? in-data))
                      (create-local-processing-pipeline
                        (condp = scenario
                          "no-op" (create-no-op-proc-fns pipeline-length)
                          "factorial" (create-factorial-proc-fns pipeline-length)
-                         "pcap-json" [(fn [i _] (create-proc-fn sample-pcap-processing-definition-json))]
+                         "pcap-json" [(fn [i _] (proc-fn i))]
                          )
                        out-fn))
           in-fn (if (not (nil? in-data))
