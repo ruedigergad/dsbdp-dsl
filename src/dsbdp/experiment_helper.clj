@@ -64,10 +64,11 @@
        n))))
 
 (defn factorial
-  [n]
-  (loop [result 1N i 1N]
+  ([n]
+    (factorial 1N 1N n))
+  ([result i n]
     (if (<= i n)
-      (recur (* result i) (inc i))
+      (recur (* result i) (inc i) n)
       result)))
 
 (defn create-factorial-proc-fns
