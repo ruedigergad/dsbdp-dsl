@@ -52,5 +52,25 @@ public class ByteArrayHelper {
     public static int getInt4H(byte[] array, int index) {
         return (array[index] & 0xF0) >> 4;
     }
+
+    public static String getEthMacAddr(byte[] array, int index) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 6; i++) {
+            int val = getInt8(array, index + i);
+
+            if (val < 16) {
+                sb.append("0");
+            }
+
+            sb.append(Integer.toHexString(val).toUpperCase());
+
+            if (i < 5) {
+                sb.append(":");
+            }
+        }
+
+        return sb.toString();
+    }
 }
 
