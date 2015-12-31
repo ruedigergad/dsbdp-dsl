@@ -65,7 +65,7 @@
 
 (deftest eth-mac-addr-conversion-test-2
   (let [ba (byte-array (map byte [-1 -2 -3 -14 -15 -16]))
-        expected "TODO"]
+        expected "FF:FE:FD:F2:F1:F0"]
   (is (= expected (eth-mac-addr ba 0)))))
 
 (deftest ipv4-addr-conversion-test-1
@@ -75,6 +75,6 @@
 
 (deftest ipv4-addr-conversion-test-2
   (let [ba (byte-array (map byte [-4 -3 -2 -1]))
-        expected "TODO"]
+        expected "252.253.254.255"]
   (is (= expected (ipv4-addr ba 0)))))
 
