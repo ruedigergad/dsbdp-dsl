@@ -61,6 +61,7 @@
     :default "no-op"]])
 
 (defn -main [& args]
+  (println "Starting dsbdp main...")
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
     (when (:help options)
       (println summary)
@@ -105,7 +106,7 @@
                       (fn []
                         (.inc in-cntr))))
           thread-info-fn (create-thread-info-fn)]
-      (println "Starting dsbdp main...")
+      (println "Starting experiment...")
       (.setName (Thread/currentThread) "Main")
       (.start in-loop)
       (run-repeat (executor) (fn []
