@@ -80,11 +80,11 @@
 
 (deftest timestamp-str-conversion-test
   (let [ba (byte-array (map byte [84 -57 -106 -5 0 14 -54 15]))
-        expected "2015-01-27_13:47:39"]
+        expected "2015-01-27_14:47:39"]
     (is (= expected (timestamp-str ba 0)))))
 
 (deftest timestamp-str-be-conversion-test
   (let [ba (byte-array (map byte [-5 -106 -57 84 15 -54 14 0 -5]))
-        expected "2015-01-27_13:47:39"]
+        expected "2015-01-27_14:47:39"]
     (is (= expected (timestamp-str-be ba 0)))))
 

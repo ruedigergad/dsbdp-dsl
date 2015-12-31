@@ -10,7 +10,10 @@
   ^{:author "Ruediger Gad",
     :doc "Helper functions for converting byte arrays into other data types/representations"}
   dsbdp.byte-array-conversion
-  (:import (dsbdp ByteArrayHelper)))
+  (:import
+    (dsbdp ByteArrayHelper)
+    (java.text SimpleDateFormat)
+    (java.util Date)))
 
 (defn int4l
   "Get the lower 4 bits (nibble) of the byte at the given index idx in the provided byte-array ba."
@@ -65,11 +68,20 @@
   [ba idx]
   (ByteArrayHelper/getIpv4AddrString ba idx))
 
+(defn timestamp-to-str
+  [ts]
+  (->
+    (SimpleDateFormat. "yyyy-MM-DD_HH:mm:ss")
+    (.format
+      (Date.
+        (long (/ ts 1000000))))))
+
+
 (defn timestamp-str
   [ba idx]
-  )
+  (timestamp-to-str (timestamp ba idx)))
 
 (defn timestamp-str-be
   [ba idx]
-  )
+  (timestamp-to-str (timestamp-be ba idx)))
 
