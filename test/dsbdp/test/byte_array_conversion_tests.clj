@@ -58,3 +58,23 @@
         expected 1422366459969231000]
     (is (= expected (timestamp-be ba 0)))))
 
+(deftest eth-mac-addr-conversion-test-1
+  (let [ba (byte-array (map byte [1 2 3 4 5 6]))
+        expected "01:02:03:04:05:06"]
+  (is (= expected (eth-mac-addr ba 0)))))
+
+(deftest eth-mac-addr-conversion-test-2
+  (let [ba (byte-array (map byte [-1 -2 -3 -14 -15 -16]))
+        expected "TODO"]
+  (is (= expected (eth-mac-addr ba 0)))))
+
+(deftest ipv4-addr-conversion-test-1
+  (let [ba (byte-array (map byte [1 2 3 4]))
+        expected "1.2.3.4"]
+  (is (= expected (ipv4-addr ba 0)))))
+
+(deftest ipv4-addr-conversion-test-2
+  (let [ba (byte-array (map byte [-4 -3 -2 -1]))
+        expected "TODO"]
+  (is (= expected (ipv4-addr ba 0)))))
+
