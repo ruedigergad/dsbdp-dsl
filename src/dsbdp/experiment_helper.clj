@@ -18,7 +18,7 @@
     (java.util HashMap Map)
     (org.apache.commons.math3.util CombinatoricsUtils)))
 
-(defmacro create-proc-fns
+(defn create-proc-fns
   [fn-1 fn-n n]
   (loop [fns (prewalk-replace {:idx 0} [fn-1])]
     (if (< (count fns) n)
@@ -29,28 +29,28 @@
         (println "proc-fns-pretty:\n" (.replaceAll (str (with-out-str (pprint fns))) "(?<=\\()([a-zA-Z\\.\\-]++/)" ""))
         fns))))
 
-(defmacro create-no-op-proc-fns
+(defn create-no-op-proc-fns
   [n]
-  `(create-proc-fns
-     (fn [~'_ ~'_])
-     (fn [~'_ ~'_])
-     ~n))
+  (create-proc-fns
+    (fn [_ _])
+    (fn [_ _])
+    n))
 
-(defmacro create-inc-proc-fns
+(defn create-inc-proc-fns
   [n]
-  `(create-proc-fns
-     (fn [~'i ~'_] (inc ~'i))
-     (fn [~'_ ~'o] (inc ~'o))
-     ~n))
+  (create-proc-fns
+    (fn [i _] (inc i))
+    (fn [_ o] (inc o))
+    n))
 
-(defmacro create-hashmap-inc-put-proc-fns
+(defn create-hashmap-inc-put-proc-fns
   [n]
   (let [o-sym 'o]
     (let [o-meta (vary-meta o-sym assoc :tag 'Map)]
-     `(create-proc-fns
-        (fn [~'i ~'_] (doto (HashMap.) (.put (str :idx) (inc ~'i))))
-        (fn [~'_ ~o-meta] (.put ~o-meta (str :idx) (inc (.get ~o-meta (str (dec :idx))))))
-        ~n))))
+     (create-proc-fns
+       (fn [i _] (doto (HashMap.) (.put (str :idx) (inc i))))
+       (fn [_ o-meta] (.put o-meta (str :idx) (inc (.get o-meta (str (dec :idx))))))
+       n))))
 
 (defn factorial
   [n]
@@ -59,10 +59,10 @@
       (recur (* result i) (inc i))
       result)))
 
-(defmacro create-factorial-proc-fns
+(defn create-factorial-proc-fns
   [n]
-  `(create-proc-fns
-     (fn [~'i ~'_] (factorial ~'i))
-     (fn [~'i ~'_] (factorial ~'i))
-     ~n))
+  (create-proc-fns
+    (fn [i _] (factorial i))
+    (fn [i _] (factorial i))
+     n))
 
