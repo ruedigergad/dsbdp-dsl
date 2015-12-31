@@ -61,6 +61,6 @@
   [ba idx]
   (ByteArrayHelper/getEthMacAddrString ba idx))
 
-(defn ipv4-addr
+(defn ipv4-addr-str
   [ba idx])
 
