@@ -57,9 +57,9 @@
   [ba idx]
   (+ (* (ByteArrayHelper/getInt32BigEndian ba idx) 1000000000) (* (ByteArrayHelper/getInt32BigEndian ba (+ idx 4)) 1000)))
 
-(defn eth-mac-addr
+(defn eth-mac-addr-str
   [ba idx]
-  (ByteArrayHelper/getEthMacAddr ba idx))
+  (ByteArrayHelper/getEthMacAddrString ba idx))
 
 (defn ipv4-addr
   [ba idx])

@@ -61,12 +61,12 @@
 (deftest eth-mac-addr-conversion-test-1
   (let [ba (byte-array (map byte [1 2 3 4 5 6]))
         expected "01:02:03:04:05:06"]
-  (is (= expected (eth-mac-addr ba 0)))))
+  (is (= expected (eth-mac-addr-str ba 0)))))
 
 (deftest eth-mac-addr-conversion-test-2
   (let [ba (byte-array (map byte [-1 -2 -3 -14 -15 -16]))
         expected "FF:FE:FD:F2:F1:F0"]
-  (is (= expected (eth-mac-addr ba 0)))))
+  (is (= expected (eth-mac-addr-str ba 0)))))
 
 (deftest ipv4-addr-conversion-test-1
   (let [ba (byte-array (map byte [1 2 3 4]))

@@ -53,7 +53,7 @@ public class ByteArrayHelper {
         return (array[index] & 0xF0) >> 4;
     }
 
-    public static String getEthMacAddr(byte[] array, int index) {
+    public static String getEthMacAddrString(byte[] array, int index) {
         StringBuilder sb = new StringBuilder();
 
         for (int i = 0; i < 6; i++) {
