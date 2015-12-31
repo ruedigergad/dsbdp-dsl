@@ -65,3 +65,11 @@
   [ba idx]
   (ByteArrayHelper/getIpv4AddrString ba idx))
 
+(defn timestamp-str
+  [ba idx]
+  )
+
+(defn timestamp-str-be
+  [ba idx]
+  )
+
