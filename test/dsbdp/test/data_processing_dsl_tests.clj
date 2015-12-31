@@ -11,19 +11,9 @@
     :doc "Unit tests for data processing DSL"}
   dsbdp.test.data-processing-dsl-tests
   (:require [clojure.test :refer :all]
-            [dsbdp.data-processing-dsl :refer :all])
+            [dsbdp.data-processing-dsl :refer :all]
+            [dsbdp.experiment-helper :refer :all]) 
   (:import (java.util ArrayList HashMap List Map)))
-
-(def byte-array-test-data
-  "We use the byte array representation of a captured UDP packet as byte array test data."
-  (byte-array
-    (map byte [-5 -106 -57 84   15 -54 14 0   77 0 0 0   77 0 0 0    ; 16 byte pcap header
-               -1 -2 -3 -14 -15 -16 1 2 3 4 5 6 8 0                  ; 14 byte Ethernet header
-               69 0 0 32 0 3 64 0 7 17 115 -57 1 2 3 4 -4 -3 -2 -1   ; 20 byte IP header
-               8 0 16 0 0 4 -25 -26                                  ; 8 byte UDP header
-               97 98 99 100])))                                      ; 4 byte data "abcd"
-
-
 
 ;;;
 ;;; Tests for byte array input and various output types.
@@ -34,7 +24,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -44,7 +34,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (map? result))
     (is (= expected result))))
 
@@ -54,7 +44,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (= expected (str result)))))
 
 (deftest byte-array-to-json-str-test
@@ -63,7 +53,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (= expected (str result)))))
 
 (deftest byte-array-to-csv-str-qm-test
@@ -72,7 +62,7 @@
                         :rules [['udpSrc '(int16 50) :qm]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (= expected (str  result)))))
 
 (deftest byte-array-to-json-str-qm-test
@@ -81,7 +71,7 @@
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52) :qm]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (= expected (str result)))))
 
 
@@ -96,7 +86,7 @@
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
         input  (HashMap. {"foo" :bar})
-        result (data-processing-fn byte-array-test-data input)]
+        result (data-processing-fn pcap-byte-array-test-data input)]
     (is (instance? Map result))
     (is (identical? input result))
     (is (= expected result))))
@@ -108,7 +98,7 @@
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
         input  {"foo" :bar}
-        result (data-processing-fn byte-array-test-data input)]
+        result (data-processing-fn pcap-byte-array-test-data input)]
     (is (map? result))
     (is (not (identical? input result)))
     (is (= expected result))))
@@ -120,7 +110,7 @@
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
         input (doto (java.lang.StringBuilder.) (.append "foo,bar,"))
-        result (data-processing-fn byte-array-test-data input)]
+        result (data-processing-fn pcap-byte-array-test-data input)]
     (is (= expected (str result)))))
 
 (deftest incremental-byte-array-to-json-str-test
@@ -130,7 +120,7 @@
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
         input (doto (java.lang.StringBuilder.) (.append "{\"foo\":\"bar\"}"))
-        result (data-processing-fn byte-array-test-data input)]
+        result (data-processing-fn pcap-byte-array-test-data input)]
     (is (= expected (str result)))))
 
 
@@ -144,7 +134,7 @@
                         :rules [['udpSrc '(/ (int16 50) 2)]
                                 ['udpDst '(/ (int16 52) 2)]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -154,7 +144,7 @@
                         :rules [['udpSrc '(float (/ (int16 50) 65535))]
                                 ['udpDst '(float (/ (int16 52) 65535))]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
@@ -163,7 +153,7 @@
         dsl-expression {:output-type :java-map
                         :rules [['quotient '(/ (int16 52) (int16 50))]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn byte-array-test-data)]
+        result (data-processing-fn pcap-byte-array-test-data)]
     (is (instance? Map result))
     (is (= expected result))))
 
