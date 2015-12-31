@@ -56,7 +56,7 @@
    ["-l" "--pipeline-length"
     :default 2
     :parse-fn #(Integer/parseInt %)]
-   ["-S" "--scenario"
+   ["-S" "--scenario SCENARIO"
     "The scenario that is to be used."
     :default "no-op"]])
 
@@ -86,6 +86,7 @@
           in-data (condp = scenario
                     "no-op" 1
                     "factorial" 24N
+                    "pcap-json" pcap-byte-array-test-data
                     "nil" nil
                     )
           pipeline-length (:pipeline-length options)
@@ -93,7 +94,9 @@
                      (create-local-processing-pipeline
                        (condp = scenario
                          "no-op" (create-no-op-proc-fns pipeline-length)
-                         "factorial" (create-factorial-proc-fns pipeline-length))
+                         "factorial" (create-factorial-proc-fns pipeline-length)
+                         "pcap-json" [(fn [i _] (create-proc-fn sample-pcap-processing-definition-json))]
+                         )
                        out-fn))
           in-fn (if (not (nil? in-data))
                   (get-in-fn pipeline))
