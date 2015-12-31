@@ -72,5 +72,19 @@ public class ByteArrayHelper {
 
         return sb.toString();
     }
+
+    public static String getIpv4AddrString(byte[] array, int index) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < 4; i++) {
+            sb.append(getInt8(array, index + i));
+
+            if (i < 3) {
+                sb.append(".");
+            }
+        }
+
+        return sb.toString();
+    }
 }
 
