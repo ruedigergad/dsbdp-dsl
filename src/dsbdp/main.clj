@@ -12,6 +12,7 @@
   dsbdp.main
   (:require
     (clj-assorted-utils [util :refer :all])
+    (clojure.tools [cli :refer :all])
     (dsbdp
       [data-processing-dsl :refer :all]
       [byte-array-conversion :refer :all]
@@ -50,48 +51,63 @@
                        (delta-cntr (str "waited-" t-id) waited) ","
                        (delta-cntr (str "blocked-" t-id) blocked)))))))))
 
+(def cli-options
+  [["-h" "--help"]
+   ["-S" "--scenario"
+    "The scenario that is to be used."
+    :default "no-op"]])
+
 (defn -main [& args]
-  (println "Starting dsbdp main...")
-  (.setName (Thread/currentThread) "Main")
-  (let [in-cntr (Counter.)
-        out-cntr (Counter.)
-        no-op false
-        delta-cntr (delta-counter)
-        stats-fn (fn []
-                   (let [in (double (/ (.value in-cntr) 1000.0))
-                         out (double (/ (.value out-cntr) 1000.0))]
-                     (println
-                       "time-delta:" (delta-cntr :time (System/currentTimeMillis)) "ms;"
-                       "in:" in "k;"
-                       "out:" out "k;"
-                       "in-delta:" (delta-cntr :in in) "k/s;"
-                       "out-delta:" (delta-cntr :out out) "k/s;")))
-        out-fn (fn [_ _]
-                 (.inc out-cntr))
-;        in-data 24N
-        in-data (if (not no-op)
-                  1)
-        pipeline (if (not no-op)
-                   (create-local-processing-pipeline
-                     (create-no-op-proc-fns 1)
-;                     (create-factorial-proc-fns 2)
-                     out-fn))
-        in-fn (if (not (nil? pipeline))
-                (get-in-fn pipeline))
-        in-loop (ProcessingLoop.
-                  "InLoop"
-                  (if (not (nil? in-fn))
-                    (fn []
-                      (in-fn in-data)
-                      (.inc in-cntr))
-                    (fn []
-                      (.inc in-cntr))))
-        thread-info-fn (create-thread-info-fn)]
-    (.start in-loop)
-    (run-repeat (executor) (fn []
-                             (stats-fn)
-                             (thread-info-fn) (println)
-                             )
-                1000)
-    (run-once (executor) (fn [] (System/exit 0)) 120000)))
+  (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
+    (when (:help options)
+      (println summary)
+      (System/exit 0))
+    (println "Using options:" options)
+    (println "Using args:" arguments)
+    (let [in-cntr (Counter.)
+          out-cntr (Counter.)
+          delta-cntr (delta-counter)
+          stats-fn (fn []
+                     (let [in (double (/ (.value in-cntr) 1000.0))
+                           out (double (/ (.value out-cntr) 1000.0))]
+                       (println
+                         "time-delta:" (delta-cntr :time (System/currentTimeMillis)) "ms;"
+                         "in:" in "k;"
+                         "out:" out "k;"
+                         "in-delta:" (delta-cntr :in in) "k/s;"
+                         "out-delta:" (delta-cntr :out out) "k/s;")))
+          out-fn (fn [_ _]
+                   (.inc out-cntr))
+          scenario (:scenario options)
+          in-data (condp = scenario
+                    "no-op" 1
+                    "factorial" 24N
+                    "nil" nil
+                    )
+          pipeline (if (not (nil? in-data))
+                     (create-local-processing-pipeline
+                       (condp = scenario
+                         "no-op" (create-no-op-proc-fns 2)
+                         "factorial" (create-factorial-proc-fns 2))
+                       out-fn))
+          in-fn (if (not (nil? in-data))
+                  (get-in-fn pipeline))
+          in-loop (ProcessingLoop.
+                    "InLoop"
+                    (if (not (nil? in-data))
+                      (fn []
+                        (in-fn in-data)
+                        (.inc in-cntr))
+                      (fn []
+                        (.inc in-cntr))))
+          thread-info-fn (create-thread-info-fn)]
+      (println "Starting dsbdp main...")
+      (.setName (Thread/currentThread) "Main")
+      (.start in-loop)
+      (run-repeat (executor) (fn []
+                               (stats-fn)
+                               (thread-info-fn) (println)
+                               )
+                  1000)
+      (run-once (executor) (fn [] (System/exit 0)) 120000))))
 
