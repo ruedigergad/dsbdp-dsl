@@ -27,29 +27,30 @@
         (println "proc-fns-full:" fns)
         (println "proc-fns-short:" (.replaceAll (str fns) "(?<=\\()([a-zA-Z\\.\\-]++/)" ""))
         (println "proc-fns-pretty:\n" (.replaceAll (str (with-out-str (pprint fns))) "(?<=\\()([a-zA-Z\\.\\-]++/)" ""))
-        fns))))
+        (vec
+          (map eval fns))))))
 
 (defn create-no-op-proc-fns
   [n]
   (create-proc-fns
-    (fn [_ _])
-    (fn [_ _])
+    '(fn [_ _])
+    '(fn [_ _])
     n))
 
 (defn create-inc-proc-fns
   [n]
   (create-proc-fns
-    (fn [i _] (inc i))
-    (fn [_ o] (inc o))
+    '(fn [i _] (inc i))
+    '(fn [_ o] (inc o))
     n))
 
 (defn create-hashmap-inc-put-proc-fns
   [n]
   (let [o-sym 'o]
-    (let [o-meta (vary-meta o-sym assoc :tag 'Map)]
+    (let [o-meta (vary-meta o-sym assoc :tag 'java.util.Map)]
      (create-proc-fns
-       (fn [i _] (doto (HashMap.) (.put (str :idx) (inc i))))
-       (fn [_ o-meta] (.put o-meta (str :idx) (inc (.get o-meta (str (dec :idx))))))
+       '(fn [i _] (doto (java.util.HashMap.) (.put (str :idx) (inc i))))
+       '(fn [_ o-meta] (.put o-meta (str :idx) (inc (.get o-meta (str (dec :idx))))))
        n))))
 
 (defn factorial
@@ -62,7 +63,7 @@
 (defn create-factorial-proc-fns
   [n]
   (create-proc-fns
-    (fn [i _] (factorial i))
-    (fn [i _] (factorial i))
+    '(fn [i _] (dsbdp.experiment-helper/factorial i))
+    '(fn [i _] (dsbdp.experiment-helper/factorial i))
      n))
 
