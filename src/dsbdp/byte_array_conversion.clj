@@ -84,3 +84,7 @@
   [ba idx]
   (timestamp-to-str (timestamp-be ba idx)))
 
+(defn ba-to-str
+  [ba idx len]
+  (ByteArrayHelper/byteArrayToString ba idx len))
+

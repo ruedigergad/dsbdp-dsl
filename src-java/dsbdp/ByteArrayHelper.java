@@ -86,5 +86,9 @@ public class ByteArrayHelper {
 
         return sb.toString();
     }
+
+    public static String byteArrayToString(byte[] array, int index, int length) {
+        return new String(array, index, length);
+    }
 }
 
