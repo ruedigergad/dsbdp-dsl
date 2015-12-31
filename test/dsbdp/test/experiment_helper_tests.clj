@@ -12,6 +12,7 @@
   dsbdp.test.experiment-helper-tests
   (:require
     [clojure.test :refer :all]
+    [dsbdp.data-processing-dsl :refer :all] 
     [dsbdp.experiment-helper :refer :all])
   (:import
     (java.util HashMap Map)))
@@ -69,4 +70,15 @@
     (is (= 6 ((first proc-fns) 3 nil)))
     (is (= 6 ((nth proc-fns 1) 3 nil)))
     (is (= 6 ((last proc-fns) 3 nil)))))
+
+(deftest sample-pcap-processing-definition-json-test
+  (let [processing-fn (create-proc-fn sample-pcap-processing-definition-json)]
+    (is (=
+         (str
+           "{\"timestamp\":\"2015-01-27_14:47:39\",\"capture-length\":58,"
+           "\"eth-src\":\"01:02:03:04:05:06\",\"eth-dst\":\"FF:FE:FD:F2:F1:F0\","
+           "\"ip-src\":\"1.2.3.4\",\"ip-dst\":\"252.253.254.255\","
+           "\"ip-ver\":4,\"ip-length\":44,\"ip-id\":3,\"ip-ttl\":7,\"ip-protocol\":17,\"ip-checksum\":29639,"
+           "\"udp-src\":2048,\"udp-dst\":4096,\"udp-length\":16,\"udp-checksum\":59366,\"udp-payload\":\"abcdefghijklmnop\"}")
+         (str (processing-fn pcap-byte-array-test-data))))))
 

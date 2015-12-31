@@ -13,7 +13,8 @@
   (:require
     [clojure.walk :refer :all]
     [clojure.pprint :refer :all]
-    [dsbdp.byte-array-conversion :refer :all])
+    [dsbdp.byte-array-conversion :refer :all]
+    [dsbdp.data-processing-dsl :refer :all]) 
   (:import
     (java.util HashMap Map)
     (org.apache.commons.math3.util CombinatoricsUtils)))
@@ -21,11 +22,11 @@
 (def pcap-byte-array-test-data
   "The byte array representation of a UDP packet for being used as dummy data."
   (byte-array
-    (map byte [-5 -106 -57 84   15 -54 14 0   77 0 0 0   77 0 0 0    ; 16 byte pcap header
-               -1 -2 -3 -14 -15 -16 1 2 3 4 5 6 8 0                  ; 14 byte Ethernet header
-               69 0 0 32 0 3 64 0 7 17 115 -57 1 2 3 4 -4 -3 -2 -1   ; 20 byte IP header
-               8 0 16 0 0 4 -25 -26                                  ; 8 byte UDP header
-               97 98 99 100])))                                      ; 4 byte data "abcd"
+    (map byte [-5 -106 -57 84   15 -54 14 0   58 0 0 0   58 0 0 0                ; 16 byte pcap header
+               -1 -2 -3 -14 -15 -16 1 2 3 4 5 6 8 0                              ; 14 byte Ethernet header
+               69 0 0 44   0 3 64 0   7 17 115 -57   1 2 3 4   -4 -3 -2 -1       ; 20 byte IP header
+               8 0 16 0 0 16 -25 -26                                              ; 8 byte UDP header
+               97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112])))  ; 16 byte data "abcdefghijklmnop"
 
 (defn create-proc-fns
   [fn-1 fn-n n]
@@ -75,4 +76,27 @@
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
      n))
+
+(def sample-pcap-processing-definition-rules
+  [['timestamp '(timestamp-str-be 0) :qm]
+   ['capture-length '(int32be 8)]
+   ['eth-src '(eth-mac-addr-str 22) :qm]
+   ['eth-dst '(eth-mac-addr-str 16) :qm]
+   ['ip-src '(ipv4-addr-str 42) :qm]
+   ['ip-dst '(ipv4-addr-str 46) :qm]
+   ['ip-ver '(int4h 30)]
+   ['ip-length '(int16 32)]
+   ['ip-id '(int16 34)]
+   ['ip-ttl '(int8 38)]
+   ['ip-protocol '(int8 39)]
+   ['ip-checksum '(int16 40)]
+   ['udp-src '(int16 50)]
+   ['udp-dst '(int16 52)]
+   ['udp-length '(int16 54)]
+   ['udp-checksum '(int16 56)]
+   ['udp-payload '(ba-to-str 58 16) :qm]])
+
+(def sample-pcap-processing-definition-json
+  {:output-type :json-str
+   :rules sample-pcap-processing-definition-rules})
 
