@@ -53,6 +53,9 @@
 
 (def cli-options
   [["-h" "--help"]
+   ["-l" "--pipeline-length"
+    :default 2
+    :parse-fn #(Integer/parseInt %)]
    ["-S" "--scenario"
     "The scenario that is to be used."
     :default "no-op"]])
@@ -84,11 +87,12 @@
                     "factorial" 24N
                     "nil" nil
                     )
+          pipeline-length (:pipeline-length options)
           pipeline (if (not (nil? in-data))
                      (create-local-processing-pipeline
                        (condp = scenario
-                         "no-op" (create-no-op-proc-fns 2)
-                         "factorial" (create-factorial-proc-fns 2))
+                         "no-op" (create-no-op-proc-fns pipeline-length)
+                         "factorial" (create-factorial-proc-fns pipeline-length))
                        out-fn))
           in-fn (if (not (nil? in-data))
                   (get-in-fn pipeline))
@@ -106,7 +110,7 @@
       (.start in-loop)
       (run-repeat (executor) (fn []
                                (stats-fn)
-                               (thread-info-fn) (println)
+                               ;(thread-info-fn) (println)
                                )
                   1000)
       (run-once (executor) (fn [] (System/exit 0)) 120000))))
