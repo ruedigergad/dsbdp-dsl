@@ -76,7 +76,6 @@
       (Date.
         (long (/ ts 1000000))))))
 
-
 (defn timestamp-str
   [ba idx]
   (timestamp-to-str (timestamp ba idx)))
