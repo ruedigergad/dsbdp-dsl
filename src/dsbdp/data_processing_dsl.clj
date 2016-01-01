@@ -139,12 +139,12 @@
 
 (defn create-proc-fns-vec
   [fn-mapping dsl-expression]
-;  (loop [v [(fn [in _] ((create-partial-proc-fn dsl-expression 0 (first fn-mapping))))]
-;         current-idx (first fn-mapping)
-;         remaining-mapping (rest fn-mapping)]
-;    (if (empty? remaining-mapping)
-;      (conj v )
-;      (recur
-;        (conj v )
-;        )))
-  )
+  (reduce
+    (fn [v m]
+      (let [start-idx (reduce + (subvec fn-mapping 0 (count v)))]
+        (conj v (create-partial-proc-fn dsl-expression
+                                        start-idx
+                                        (+ start-idx m)))))
+    [(fn [in _] ((create-partial-proc-fn dsl-expression 0 (first fn-mapping)) in))]
+    (rest fn-mapping)))
+
