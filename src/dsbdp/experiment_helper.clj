@@ -79,7 +79,7 @@
      n))
 
 (def sample-pcap-processing-definition-rules
-  [['timestamp '(timestamp-str-be 0) :qm]
+  [['timestamp '(timestamp-be 0) :qm]
    ['capture-length '(int32be 8)]
    ['eth-src '(eth-mac-addr-str 22) :qm]
    ['eth-dst '(eth-mac-addr-str 16) :qm]
