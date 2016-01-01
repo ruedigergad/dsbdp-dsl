@@ -53,10 +53,14 @@
 
 (def cli-options
   [["-h" "--help"]
-   ["-l" "--pipeline-length"
+   ["-l" "--pipeline-length PIPELINE-LENGTH"
     :default 2
     :parse-fn #(Integer/parseInt %)]
-   ["-S" "--scenario SCENARIO"
+   ["-m" "--fn-mapping FN-MAPPING"
+    "The mapping of dsl-expressions to processing functions."
+    :default [5 5 4 3]
+    :parse-fn #(binding [*read-eval* false] (read-string %))]
+   ["-s" "--scenario SCENARIO"
     "The scenario that is to be used."
     :default "no-op"]])
 
@@ -83,13 +87,14 @@
           out-fn (fn [_ _]
                    (.inc out-cntr))
           scenario (:scenario options)
-          in-data (condp = scenario
+          in-data (condp (fn [v s] (.startsWith s v)) scenario
                     "no-op" 1
                     "factorial" 24N
-                    "pcap-json" pcap-byte-array-test-data
+                    "pcap" pcap-byte-array-test-data
                     "nil" nil
                     )
           proc-fn (create-proc-fn sample-pcap-processing-definition-json)
+          fn-mapping (:fn-mapping options)
           pipeline-length (:pipeline-length options)
           pipeline (if (not (nil? in-data))
                      (create-local-processing-pipeline
@@ -97,6 +102,9 @@
                          "no-op" (create-no-op-proc-fns pipeline-length)
                          "factorial" (create-factorial-proc-fns pipeline-length)
                          "pcap-json" [(fn [i _] (proc-fn i))]
+                         "pcap-json#inc" (create-proc-fns-vec
+                                           fn-mapping
+                                           sample-pcap-processing-definition-json)
                          )
                        out-fn))
           in-fn (if (not (nil? in-data))
