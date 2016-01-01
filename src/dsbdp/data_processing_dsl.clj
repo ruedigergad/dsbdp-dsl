@@ -127,6 +127,21 @@
                              (eval `(fn [~input-sym] ~fn-body)))]
     data-processing-fn))
 
+(defn create-partial-proc-fn
+  [dsl-expression start-idx end-idx]
+  (if (= 0 start-idx)
+    (create-proc-fn
+      {:output-type (:output-type dsl-expression)
+       :rules (subvec (:rules dsl-expression) start-idx end-idx)})))
+
 (defn create-proc-fns-vec
   [fn-mapping dsl-expression]
+;  (loop [v [(fn [in _] ((create-partial-proc-fn dsl-expression 0 (first fn-mapping))))]
+;         current-idx (first fn-mapping)
+;         remaining-mapping (rest fn-mapping)]
+;    (if (empty? remaining-mapping)
+;      (conj v )
+;      (recur
+;        (conj v )
+;        )))
   )
