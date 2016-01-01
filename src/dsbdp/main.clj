@@ -87,7 +87,7 @@
           out-fn (fn [_ _]
                    (.inc out-cntr))
           scenario (:scenario options)
-          in-data (condp (fn [v s] (.startsWith s v)) scenario
+          in-data (condp (fn [^String v ^String s] (.startsWith s v)) scenario
                     "no-op" 1
                     "factorial" 24N
                     "pcap" pcap-byte-array-test-data
