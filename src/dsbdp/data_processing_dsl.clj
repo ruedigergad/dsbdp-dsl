@@ -145,6 +145,7 @@
         (conj v (create-partial-proc-fn dsl-expression
                                         start-idx
                                         (+ start-idx m)))))
-    [(fn [in _] ((create-partial-proc-fn dsl-expression 0 (first fn-mapping)) in))]
+    (let [f (create-partial-proc-fn dsl-expression 0 (first fn-mapping))]
+      [(fn [in _] (f in))])
     (rest fn-mapping)))
 
