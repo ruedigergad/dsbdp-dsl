@@ -132,6 +132,9 @@
   (if (= 0 start-idx)
     (create-proc-fn
       {:output-type (:output-type dsl-expression)
+       :rules (subvec (:rules dsl-expression) start-idx end-idx)})
+    (create-proc-fn
+      {:output-type (keyword (str (name (:output-type dsl-expression)) *incremental-indicator-suffix*))
        :rules (subvec (:rules dsl-expression) start-idx end-idx)})))
 
 (defn create-proc-fns-vec
