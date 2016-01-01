@@ -127,3 +127,6 @@
                              (eval `(fn [~input-sym] ~fn-body)))]
     data-processing-fn))
 
+(defn create-proc-fns-vec
+  [fn-mapping dsl-expression]
+  )
