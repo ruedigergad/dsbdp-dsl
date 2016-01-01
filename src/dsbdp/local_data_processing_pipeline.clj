@@ -27,7 +27,9 @@
                   (.trim ^String (slurp file-name)))
                 (do
                   (println file-name "not found. Using default.")
-                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
+                  "ArrayBlockingQueue_put"))]
+;                  "LinkedTransferQueue_tryTransfer"))]
+;                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
     (println "Using queue-setup:" setup)
     setup))
 
