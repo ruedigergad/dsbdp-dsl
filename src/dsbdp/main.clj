@@ -113,8 +113,10 @@
                     "InLoop"
                     (if (not (nil? in-data))
                       (fn []
-                        (in-fn in-data)
-                        (.inc in-cntr))
+                        (doseq [i (repeat 1000 0)]
+                          (in-fn in-data)
+                          (.inc in-cntr))
+                        (sleep 1))
                       (fn []
                         (.inc in-cntr))))
           thread-info-fn (create-thread-info-fn)]

@@ -18,7 +18,7 @@
 
 
 
-(def ^Integer queue-size (int 100000))
+(def ^Integer queue-size (int 512))
 (def queue-setup
   (let [file-name "queue-setup.cfg"
         setup (if (file-exists? file-name)
@@ -27,9 +27,13 @@
                   (.trim ^String (slurp file-name)))
                 (do
                   (println file-name "not found. Using default.")
-                  "ArrayBlockingQueue_put"))]
-;                  "LinkedTransferQueue_tryTransfer"))]
-;                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
+;                  "ArrayBlockingQueue_put"))]
+                  "ArrayBlockingQueue_put-counted-yield"))]
+;                  "ArrayBlockingQueue_offer"))]
+;                  "ArrayBlockingQueue_offer-counted-yield"))]
+;                  "LinkedTransferQueue_transfer"))]
+;                  "LinkedTransferQueue_transfer-counted-yield"))]
+;                  "LinkedTransferQueue_tryTransfer-counted-1ms"))]
     (println "Using queue-setup:" setup)
     setup))
 
@@ -48,7 +52,21 @@
   (println "Enqueueing data via:")
   (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
                "put" `(.put ~queue ~data)
+               "put-counted-yield" `(if (< (.size ~queue) queue-size)
+                                      (do
+                                        (.put ~queue ~data)
+                                        (.inc ~enqueued-counter))
+                                      (do
+                                        (.inc ~dropped-counter)
+                                        (Thread/yield)))
                "offer" `(.offer ~queue ~data)
+               "offer-counted-yield" `(if (< (.size ~queue) queue-size)
+                                        (do
+                                          (.offer ~queue ~data)
+                                          (.inc ~enqueued-counter))
+                                        (do
+                                          (.inc ~dropped-counter)
+                                          (Thread/yield)))
                "transfer" `(.transfer ~queue ~data)
                "transfer-counted-no-sleep" `(if (.hasWaitingConsumer ~queue)
                                               (do
@@ -62,6 +80,13 @@
                                                (do
                                                  (.inc ~dropped-counter)
                                                  (sleep 1)))
+               "transfer-counted-yield" `(if (.hasWaitingConsumer ~queue)
+                                               (do
+                                                 (.transfer ~queue ~data)
+                                                 (.inc ~enqueued-counter))
+                                               (do
+                                                 (.inc ~dropped-counter)
+                                                 (Thread/yield)))
                "tryTransfer" `(.tryTransfer ~queue ~data)
                "tryTransfer-counted-no-timeout" `(if (.tryTransfer ~queue ~data)
                                                    (.inc ~enqueued-counter)
