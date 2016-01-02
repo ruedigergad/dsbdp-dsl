@@ -30,14 +30,15 @@
                   (println file-name "not found. Using default.")
 ;                  "ArrayBlockingQueue_put"))]
 ;                  "ArrayBlockingQueue_put-counted-yield"))]
-                  "ArrayBlockingQueue_add-counted-yield"))]
+;                  "ArrayBlockingQueue_add-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield_remove-yield"))]
 ;                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
 ;                  "ArrayBlockingQueue_offer-counted"))]
 ;                  "ArrayBlockingQueue_offer-counted-yield"))]
 ;                  "LinkedTransferQueue_transfer"))]
+;                  "LinkedTransferQueue_tryTransfer"))]
 ;                  "LinkedTransferQueue_transfer-counted-yield"))]
-;                  "LinkedTransferQueue_tryTransfer-counted-1ms"))]
+                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
     (println "Using queue-setup:" setup)
     setup))
 
@@ -103,7 +104,6 @@
                                                (do
                                                  (.inc ~dropped-counter)
                                                  (Thread/yield)))
-               "tryTransfer" `(.tryTransfer ~queue ~data)
                "tryTransfer-counted-no-timeout" `(if (.tryTransfer ~queue ~data)
                                                    (.inc ~enqueued-counter)
                                                    (.inc ~dropped-counter))
@@ -115,7 +115,8 @@
                                              (.inc ~dropped-counter))
                "tryTransfer-counted-100ms" `(if (.tryTransfer ~queue ~data 100 TimeUnit/MILLISECONDS)
                                               (.inc ~enqueued-counter)
-                                              (.inc ~dropped-counter)))]
+                                              (.inc ~dropped-counter))
+               "tryTransfer" `(.tryTransfer ~queue ~data))]
     (println expr)
     expr))
 
