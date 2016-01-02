@@ -30,6 +30,7 @@
 ;                  "ArrayBlockingQueue_put"))]
 ;                  "ArrayBlockingQueue_put-counted-yield"))]
                   "ArrayBlockingQueue_add-counted-yield"))]
+;                  "ArrayBlockingQueue_add-counted-yield_remove-yield"))]
 ;                  "ArrayBlockingQueue_offer"))]
 ;                  "ArrayBlockingQueue_offer-counted-yield"))]
 ;                  "LinkedTransferQueue_transfer"))]
@@ -42,8 +43,8 @@
   []
   (println "Setting up queue creation for:" queue-setup)
   (let [expr (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
-               "LinkedBlockingQueue" `(LinkedBlockingQueue. queue-size)
                "ArrayBlockingQueue" `(ArrayBlockingQueue. queue-size)
+               "LinkedBlockingQueue" `(LinkedBlockingQueue. queue-size)
                "LinkedTransferQueue" `(LinkedTransferQueue.))]
     (println expr)
     expr))
@@ -51,7 +52,7 @@
 (defmacro enqueue
   [queue data enqueued-counter dropped-counter]
   (println "Enqueueing data via:")
-  (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
+  (let [expr (condp (fn [^String v ^String s] (.contains s v)) queue-setup
                "add-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
                                         (.add ~queue ~data)
@@ -113,13 +114,17 @@
 
 (defmacro take-from-queue
   [queue]
-  `(loop []
-     (if (not (.isEmpty ~queue))
-       (.remove ~queue)
-       (do
-         (Thread/yield)
-         (recur)))))
-;  `(.take ~queue))
+  (println "Retrieving data from queue via:")
+  (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
+               "remove-yield" `(loop []
+                                 (if (not (.isEmpty ~queue))
+                                   (.remove ~queue)
+                                   (do
+                                     (Thread/yield)
+                                     (recur))))
+               `(.take ~queue))]
+    (println expr)
+    expr))
 
 
 
