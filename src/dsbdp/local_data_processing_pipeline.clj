@@ -29,6 +29,7 @@
                 (do
                   (println file-name "not found. Using default.")
 ;                  "ArrayBlockingQueue_put"))]
+                  "ArrayBlockingQueue_put-counted"))]
 ;                  "ArrayBlockingQueue_put-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield_remove-yield"))]
@@ -36,9 +37,9 @@
 ;                  "ArrayBlockingQueue_offer-counted"))]
 ;                  "ArrayBlockingQueue_offer-counted-yield"))]
 ;                  "LinkedTransferQueue_transfer"))]
-;                  "LinkedTransferQueue_tryTransfer"))]
+;                  "LinkedTransferQueue_tryTransfer-counted-no-timeout"))]
 ;                  "LinkedTransferQueue_transfer-counted-yield"))]
-                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
+;                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
     (println "Using queue-setup:" setup)
     setup))
 
@@ -72,6 +73,11 @@
                                       (do
                                         (.inc ~dropped-counter)
                                         (Thread/yield)))
+               "put-counted" `(if (< (.size ~queue) queue-size)
+                                      (do
+                                        (.put ~queue ~data)
+                                        (.inc ~enqueued-counter))
+                                      (.inc ~dropped-counter))
                "put" `(.put ~queue ~data)
                "offer-counted-yield" `(if (< (.size ~queue) queue-size)
                                         (do
