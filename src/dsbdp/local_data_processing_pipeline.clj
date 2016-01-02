@@ -29,11 +29,13 @@
                 (do
                   (println file-name "not found. Using default.")
 ;                  "ArrayBlockingQueue_put"))]
-                  "ArrayBlockingQueue_put-counted"))]
+;                  "ArrayBlockingQueue_put-counted"))]
 ;                  "ArrayBlockingQueue_put-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield_remove-yield"))]
 ;                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
+;                  "OneToOneConcurrentArrayQueue3_add-counted_remove-yield"))]
+                  "OneToOneConcurrentArrayQueue3_add-counted_remove"))]
 ;                  "ArrayBlockingQueue_offer-counted"))]
 ;                  "ArrayBlockingQueue_offer-counted-yield"))]
 ;                  "LinkedTransferQueue_transfer"))]
@@ -66,6 +68,11 @@
                                       (do
                                         (.inc ~dropped-counter)
                                         (Thread/yield)))
+               "add-counted" `(if (< (.size ~queue) queue-size)
+                                (do
+                                  (.add ~queue ~data)
+                                  (.inc ~enqueued-counter))
+                                (.inc ~dropped-counter))
                "put-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
                                         (.put ~queue ~data)
@@ -74,10 +81,10 @@
                                         (.inc ~dropped-counter)
                                         (Thread/yield)))
                "put-counted" `(if (< (.size ~queue) queue-size)
-                                      (do
-                                        (.put ~queue ~data)
-                                        (.inc ~enqueued-counter))
-                                      (.inc ~dropped-counter))
+                                (do
+                                  (.put ~queue ~data)
+                                  (.inc ~enqueued-counter))
+                                (.inc ~dropped-counter))
                "put" `(.put ~queue ~data)
                "offer-counted-yield" `(if (< (.size ~queue) queue-size)
                                         (do
@@ -136,6 +143,10 @@
                                    (do
                                      (Thread/yield)
                                      (recur))))
+               "remove" `(loop []
+                           (if (not (.isEmpty ~queue))
+                             (.remove ~queue)
+                             (recur)))
                `(.take ~queue))]
     (println expr)
     expr))
