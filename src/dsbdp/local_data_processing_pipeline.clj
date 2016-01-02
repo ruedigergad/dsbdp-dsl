@@ -217,7 +217,8 @@
                       (reduce
                         (fn [m pe]
                           (assoc m (get-id pe) (get-counts pe)))
-                        {}
+                        {:pipeline {:in (.value in-counter)
+                                    :dropped (.value in-drop-counter)}}
                         proc-elements))
      :interrupt (fn []
                   (reset! running false)
