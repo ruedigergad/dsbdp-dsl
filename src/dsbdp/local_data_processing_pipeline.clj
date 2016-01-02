@@ -35,7 +35,7 @@
 ;                  "ArrayBlockingQueue_add-counted-yield_remove-yield"))]
 ;                  "ArrayBlockingQueue_add-counted_remove"))]
 ;                  "LinkedBlockingQueue_add-counted_remove"))]
-                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
+;                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
 ;                  "OneToOneConcurrentArrayQueue3_add-counted_remove-yield"))]
 ;                  "OneToOneConcurrentArrayQueue3_add-counted_remove"))]
 ;                  "ArrayBlockingQueue_offer-counted"))]
@@ -43,7 +43,7 @@
 ;                  "LinkedTransferQueue_transfer"))]
 ;                  "LinkedTransferQueue_tryTransfer-counted-no-timeout"))]
 ;                  "LinkedTransferQueue_transfer-counted-yield"))]
-;                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
+                  "LinkedTransferQueue_tryTransfer-counted-10ms"))]
     (println "Using queue-setup:" setup)
     setup))
 
@@ -75,6 +75,8 @@
                                   (.add ~queue ~data)
                                   (.inc ~enqueued-counter))
                                 (.inc ~dropped-counter))
+               "add" `(if (< (.size ~queue) queue-size)
+                        (.add ~queue ~data))
                "put-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
                                         (.put ~queue ~data)
