@@ -14,7 +14,8 @@
   (:require [clj-assorted-utils.util :refer :all])
   (:import
     (dsbdp Counter LocalTransferContainer ProcessingLoop)
-    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedBlockingQueue LinkedTransferQueue TimeUnit TransferQueue)))
+    (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedBlockingQueue LinkedTransferQueue TimeUnit TransferQueue)
+    (uk.co.real_logic.queues OneToOneConcurrentArrayQueue3)))
 
 
 
@@ -29,8 +30,9 @@
                   (println file-name "not found. Using default.")
 ;                  "ArrayBlockingQueue_put"))]
 ;                  "ArrayBlockingQueue_put-counted-yield"))]
-                  "ArrayBlockingQueue_add-counted-yield"))]
+;                  "ArrayBlockingQueue_add-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield_remove-yield"))]
+                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
 ;                  "ArrayBlockingQueue_offer"))]
 ;                  "ArrayBlockingQueue_offer-counted-yield"))]
 ;                  "LinkedTransferQueue_transfer"))]
@@ -45,7 +47,9 @@
   (let [expr (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
                "ArrayBlockingQueue" `(ArrayBlockingQueue. queue-size)
                "LinkedBlockingQueue" `(LinkedBlockingQueue. queue-size)
-               "LinkedTransferQueue" `(LinkedTransferQueue.))]
+               "LinkedTransferQueue" `(LinkedTransferQueue.)
+               "OneToOneConcurrentArrayQueue3" `(OneToOneConcurrentArrayQueue3. queue-size)
+               )]
     (println expr)
     expr))
 
