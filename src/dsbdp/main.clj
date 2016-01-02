@@ -87,7 +87,9 @@
           proc-fn (create-proc-fn sample-pcap-processing-definition-json)
           fn-mapping (:fn-mapping options)
           pipeline-length (:pipeline-length options)
-          pipeline (if (not (nil? in-data))
+          pipeline (if (and
+                         (not (nil? in-data))
+                         (not= scenario "pcap-direct"))
                      (create-local-processing-pipeline
                        (condp = scenario
                          "no-op" (create-no-op-proc-fns pipeline-length)
@@ -98,14 +100,18 @@
                                            sample-pcap-processing-definition-json)
                          )
                        out-fn))
-          in-fn (if (not (nil? in-data))
-                  (get-in-fn pipeline))
+          in-fn (cond
+                  (nil? in-data) (fn [] (.inc in-cntr))
+                  (= scenario "pcap-direct") (fn []
+                                               (proc-fn in-data)
+                                               (.inc in-cntr))
+                  :default (get-in-fn pipeline))
           in-loop (ProcessingLoop.
                     "InLoop"
                     (if (not (nil? in-data))
                       (fn []
                         (doseq [i (repeat 1000 0)]
-                          (in-fn in-data)
+                          (in-fn)
                           (.inc in-cntr))
                         (sleep 1))
                       (fn []
@@ -113,15 +119,15 @@
           thread-info-fn (create-thread-info-fn)
           stats-fn (fn []
                      (let [in (double (/ (.value in-cntr) 1000.0))
-                           out (double (/ (.value out-cntr) 1000.0))
-                           pe-counts (get-counts pipeline)]
+                           out (double (/ (.value out-cntr) 1000.0))]
                        (println
                          "time-delta:" (delta-cntr :time (System/currentTimeMillis)) "ms;"
                          "in:" in "k;"
                          "out:" out "k;"
                          "in-delta:" (delta-cntr :in in) "k/s;"
                          "out-delta:" (delta-cntr :out out) "k/s;")
-                       (println pe-counts)))]
+                       (if (not (nil? pipeline))
+                         (println (get-counts pipeline)))))]
       (println "Starting experiment...")
       (.setName (Thread/currentThread) "Main")
       (.start in-loop)
