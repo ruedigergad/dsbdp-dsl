@@ -28,7 +28,8 @@
                 (do
                   (println file-name "not found. Using default.")
 ;                  "ArrayBlockingQueue_put"))]
-                  "ArrayBlockingQueue_put-counted-yield"))]
+;                  "ArrayBlockingQueue_put-counted-yield"))]
+                  "ArrayBlockingQueue_add-counted-yield"))]
 ;                  "ArrayBlockingQueue_offer"))]
 ;                  "ArrayBlockingQueue_offer-counted-yield"))]
 ;                  "LinkedTransferQueue_transfer"))]
@@ -51,6 +52,13 @@
   [queue data enqueued-counter dropped-counter]
   (println "Enqueueing data via:")
   (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
+               "add-counted-yield" `(if (< (.size ~queue) queue-size)
+                                      (do
+                                        (.add ~queue ~data)
+                                        (.inc ~enqueued-counter))
+                                      (do
+                                        (.inc ~dropped-counter)
+                                        (Thread/yield)))
                "put" `(.put ~queue ~data)
                "put-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
@@ -105,7 +113,13 @@
 
 (defmacro take-from-queue
   [queue]
-  `(.take ~queue))
+  `(loop []
+     (if (not (.isEmpty ~queue))
+       (.remove ~queue)
+       (do
+         (Thread/yield)
+         (recur)))))
+;  `(.take ~queue))
 
 
 
