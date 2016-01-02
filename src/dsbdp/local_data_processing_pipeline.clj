@@ -139,16 +139,11 @@
   [queue]
   (println "Retrieving data from queue via:")
   (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
-               "remove-yield" `(loop []
-                                 (if (not (.isEmpty ~queue))
-                                   (.remove ~queue)
-                                   (do
-                                     (Thread/yield)
-                                     (recur))))
-               "remove" `(loop []
-                           (if (not (.isEmpty ~queue))
-                             (.remove ~queue)
-                             (recur)))
+               "remove-yield" `(if (not (.isEmpty ~queue))
+                                 (.remove ~queue)
+                                 (Thread/yield))
+               "remove" `(if (not (.isEmpty ~queue))
+                           (.remove ~queue))
                `(.take ~queue))]
     (println expr)
     expr))
@@ -166,10 +161,11 @@
           proc-fn (fn []
                     (try
                       (let [^LocalTransferContainer c (take-from-queue in-queue)
-                            new-out (f (.getIn c) (.getOut c))]
-                        (if (not (nil? new-out))
-                          (.setOut c new-out))
-                        (enqueue out-queue c out-counter out-drop-counter))
+                            new-out (if (not (nil? c))
+                                      (f (.getIn c) (.getOut c)))]
+                        (when (not (nil? new-out))
+                          (.setOut c new-out)
+                          (enqueue out-queue c out-counter out-drop-counter)))
                       (catch InterruptedException e
                         (if @running
                           (throw e)))))
@@ -228,8 +224,7 @@
                           (try
                             (let [^LocalTransferContainer c (take-from-queue out-queue)]
                               (if (not (nil? c))
-                                (out-fn (.getIn c) (.getOut c))
-                                (out-fn nil nil)))
+                                (out-fn (.getIn c) (.getOut c))))
                             (catch InterruptedException e
                               (if @running
                                 (throw e))))))
