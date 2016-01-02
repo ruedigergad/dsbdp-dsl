@@ -190,7 +190,13 @@
         in-counter (Counter.)
         in-drop-counter (Counter.)]
     (.start out-proc-loop)
-    {:interrupt (fn []
+    {:get-counts-fn (fn []
+                      (reduce
+                        (fn [m pe]
+                          (assoc m (get-id pe) (get-counts pe)))
+                        {}
+                        proc-elements))
+     :interrupt (fn []
                   (reset! running false)
                   (doseq [pe proc-elements]
                     (interrupt pe))

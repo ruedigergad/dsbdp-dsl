@@ -75,15 +75,6 @@
     (let [in-cntr (Counter.)
           out-cntr (Counter.)
           delta-cntr (delta-counter)
-          stats-fn (fn []
-                     (let [in (double (/ (.value in-cntr) 1000.0))
-                           out (double (/ (.value out-cntr) 1000.0))]
-                       (println
-                         "time-delta:" (delta-cntr :time (System/currentTimeMillis)) "ms;"
-                         "in:" in "k;"
-                         "out:" out "k;"
-                         "in-delta:" (delta-cntr :in in) "k/s;"
-                         "out-delta:" (delta-cntr :out out) "k/s;")))
           out-fn (fn [_ _]
                    (.inc out-cntr))
           scenario (:scenario options)
@@ -119,7 +110,18 @@
                         (sleep 1))
                       (fn []
                         (.inc in-cntr))))
-          thread-info-fn (create-thread-info-fn)]
+          thread-info-fn (create-thread-info-fn)
+          stats-fn (fn []
+                     (let [in (double (/ (.value in-cntr) 1000.0))
+                           out (double (/ (.value out-cntr) 1000.0))
+                           pe-counts (get-counts pipeline)]
+                       (println
+                         "time-delta:" (delta-cntr :time (System/currentTimeMillis)) "ms;"
+                         "in:" in "k;"
+                         "out:" out "k;"
+                         "in-delta:" (delta-cntr :in in) "k/s;"
+                         "out-delta:" (delta-cntr :out out) "k/s;")
+                       (println pe-counts)))]
       (println "Starting experiment...")
       (.setName (Thread/currentThread) "Main")
       (.start in-loop)
