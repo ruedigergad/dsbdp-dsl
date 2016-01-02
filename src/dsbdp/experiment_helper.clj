@@ -43,8 +43,8 @@
 (defn create-no-op-proc-fns
   [n]
   (create-proc-fns
-    '(fn [_ _])
-    '(fn [_ _])
+    '(fn [_ _] 0)
+    '(fn [_ _] 1)
     n))
 
 (defn create-inc-proc-fns
