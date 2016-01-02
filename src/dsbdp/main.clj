@@ -102,8 +102,8 @@
                        out-fn))
           in-fn (cond
                   (nil? in-data) (fn [] (.inc in-cntr))
-                  (= scenario "pcap-direct") (fn []
-                                               (proc-fn in-data)
+                  (= scenario "pcap-direct") (fn [d]
+                                               (proc-fn d)
                                                (.inc in-cntr))
                   :default (get-in-fn pipeline))
           in-loop (ProcessingLoop.
@@ -111,7 +111,7 @@
                     (if (not (nil? in-data))
                       (fn []
                         (doseq [i (repeat 1000 0)]
-                          (in-fn)
+                          (in-fn in-data)
                           (.inc in-cntr))
                         (sleep 1))
                       (fn []
