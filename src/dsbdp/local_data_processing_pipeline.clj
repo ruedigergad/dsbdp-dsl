@@ -32,12 +32,12 @@
 ;                  "ArrayBlockingQueue_put-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield_remove-yield"))]
-;                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
+                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
 ;                  "ArrayBlockingQueue_offer"))]
 ;                  "ArrayBlockingQueue_offer-counted-yield"))]
 ;                  "LinkedTransferQueue_transfer"))]
 ;                  "LinkedTransferQueue_transfer-counted-yield"))]
-                  "LinkedTransferQueue_tryTransfer-counted-1ms"))]
+;                  "LinkedTransferQueue_tryTransfer-counted-1ms"))]
     (println "Using queue-setup:" setup)
     setup))
 
