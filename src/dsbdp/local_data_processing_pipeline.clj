@@ -65,7 +65,6 @@
                                       (do
                                         (.inc ~dropped-counter)
                                         (Thread/yield)))
-               "put" `(.put ~queue ~data)
                "put-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
                                         (.put ~queue ~data)
@@ -73,10 +72,7 @@
                                       (do
                                         (.inc ~dropped-counter)
                                         (Thread/yield)))
-               "offer" `(.offer ~queue ~data)
-               "offer-counted" `(if (.offer ~queue ~data)
-                                  (.inc ~enqueued-counter)
-                                  (.inc ~dropped-counter))
+               "put" `(.put ~queue ~data)
                "offer-counted-yield" `(if (< (.size ~queue) queue-size)
                                         (do
                                           (.offer ~queue ~data)
@@ -84,7 +80,10 @@
                                         (do
                                           (.inc ~dropped-counter)
                                           (Thread/yield)))
-               "transfer" `(.transfer ~queue ~data)
+               "offer-counted" `(if (.offer ~queue ~data)
+                                  (.inc ~enqueued-counter)
+                                  (.inc ~dropped-counter))
+               "offer" `(.offer ~queue ~data)
                "transfer-counted-no-sleep" `(if (.hasWaitingConsumer ~queue)
                                               (do
                                                 (.transfer ~queue ~data)
@@ -104,6 +103,7 @@
                                                (do
                                                  (.inc ~dropped-counter)
                                                  (Thread/yield)))
+               "transfer" `(.transfer ~queue ~data)
                "tryTransfer-counted-no-timeout" `(if (.tryTransfer ~queue ~data)
                                                    (.inc ~enqueued-counter)
                                                    (.inc ~dropped-counter))
