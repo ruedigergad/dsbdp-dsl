@@ -102,20 +102,20 @@
                        out-fn))
           in-fn (cond
                   (nil? in-data) (fn [] (.inc in-cntr))
-                  (= scenario "pcap-direct") (fn [d]
-                                               (proc-fn d)
-                                               (.inc in-cntr))
-                  :default (get-in-fn pipeline))
+                  :default (if (not (nil? pipeline))
+                             (get-in-fn pipeline)))
           in-loop (ProcessingLoop.
                     "InLoop"
-                    (if (not (nil? in-data))
-                      (fn []
-                        (doseq [i (repeat 1000 0)]
-                          (in-fn in-data)
-                          (.inc in-cntr))
-                        (sleep 1))
-                      (fn []
-                        (.inc in-cntr))))
+                    (cond
+                      (= "pcap-direct" scenario) (fn []
+                                                   (proc-fn in-data)
+                                                   (.inc in-cntr))
+                      (not (nil? in-data)) (fn []
+                                             (doseq [i (repeat 1000 0)]
+                                               (in-fn in-data)
+                                               (.inc in-cntr))
+                                             (sleep 1))
+                      :default (fn [] (.inc in-cntr))))
           thread-info-fn (create-thread-info-fn)
           stats-fn (fn []
                      (let [in (double (/ (.value in-cntr) 1000.0))
