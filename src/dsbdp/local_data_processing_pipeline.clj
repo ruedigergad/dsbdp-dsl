@@ -30,10 +30,10 @@
                   (println file-name "not found. Using default.")
 ;                  "ArrayBlockingQueue_put"))]
 ;                  "ArrayBlockingQueue_put-counted-yield"))]
-;                  "ArrayBlockingQueue_add-counted-yield"))]
+                  "ArrayBlockingQueue_add-counted-yield"))]
 ;                  "ArrayBlockingQueue_add-counted-yield_remove-yield"))]
-                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
-;                  "ArrayBlockingQueue_offer"))]
+;                  "OneToOneConcurrentArrayQueue3_add-counted-yield_remove-yield"))]
+;                  "ArrayBlockingQueue_offer-counted"))]
 ;                  "ArrayBlockingQueue_offer-counted-yield"))]
 ;                  "LinkedTransferQueue_transfer"))]
 ;                  "LinkedTransferQueue_transfer-counted-yield"))]
@@ -73,6 +73,9 @@
                                         (.inc ~dropped-counter)
                                         (Thread/yield)))
                "offer" `(.offer ~queue ~data)
+               "offer-counted" `(if (.offer ~queue ~data)
+                                  (.inc ~enqueued-counter)
+                                  (.inc ~dropped-counter))
                "offer-counted-yield" `(if (< (.size ~queue) queue-size)
                                         (do
                                           (.offer ~queue ~data)
