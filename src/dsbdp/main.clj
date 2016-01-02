@@ -115,7 +115,7 @@
                                                (in-fn in-data)
                                                (.inc in-cntr))
                                              (sleep 1))
-                      :default (fn [] (.inc in-cntr))))
+                      :default (fn [] (.inc out-cntr))))
           thread-info-fn (create-thread-info-fn)
           stats-fn (fn []
                      (let [in (double (/ (.value in-cntr) 1000.0))
