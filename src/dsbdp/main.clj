@@ -109,7 +109,7 @@
                     (cond
                       (= "pcap-direct" scenario) (fn []
                                                    (proc-fn in-data)
-                                                   (.inc in-cntr))
+                                                   (.inc out-cntr))
                       (not (nil? in-data)) (fn []
                                              (doseq [i (repeat 1000 0)]
                                                (in-fn in-data)
