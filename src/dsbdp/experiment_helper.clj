@@ -30,9 +30,9 @@
 
 (defn create-proc-fns
   [fn-1 fn-n n]
-  (loop [fns (prewalk-replace {:idx 0} [fn-1])]
+  (loop [fns (prewalk-replace {:_idx_ 0} [fn-1])]
     (if (< (count fns) n)
-      (recur (conj fns (prewalk-replace {:idx (count fns)} fn-n)))
+      (recur (conj fns (prewalk-replace {:_idx_ (count fns)} fn-n)))
       (do
         (println "proc-fns-full:" fns)
         (println "proc-fns-short:" (.replaceAll (str fns) "(?<=\\()([a-zA-Z\\.\\-]++/)" ""))
@@ -59,8 +59,8 @@
   (let [o-sym 'o]
     (let [o-meta (vary-meta o-sym assoc :tag 'java.util.Map)]
      (create-proc-fns
-       '(fn [i _] (doto (java.util.HashMap.) (.put (str :idx) (inc i))))
-       '(fn [_ o-meta] (.put o-meta (str :idx) (inc (.get o-meta (str (dec :idx))))))
+       '(fn [i _] (doto (java.util.HashMap.) (.put (str :_idx_) (inc i))))
+       '(fn [_ o-meta] (.put o-meta (str :_idx_) (inc (.get o-meta (str (dec :_idx_))))))
        n))))
 
 (defn factorial
