@@ -27,9 +27,9 @@
 (deftest create-no-op-proc-fns-test
   (let [proc-fns (create-no-op-proc-fns 4)]
     (is (= 4 (count proc-fns)))
-    (is (= nil ((first proc-fns) nil nil)))
-    (is (= nil ((nth proc-fns 1) nil nil)))
-    (is (= nil ((last proc-fns) nil nil)))))
+    (is (= 0 ((first proc-fns) nil nil)))
+    (is (= 1 ((nth proc-fns 1) nil nil)))
+    (is (= 1 ((last proc-fns) nil nil)))))
 
 (deftest create-inc-proc-fns-test
   (let [proc-fns (create-inc-proc-fns 4)]
@@ -77,8 +77,9 @@
          (str
            "{\"timestamp\":\"2015-01-27_14:47:39\",\"capture-length\":58,"
            "\"eth-src\":\"01:02:03:04:05:06\",\"eth-dst\":\"FF:FE:FD:F2:F1:F0\","
-           "\"ip-src\":\"1.2.3.4\",\"ip-dst\":\"252.253.254.255\","
-           "\"ip-ver\":4,\"ip-length\":44,\"ip-id\":3,\"ip-ttl\":7,\"ip-protocol\":17,\"ip-checksum\":29639,"
-           "\"udp-src\":2048,\"udp-dst\":4096,\"udp-length\":16,\"udp-checksum\":59366,\"udp-payload\":\"abcdefghijklmnop\"}")
+           "\"ip-src\":\"1.2.3.4\",\"ip-dst\":\"252.253.254.255\",\"ip-ver\":4,\"ip-length\":6.7139696E-4,"
+           "\"ip-id\":4.5777066E-5,\"ip-ttl\":0.02745098,\"ip-protocol\":0.06666667,\"ip-checksum\":0.45226216,"
+           "\"udp-src\":0.031250477,\"udp-dst\":0.06250095,\"udp-length\":2.4414435E-4,"
+           "\"udp-checksum\":0.9058671,\"udp-payload\":\"abcdefghijklmnop\"}")
          (str (processing-fn pcap-byte-array-test-data))))))
 

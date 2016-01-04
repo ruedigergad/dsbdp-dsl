@@ -37,7 +37,7 @@
   (let [in-queue (LinkedTransferQueue.)
         flag (prepare-flag)
         proc-element (create-local-processing-element in-queue
-                                                      (fn [_ _] (set-flag flag)))]
+                                                      (fn [_ _] (set-flag flag) 0))]
     (.put in-queue (LocalTransferContainer. "in" "out"))
     (await-flag flag)
     (is (flag-set? flag))
@@ -46,7 +46,7 @@
 (deftest create-local-processing-element-id-test
   (let [in-queue (LinkedTransferQueue.)
         proc-element (create-local-processing-element in-queue
-                                                      (fn [_ _])
+                                                      (fn [_ _] 0)
                                                       123)]
     (is (= 123 (get-id proc-element)))
     (is (= "ProcessingElement_123" (get-thread-name proc-element)))
@@ -55,7 +55,7 @@
 (deftest create-local-processing-element-no-id-test
   (let [in-queue (LinkedTransferQueue.)
         proc-element (create-local-processing-element in-queue
-                                                      (fn [_ _]))]
+                                                      (fn [_ _] 0))]
     (is (nil? (get-id proc-element)))
     (is (nil? (get-thread-name proc-element)))
     (interrupt proc-element)))
@@ -69,7 +69,8 @@
                                                       (fn [in out]
                                                         (reset! in-arg in)
                                                         (reset! out-arg out)
-                                                        (set-flag flag)))]
+                                                        (set-flag flag)
+                                                        0))]
     (.put in-queue (LocalTransferContainer. "in" "out"))
     (await-flag flag)
     (is (= "in" @in-arg))
@@ -130,7 +131,7 @@
 (deftest simple-local-processing-element-counter-drop-test
   (let [in-queue (LinkedTransferQueue.)
         proc-element (create-local-processing-element in-queue
-                                                      (fn [_ _]))]
+                                                      (fn [_ _] 0))]
     (.put in-queue (LocalTransferContainer. "in" "out"))
     (.put in-queue (LocalTransferContainer. "in" "out"))
     (.put in-queue (LocalTransferContainer. "in" "out"))
@@ -145,7 +146,7 @@
 (deftest simple-local-pipeline-send-test
   (let [flag-proc (prepare-flag)
         flag-out (prepare-flag)
-        proc-fns [(fn [_ _] (set-flag flag-proc))]
+        proc-fns [(fn [_ _] (set-flag flag-proc) 0)]
         pipeline (create-local-processing-pipeline proc-fns (fn [_ _] (set-flag flag-out)))]
     ((get-in-fn pipeline) "foo")
     (await-flag flag-proc)
