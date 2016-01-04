@@ -59,7 +59,7 @@
 (deftest byte-array-to-csv-str-qm-test
   (let [expected "\"2048\",4096"
         dsl-expression {:output-type :csv-str
-                        :rules [['udpSrc '(int16 50) :qm]
+                        :rules [['udpSrc '(int16 50) :string]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn pcap-byte-array-test-data)]
@@ -69,7 +69,7 @@
   (let [expected "{\"udpSrc\":2048,\"udpDst\":\"4096\"}"
         dsl-expression {:output-type :json-str
                         :rules [['udpSrc '(int16 50)]
-                                ['udpDst '(int16 52) :qm]]}
+                                ['udpDst '(int16 52) :string]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn pcap-byte-array-test-data)]
     (is (= expected (str result)))))

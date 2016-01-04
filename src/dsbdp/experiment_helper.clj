@@ -79,12 +79,12 @@
      n))
 
 (def sample-pcap-processing-definition-rules
-  [['timestamp '(timestamp-str-be 0) :qm]
+  [['timestamp '(timestamp-str-be 0) :string]
    ['capture-length '(int32be 8)]
-   ['eth-src '(eth-mac-addr-str 22) :qm]
-   ['eth-dst '(eth-mac-addr-str 16) :qm]
-   ['ip-src '(ipv4-addr-str 42) :qm]
-   ['ip-dst '(ipv4-addr-str 46) :qm]
+   ['eth-src '(eth-mac-addr-str 22) :string]
+   ['eth-dst '(eth-mac-addr-str 16) :string]
+   ['ip-src '(ipv4-addr-str 42) :string]
+   ['ip-dst '(ipv4-addr-str 46) :string]
    ['ip-ver '(int4h 30)]
    ['ip-length '(float (/ (int16 32) 65535))]
    ['ip-id '(float (/ (int16 34) 65535))]
@@ -95,7 +95,7 @@
    ['udp-dst '(float (/ (int16 52) 65535))]
    ['udp-length '(float (/ (int16 54) 65535))]
    ['udp-checksum '(float (/ (int16 56) 65535))]
-   ['udp-payload '(ba-to-str 58 16) :qm]])
+   ['udp-payload '(ba-to-str 58 16) :string]])
 
 (def sample-pcap-processing-definition-json
   {:output-type :json-str

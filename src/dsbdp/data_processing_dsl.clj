@@ -72,7 +72,7 @@
   (reduce
     (fn [v rule]
       (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)
-            tmp-v (if (some #{:qm} rule)
+            tmp-v (if (some #{:string} rule)
                     (conj v `(.append "\"") `(.append ~data-proc-sub-fn) `(.append "\""))
                     (conj v `(.append ~data-proc-sub-fn)))]
         (if (not= rule (last rules))
@@ -90,7 +90,7 @@
     (fn [v rule]
       (let [data-proc-sub-fn (create-proc-sub-fn (second rule) input)
             tmp-k (conj v `(.append "\"") `(.append ~(name (first rule))) `(.append "\":"))
-            tmp-v (if (some #{:qm} rule)
+            tmp-v (if (some #{:string} rule)
                     (conj tmp-k `(.append "\"") `(.append ~data-proc-sub-fn) `(.append "\""))
                     (conj tmp-k `(.append ~data-proc-sub-fn)))]
         (if (not= rule (last rules))
