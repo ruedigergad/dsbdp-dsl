@@ -101,3 +101,7 @@
   {:output-type :json-str
    :rules sample-pcap-processing-definition-rules})
 
+(def sample-pcap-processing-definition-clj-map
+  {:output-type :clj-map
+   :rules sample-pcap-processing-definition-rules})
+
