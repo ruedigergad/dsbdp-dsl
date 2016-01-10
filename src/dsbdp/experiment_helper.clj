@@ -16,7 +16,7 @@
     [dsbdp.byte-array-conversion :refer :all]
     [dsbdp.data-processing-dsl :refer :all]
     [opennlp.nlp :refer :all]
-;    [opennlp.treebank :refer :all]
+    [opennlp.treebank :refer :all]
     
     ) 
   (:import
@@ -35,7 +35,7 @@
 (def get-sentences (make-sentence-detector "resources/opennlp/models/en-sent.bin"))
 (def tokenize (make-tokenizer "resources/opennlp/models/en-token.bin"))
 (def pos-tag (make-pos-tagger "resources/opennlp/models/en-pos-maxent.bin"))
-;(def chunker (make-treebank-chunker "resources/opennlp/models/en-chunker.bin"))
+(def chunker (make-treebank-chunker "resources/opennlp/models/en-chunker.bin"))
 
 (defn create-proc-fns
   [fn-1 fn-n n]
@@ -117,6 +117,6 @@
 (defn opennlp-test-fn
   [in-str]
   (doseq [sentence (get-sentences in-str)]
-    (pos-tag (tokenize sentence))))
-;    (phrases (chunker (pos-tag (tokenize sentence))))))
+;    (pos-tag (tokenize sentence))))
+    (phrases (chunker (pos-tag (tokenize sentence))))))
 
