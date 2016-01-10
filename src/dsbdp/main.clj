@@ -81,18 +81,24 @@
           in-data (condp (fn [^String v ^String s] (.startsWith s v)) scenario
                     "no-op" 1
                     "factorial" 300N
+                    "opennlp" (str 
+                                "This is a simple sentence. "
+                                "The first example sentence is followed by another example sentence. "
+                                "The second sentence is followed by yet another example sentence. "
+                                "Do all these examples make sense? "
+                                "Lets add another example sentence, just for fun.")
                     "pcap" pcap-byte-array-test-data
                     "nil" nil
                     )
           proc-fn (condp = scenario
                     "pcap-direct" (create-proc-fn sample-pcap-processing-definition-json)
+                    "opennlp-direct" opennlp-test-fn
                     "factorial-direct" factorial)
           fn-mapping (:fn-mapping options)
           pipeline-length (:pipeline-length options)
           pipeline (if (and
                          (not (nil? in-data))
-                         (not= scenario "pcap-direct")
-                         (not= scenario "factorial-direct"))
+                         (not= (.endsWith scenario "-direct")))
                      (create-local-processing-pipeline
                        (condp = scenario
                          "no-op" (create-no-op-proc-fns pipeline-length)
@@ -101,8 +107,7 @@
                          "pcap-json" [(fn [i _] (proc-fn i))]
                          "pcap-json#inc" (create-proc-fns-vec
                                            fn-mapping
-                                           sample-pcap-processing-definition-json)
-                         )
+                                           sample-pcap-processing-definition-json))
                        out-fn))
           in-fn (cond
                   (nil? in-data) (fn [] (.inc in-cntr))
@@ -111,11 +116,9 @@
           in-loop (ProcessingLoop.
                     "InLoop"
                     (cond
-                      (or
-                        (= "pcap-direct" scenario)
-                        (= "factorial-direct")) (fn []
-                                                  (proc-fn in-data)
-                                                  (.inc out-cntr))
+                      (.endsWith scenario "-direct") (fn []
+                                                       (proc-fn in-data)
+                                                       (.inc out-cntr))
                       (not (nil? in-data)) (fn []
                                              (doseq [i (repeat 1000 0)]
                                                (in-fn in-data)

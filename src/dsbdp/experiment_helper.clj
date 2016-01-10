@@ -14,7 +14,11 @@
     [clojure.walk :refer :all]
     [clojure.pprint :refer :all]
     [dsbdp.byte-array-conversion :refer :all]
-    [dsbdp.data-processing-dsl :refer :all]) 
+    [dsbdp.data-processing-dsl :refer :all]
+    [opennlp.nlp :refer :all]
+;    [opennlp.treebank :refer :all]
+    
+    ) 
   (:import
     (java.util HashMap Map)
     (org.apache.commons.math3.util CombinatoricsUtils)))
@@ -27,6 +31,11 @@
                69 0 0 44   0 3 64 0   7 17 115 -57   1 2 3 4   -4 -3 -2 -1       ; 20 byte IP header
                8 0 16 0 0 16 -25 -26                                              ; 8 byte UDP header
                97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112])))  ; 16 byte data "abcdefghijklmnop"
+
+(def get-sentences (make-sentence-detector "resources/opennlp/models/en-sent.bin"))
+(def tokenize (make-tokenizer "resources/opennlp/models/en-token.bin"))
+(def pos-tag (make-pos-tagger "resources/opennlp/models/en-pos-maxent.bin"))
+;(def chunker (make-treebank-chunker "resources/opennlp/models/en-chunker.bin"))
 
 (defn create-proc-fns
   [fn-1 fn-n n]
@@ -104,4 +113,10 @@
 (def sample-pcap-processing-definition-clj-map
   {:output-type :clj-map
    :rules sample-pcap-processing-definition-rules})
+
+(defn opennlp-test-fn
+  [in-str]
+  (doseq [sentence (get-sentences in-str)]
+    (pos-tag (tokenize sentence))))
+;    (phrases (chunker (pos-tag (tokenize sentence))))))
 
