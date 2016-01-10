@@ -77,53 +77,58 @@
           delta-cntr (delta-counter)
           out-fn (fn [_ _]
                    (.inc out-cntr))
-          scenario (:scenario options)
+          ^String scenario (:scenario options)
           in-data (condp (fn [^String v ^String s] (.startsWith s v)) scenario
                     "no-op" 1
                     "factorial" 300N
                     "opennlp" (str 
                                 "This is a simple sentence. "
                                 "The first example sentence is followed by another example sentence. "
-                                "The second sentence is followed by yet another example sentence. "
-                                "Do all these examples make sense? "
-                                "Lets add another example sentence, just for fun.")
+                                "The second sentence is followed by another example sentence.")
                     "pcap" pcap-byte-array-test-data
                     "nil" nil
                     )
-          proc-fn (condp = scenario
-                    "pcap-direct" (create-proc-fn sample-pcap-processing-definition-json)
-                    "opennlp-direct" opennlp-test-fn
-                    "factorial-direct" factorial)
+          _ (println "in-data:" in-data)
           fn-mapping (:fn-mapping options)
           pipeline-length (:pipeline-length options)
           pipeline (if (and
                          (not (nil? in-data))
-                         (not= (.endsWith scenario "-direct")))
+                         (not (.endsWith scenario "-direct")))
                      (create-local-processing-pipeline
                        (condp = scenario
                          "no-op" (create-no-op-proc-fns pipeline-length)
-                         "factorial" [(fn [i _] (factorial i))] 
-                         "factorial#inc" (create-factorial-proc-fns pipeline-length)
-                         "pcap-json" [(fn [i _] (proc-fn i))]
-                         "pcap-json#inc" (create-proc-fns-vec
+                         "factorial" [(fn [i _] (factorial i))]
+                         "factorial-inc" (create-factorial-proc-fns pipeline-length)
+                         "pcap-clj-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-clj-map)]
+                                          [(fn [i _] (pcap-fn i))])
+                         "pcap-java-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-java-map)]
+                                           [(fn [i _] (pcap-fn i))])
+                         "pcap-json" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-json)]
+                                       [(fn [i _] (pcap-fn i))])
+                         "pcap-json-inc" (create-proc-fns-vec
                                            fn-mapping
                                            sample-pcap-processing-definition-json))
                        out-fn))
-          in-fn (cond
-                  (nil? in-data) (fn [] (.inc in-cntr))
-                  :default (if (not (nil? pipeline))
-                             (get-in-fn pipeline)))
           in-loop (ProcessingLoop.
                     "InLoop"
                     (cond
-                      (.endsWith scenario "-direct") (fn []
-                                                       (proc-fn in-data)
-                                                       (.inc out-cntr))
-                      (not (nil? in-data)) (fn []
-                                             (doseq [i (repeat 1000 0)]
-                                               (in-fn in-data)
-                                               (.inc in-cntr))
-                                             (sleep 1))
+                      (.endsWith scenario "-direct")
+                        (let [proc-fn (condp = scenario
+                                        "pcap-clj-map-direct" (create-proc-fn sample-pcap-processing-definition-clj-map)
+                                        "pcap-java-map-direct" (create-proc-fn sample-pcap-processing-definition-java-map)
+                                        "pcap-json-direct" (create-proc-fn sample-pcap-processing-definition-json)
+                                        "opennlp-direct" opennlp-direct-test-fn
+                                        "factorial-direct" factorial
+                                        nil)]
+                          (fn []
+                            (proc-fn in-data)
+                            (.inc out-cntr)))
+                      (not (nil? in-data)) (let [in-fn (get-in-fn pipeline)]
+                                             (fn []
+                                               (doseq [i (repeat 1000 0)]
+                                                 (in-fn in-data)
+                                                 (.inc in-cntr))
+                                               (sleep 1)))
                       :default (fn [] (.inc out-cntr))))
           thread-info-fn (create-thread-info-fn)
           stats-fn (fn []
