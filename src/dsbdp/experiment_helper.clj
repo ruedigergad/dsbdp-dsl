@@ -127,3 +127,9 @@
   (doseq [sentence (get-sentences in-str)]
     (opennlp-single-sentence-direct-test-fn sentence)))
 
+(def opennlp-single-sentence-inc-test-fns
+  [(fn [in _] (tokenize in))
+   (fn [_ out] (pos-tag out))
+   (fn [_ out] (chunker out))
+   (fn [_ out] (phrases out))])
+
