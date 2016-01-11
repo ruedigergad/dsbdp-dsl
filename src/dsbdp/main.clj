@@ -119,7 +119,7 @@
                                         "pcap-java-map-direct" (create-proc-fn sample-pcap-processing-definition-java-map)
                                         "pcap-json-direct" (create-proc-fn sample-pcap-processing-definition-json)
                                         "opennlp-single-direct" opennlp-single-sentence-direct-test-fn
-                                        "opennlp-multi-direct" opennlp-direct-test-fn
+                                        "opennlp-multi-direct" opennlp-multi-sentence-direct-test-fn
                                         "factorial-direct" factorial
                                         nil)]
                           (fn []

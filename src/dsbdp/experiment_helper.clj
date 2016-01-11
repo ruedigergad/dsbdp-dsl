@@ -122,7 +122,7 @@
   [sentence]
   (phrases (chunker (pos-tag (tokenize sentence)))))
 
-(defn opennlp-direct-test-fn
+(defn opennlp-multi-sentence-direct-test-fn
   [in-str]
   (doseq [sentence (get-sentences in-str)]
     (opennlp-single-sentence-direct-test-fn sentence)))
