@@ -53,6 +53,10 @@
 
 (def cli-options
   [["-h" "--help"]
+   ["-i" "--in-data IN-DATA"
+    "The input data to be used."
+    :default nil
+    :parse-fn #(binding [*read-eval* false] (read-string %))]
    ["-l" "--pipeline-length PIPELINE-LENGTH"
     :default 2
     :parse-fn #(Integer/parseInt %)]
@@ -78,17 +82,19 @@
           out-fn (fn [_ _]
                    (.inc out-cntr))
           ^String scenario (:scenario options)
-          in-data (condp (fn [^String v ^String s] (.startsWith s v)) scenario
-                    "no-op" 1
-                    "factorial" 300N
-                    "opennlp-single" "This is a simple sentence."
-                    "opennlp-multi" (str
-                                      "This is a simple sentence. "
-                                      "The first example sentence is followed by another example sentence. "
-                                      "The second sentence is followed by another example sentence.")
-                    "pcap" pcap-byte-array-test-data
-                    "nil" nil
-                    )
+          in-data-arg (:in-data options)
+          in-data (if (not (nil? in-data-arg))
+                    in-data-arg
+                    (condp (fn [^String v ^String s] (.startsWith s v)) scenario
+                      "no-op" 1
+                      "factorial" 300N
+                      "opennlp-single" "This is a simple sentence."
+                      "opennlp-multi" (str
+                                        "This is a simple sentence. "
+                                        "The first example sentence is followed by another example sentence. "
+                                        "The second sentence is followed by another example sentence.")
+                      "pcap" pcap-byte-array-test-data
+                      "nil" nil))
           _ (println "in-data:" in-data)
           fn-mapping (:fn-mapping options)
           pipeline-length (:pipeline-length options)
