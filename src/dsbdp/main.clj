@@ -81,10 +81,11 @@
           in-data (condp (fn [^String v ^String s] (.startsWith s v)) scenario
                     "no-op" 1
                     "factorial" 300N
-                    "opennlp" (str 
-                                "This is a simple sentence. "
-                                "The first example sentence is followed by another example sentence. "
-                                "The second sentence is followed by another example sentence.")
+                    "opennlp-single" "This is a simple sentence."
+                    "opennlp-multi" (str
+                                      "This is a simple sentence. "
+                                      "The first example sentence is followed by another example sentence. "
+                                      "The second sentence is followed by another example sentence.")
                     "pcap" pcap-byte-array-test-data
                     "nil" nil
                     )
@@ -117,7 +118,8 @@
                                         "pcap-clj-map-direct" (create-proc-fn sample-pcap-processing-definition-clj-map)
                                         "pcap-java-map-direct" (create-proc-fn sample-pcap-processing-definition-java-map)
                                         "pcap-json-direct" (create-proc-fn sample-pcap-processing-definition-json)
-                                        "opennlp-direct" opennlp-direct-test-fn
+                                        "opennlp-single-direct" opennlp-single-sentence-direct-test-fn
+                                        "opennlp-multi-direct" opennlp-direct-test-fn
                                         "factorial-direct" factorial
                                         nil)]
                           (fn []

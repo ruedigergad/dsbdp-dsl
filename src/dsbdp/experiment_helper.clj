@@ -118,8 +118,12 @@
   {:output-type :java-map
    :rules sample-pcap-processing-definition-rules})
 
+(defn opennlp-single-sentence-direct-test-fn
+  [sentence]
+  (phrases (chunker (pos-tag (tokenize sentence)))))
+
 (defn opennlp-direct-test-fn
   [in-str]
   (doseq [sentence (get-sentences in-str)]
-    (phrases (chunker (pos-tag (tokenize sentence))))))
+    (opennlp-single-sentence-direct-test-fn sentence)))
 
