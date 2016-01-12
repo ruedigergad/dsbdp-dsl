@@ -83,3 +83,16 @@
            "\"udp-checksum\":0.9058671,\"udp-payload\":\"abcdefghijklmnop\"}")
          (str (processing-fn pcap-byte-array-test-data))))))
 
+;(deftest sample-pcap-processing-definition-clj-map-test
+;  (let [processing-fn (create-proc-fn sample-pcap-processing-definition-clj-map)]
+;    (is (=
+;         {"timestamp" "2015-01-27_14:47:39","capture-length" 58,
+;          "eth-src" "01:02:03:04:05:06","eth-dst" "FF:FE:FD:F2:F1:F0",
+;          "ip-src" "1.2.3.4","ip-dst" "252.253.254.255","ip-ver" 4,"ip-length" 6.7139696E-4,
+;          "ip-id" 4.5777066E-5,"ip-ttl" 0.02745098,"ip-protocol" 0.06666667,"ip-checksum" 0.45226216,
+;          "udp-src" 0.031250477,"udp-dst" 0.06250095,"udp-length" 2.4414435E-4,
+;          "udp-checksum" 0.9058671,"udp-payload" "abcdefghijklmnop"}
+;         (processing-fn pcap-byte-array-test-data)))
+;    (println (processing-fn pcap-byte-array-test-data))
+;    ))
+
