@@ -15,6 +15,7 @@
     [dsbdp.data-processing-dsl :refer :all] 
     [dsbdp.experiment-helper :refer :all])
   (:import
+    (dsbdp ExperimentHelper)
     (java.util HashMap Map)))
 
 (deftest simple-create-proc-fns-test
@@ -95,4 +96,22 @@
 ;         (processing-fn pcap-byte-array-test-data)))
 ;    (println (processing-fn pcap-byte-array-test-data))
 ;    ))
+
+(deftest busy-sleep-test-1
+  (let [start-time (System/nanoTime)
+        _ (ExperimentHelper/busySleep 100)
+        end-time (System/nanoTime)
+        time-delta (- end-time start-time)]
+    (is (> time-delta 100000))
+    (is (< time-delta 150000))
+    ))
+
+(deftest busy-sleep-test-2
+  (let [start-time (System/nanoTime)
+        _ (ExperimentHelper/busySleep 1000)
+        end-time (System/nanoTime)
+        time-delta (- end-time start-time)]
+    (is (> time-delta 1000000))
+    (is (< time-delta 1050000))
+    ))
 
