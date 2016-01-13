@@ -19,7 +19,7 @@
       [experiment-helper :refer :all]
       [local-data-processing-pipeline :refer :all]))
   (:import
-    (dsbdp Counter ProcessingLoop)
+    (dsbdp Counter ExperimentHelper ProcessingLoop)
     (java.lang.management ManagementFactory ThreadInfo ThreadMXBean)
     (java.util HashMap Map))
   (:gen-class))
@@ -87,6 +87,7 @@
                     in-data-arg
                     (condp (fn [^String v ^String s] (.startsWith s v)) scenario
                       "no-op" 1
+                      "busy-sleep" [100 100 100 100]
                       "factorial" 300N
                       "opennlp-single" "This is a simple sentence."
                       "opennlp-multi" (str
@@ -104,6 +105,7 @@
                      (create-local-processing-pipeline
                        (condp = scenario
                          "no-op" (create-no-op-proc-fns pipeline-length)
+                         "busy-sleep" (create-busy-sleep-proc-fns (count in-data))
                          "factorial" [(fn [i _] (factorial i))]
                          "factorial-inc" (create-factorial-proc-fns pipeline-length)
                          "opennlp-single-inc" opennlp-single-sentence-direct-test-fn
@@ -122,12 +124,13 @@
                     (cond
                       (.endsWith scenario "-direct")
                         (let [proc-fn (condp = scenario
+                                        "busy-sleep-direct" (fn [in] (ExperimentHelper/busySleep (first in)))
+                                        "factorial-direct" factorial
+                                        "opennlp-single-direct" opennlp-single-sentence-direct-test-fn
+                                        "opennlp-multi-direct" opennlp-multi-sentence-direct-test-fn
                                         "pcap-clj-map-direct" (create-proc-fn sample-pcap-processing-definition-clj-map)
                                         "pcap-java-map-direct" (create-proc-fn sample-pcap-processing-definition-java-map)
                                         "pcap-json-direct" (create-proc-fn sample-pcap-processing-definition-json)
-                                        "opennlp-single-direct" opennlp-single-sentence-direct-test-fn
-                                        "opennlp-multi-direct" opennlp-multi-sentence-direct-test-fn
-                                        "factorial-direct" factorial
                                         nil)]
                           (fn []
                             (proc-fn in-data)
