@@ -20,6 +20,7 @@
     
     ) 
   (:import
+    (dsbdp ExperimentHelper)
     (java.util HashMap Map)
     (org.apache.commons.math3.util CombinatoricsUtils)))
 
@@ -85,6 +86,13 @@
   (create-proc-fns
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
+     n))
+
+(defn create-busy-sleep-proc-fns
+  [n]
+  (create-proc-fns
+    '(fn [i _] (dsbdp.ExperimentHelper/busySleep (i :_idx_)))
+    '(fn [i _] (dsbdp.ExperimentHelper/busySleep (i :_idx_)))
      n))
 
 (def sample-pcap-processing-definition-rules
