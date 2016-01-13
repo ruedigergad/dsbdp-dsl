@@ -217,7 +217,7 @@
 ;;;
 ;;; Tests for generating vectors of functions that can be used in the data processing pipeline.
 ;;;
-(deftest create-partial-proc-fn-test-1
+(deftest create-proc-fns-vec-fn-test-1
   (let [input-ba (byte-array (map byte [0 1 2 3 4 5 6 7 8 9]))
         expected {"a" 0, "b" 1, "c" 2, "d" 3}
         dsl-expression {:output-type :clj-map
@@ -231,10 +231,10 @@
                                 ['h '(int8 7)]
                                 ['i '(int8 8)]
                                 ['j '(int8 9)]]}
-        proc-fn (create-partial-proc-fn dsl-expression 0 4)]
+        proc-fn (create-proc-fns-vec-fn dsl-expression 0 4)]
     (is (= expected (proc-fn input-ba)))))
 
-(deftest create-partial-proc-fn-test-2
+(deftest create-proc-fns-vec-fn-test-2
   (let [input-ba (byte-array (map byte [0 1 2 3 4 5 6 7 8 9]))
         expected {"e" 4, "f" 5, "g" 6}
         dsl-expression {:output-type :clj-map
@@ -248,7 +248,7 @@
                                 ['h '(int8 7)]
                                 ['i '(int8 8)]
                                 ['j '(int8 9)]]}
-        proc-fn (create-partial-proc-fn dsl-expression 4 7)]
+        proc-fn (create-proc-fns-vec-fn dsl-expression 4 7)]
     (is (= expected (proc-fn input-ba {})))))
 
 (deftest dsl-expression-to-function-vector-test-1
