@@ -108,7 +108,7 @@
                          "busy-sleep" (create-busy-sleep-proc-fns (count in-data))
                          "factorial" [(fn [i _] (factorial i))]
                          "factorial-inc" (create-factorial-proc-fns pipeline-length)
-                         "opennlp-single-inc" opennlp-single-sentence-direct-test-fn
+                         "opennlp-single-inc" opennlp-single-sentence-inc-test-fns
                          "pcap-clj-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-clj-map)]
                                           [(fn [i _] (pcap-fn i))])
                          "pcap-java-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-java-map)]
