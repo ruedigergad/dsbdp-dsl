@@ -99,7 +99,7 @@
 
 (deftest busy-sleep-test-1
   (let [start-time (System/nanoTime)
-        _ (ExperimentHelper/busySleep 100)
+        _ (ExperimentHelper/busySleep 100000)
         end-time (System/nanoTime)
         time-delta (- end-time start-time)]
     (is (> time-delta 100000))
@@ -108,7 +108,7 @@
 
 (deftest busy-sleep-test-2
   (let [start-time (System/nanoTime)
-        _ (ExperimentHelper/busySleep 1000)
+        _ (ExperimentHelper/busySleep 1000000)
         end-time (System/nanoTime)
         time-delta (- end-time start-time)]
     (is (> time-delta 1000000))
@@ -119,7 +119,7 @@
   (let [proc-fns (create-busy-sleep-proc-fns 4)
         start-time (atom nil)
         end-time (atom nil)
-        in-data [100 200 300 400]]
+        in-data [100000 200000 300000 400000]]
     (is (= 4 (count proc-fns)))
     (swap! start-time (fn [_] (System/nanoTime)))
     ((proc-fns 0) in-data nil)

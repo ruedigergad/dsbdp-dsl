@@ -19,7 +19,7 @@ public class ExperimentHelper {
         long startTime = System.nanoTime();
         do {
             // Nothing
-        } while ((System.nanoTime() - startTime) < (duration * 1000));
+        } while ((System.nanoTime() - startTime) < duration);
     }
 
 }

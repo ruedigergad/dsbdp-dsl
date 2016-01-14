@@ -87,7 +87,7 @@
                     in-data-arg
                     (condp (fn [^String v ^String s] (.startsWith s v)) scenario
                       "no-op" 1
-                      "busy-sleep" [100 100 100 100]
+                      "busy-sleep" [100000 100000 100000 100000]
                       "factorial" 300N
                       "opennlp-single" "This is a simple sentence."
                       "opennlp-multi" (str
