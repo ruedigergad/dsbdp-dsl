@@ -159,7 +159,7 @@
       (.start in-loop)
       (run-repeat (executor) (fn []
                                (stats-fn)
-                               ;(thread-info-fn) (println)
+                               (thread-info-fn) (println)
                                )
                   1000)
       (run-once (executor) (fn [] (System/exit 0)) 20000))))
