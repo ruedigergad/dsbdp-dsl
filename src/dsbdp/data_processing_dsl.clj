@@ -127,7 +127,7 @@
                              (eval `(fn [~input-sym] ~fn-body)))]
     data-processing-fn))
 
-(defn create-proc-fns-vec-fn
+(defn create-mapped-proc-fn
   [dsl-expression start-idx end-idx]
   (if (= 0 start-idx)
     (create-proc-fn
@@ -137,15 +137,15 @@
       {:output-type (keyword (str (name (:output-type dsl-expression)) *incremental-indicator-suffix*))
        :rules (subvec (:rules dsl-expression) start-idx end-idx)})))
 
-(defn create-proc-fns-vec
+(defn create-mapped-proc-fns-vec
   [fn-mapping dsl-expression]
   (reduce
     (fn [v m]
       (let [start-idx (reduce + (subvec fn-mapping 0 (count v)))]
-        (conj v (create-proc-fns-vec-fn dsl-expression
+        (conj v (create-mapped-proc-fn dsl-expression
                                         start-idx
                                         (+ start-idx m)))))
-    (let [f (create-proc-fns-vec-fn dsl-expression 0 (first fn-mapping))]
+    (let [f (create-mapped-proc-fn dsl-expression 0 (first fn-mapping))]
       [(fn [in _] (f in))])
     (rest fn-mapping)))
 

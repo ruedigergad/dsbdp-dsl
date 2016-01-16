@@ -115,7 +115,7 @@
                                            [(fn [i _] (pcap-fn i))])
                          "pcap-json" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-json)]
                                        [(fn [i _] (pcap-fn i))])
-                         "pcap-json-inc" (create-proc-fns-vec
+                         "pcap-json-inc" (create-mapped-proc-fns-vec
                                            fn-mapping
                                            sample-pcap-processing-definition-json))
                        out-fn))
