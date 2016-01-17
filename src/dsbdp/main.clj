@@ -124,7 +124,7 @@
                     (cond
                       (.endsWith scenario "-direct")
                         (let [proc-fn (condp = scenario
-                                        "busy-sleep-direct" (fn [in] (ExperimentHelper/busySleep (first in)))
+                                        "busy-sleep-direct" (fn [in] (ExperimentHelper/busySleep ^long (first in)))
                                         "factorial-direct" factorial
                                         "opennlp-single-direct" opennlp-single-sentence-direct-test-fn
                                         "opennlp-multi-direct" opennlp-multi-sentence-direct-test-fn
@@ -137,7 +137,7 @@
                             (.inc out-cntr)))
                       (not (nil? in-data)) (let [in-fn (get-in-fn pipeline)]
                                              (fn []
-                                               (doseq [i (repeat 1000 0)]
+                                               (doseq [i (repeat 2000 0)]
                                                  (in-fn in-data)
                                                  (.inc in-cntr))
                                                (sleep 1)))
@@ -159,8 +159,8 @@
       (.start in-loop)
       (run-repeat (executor) (fn []
                                (stats-fn)
-                               ;(thread-info-fn) (println)
+                               (thread-info-fn) (println)
                                )
                   1000)
-      (run-once (executor) (fn [] (System/exit 0)) 20000))))
+      (run-once (executor) (fn [] (System/exit 0)) 120000))))
 

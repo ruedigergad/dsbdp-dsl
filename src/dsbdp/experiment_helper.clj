@@ -91,8 +91,8 @@
 (defn create-busy-sleep-proc-fns
   [n]
   (create-proc-fns
-    '(fn [i _] (dsbdp.ExperimentHelper/busySleep (i :_idx_)))
-    '(fn [i _] (dsbdp.ExperimentHelper/busySleep (i :_idx_)))
+    '(fn [i _] (dsbdp.ExperimentHelper/busySleep ^long (i :_idx_)) 0)
+    '(fn [i _] (dsbdp.ExperimentHelper/busySleep ^long (i :_idx_)) 0)
      n))
 
 (def sample-pcap-processing-definition-rules
