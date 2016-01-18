@@ -28,3 +28,15 @@
     (is (= 1 ((nth proc-fns 1) nil nil)))
     (is (= 3 ((last proc-fns) nil nil)))))
 
+(deftest create-proc-fn-vec-from-template-with-ret-val-test
+  (let [proc-fns (create-proc-fn-vec-from-template '(fn [i _] (inc i)) '(fn [_ o] (inc o)) 4)]
+    (is (= 4 (count proc-fns)))
+    (is (= 1 ((first proc-fns) 0 nil)))
+    (is (= 1 ((nth proc-fns 1) nil 0)))
+    (is (= 1 ((last proc-fns) nil 0)))
+    (is (= 4 (->>
+               ((proc-fns 0) 0 nil)
+               ((proc-fns 1) nil)
+               ((proc-fns 2) nil)
+               ((proc-fns 3) nil))))))
+
