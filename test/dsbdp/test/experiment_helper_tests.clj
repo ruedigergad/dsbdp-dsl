@@ -18,13 +18,6 @@
     (dsbdp ExperimentHelper)
     (java.util HashMap Map)))
 
-(deftest simple-create-proc-fns-test
-  (let [proc-fns (create-proc-fns '(fn [_ _] "1") '(fn [_ _] "n") 4)]
-    (is (= 4 (count proc-fns)))
-    (is (= "1" ((first proc-fns) nil nil)))
-    (is (= "n" ((nth proc-fns 1) nil nil)))
-    (is (= "n" ((last proc-fns) nil nil)))))
-
 (deftest create-no-op-proc-fns-test
   (let [proc-fns (create-no-op-proc-fns 4)]
     (is (= 4 (count proc-fns)))
@@ -38,13 +31,6 @@
     (is (= 2 ((first proc-fns) 1 nil)))
     (is (= 2 ((nth proc-fns 1) nil 1)))
     (is (= 2 ((last proc-fns) nil 1)))))
-
-(deftest create-idx-proc-fns-test
-  (let [proc-fns (create-proc-fns '(fn [_ _] :_idx_) '(fn [_ _] :_idx_) 4)]
-    (is (= 4 (count proc-fns)))
-    (is (= 0 ((first proc-fns) nil nil)))
-    (is (= 1 ((nth proc-fns 1) nil nil)))
-    (is (= 3 ((last proc-fns) nil nil)))))
 
 (deftest create-hashmap-inc-put-proc-fns-test
   (let [proc-fns (create-hashmap-inc-put-proc-fns 4)]

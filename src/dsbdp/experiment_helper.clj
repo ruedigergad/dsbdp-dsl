@@ -15,6 +15,7 @@
     [clojure.pprint :refer :all]
     [dsbdp.byte-array-conversion :refer :all]
     [dsbdp.data-processing-dsl :refer :all]
+    [dsbdp.processing-fn-utils :refer :all]
     [opennlp.nlp :refer :all]
     [opennlp.treebank :refer :all]
     
@@ -38,28 +39,16 @@
 (def pos-tag (make-pos-tagger "resources/opennlp/models/en-pos-maxent.bin"))
 (def chunker (make-treebank-chunker "resources/opennlp/models/en-chunker.bin"))
 
-(defn create-proc-fns
-  [fn-1 fn-n n]
-  (loop [fns (prewalk-replace {:_idx_ 0} [fn-1])]
-    (if (< (count fns) n)
-      (recur (conj fns (prewalk-replace {:_idx_ (count fns)} fn-n)))
-      (do
-        (println "proc-fns-full:" fns)
-        (println "proc-fns-short:" (.replaceAll (str fns) "(?<=\\()([a-zA-Z\\.\\-]++/)" ""))
-        (println "proc-fns-pretty:\n" (.replaceAll (str (with-out-str (pprint fns))) "(?<=\\()([a-zA-Z\\.\\-]++/)" ""))
-        (vec
-          (map eval fns))))))
-
 (defn create-no-op-proc-fns
   [n]
-  (create-proc-fns
+  (create-proc-fn-vec-from-template
     '(fn [_ _] 0)
     '(fn [_ _] 1)
     n))
 
 (defn create-inc-proc-fns
   [n]
-  (create-proc-fns
+  (create-proc-fn-vec-from-template
     '(fn [i _] (inc i))
     '(fn [_ o] (inc o))
     n))
@@ -68,7 +57,7 @@
   [n]
   (let [o-sym 'o]
     (let [o-meta (vary-meta o-sym assoc :tag 'java.util.Map)]
-     (create-proc-fns
+     (create-proc-fn-vec-from-template
        '(fn [i _] (doto (java.util.HashMap.) (.put (str :_idx_) (inc i))))
        '(fn [_ o-meta] (.put o-meta (str :_idx_) (inc (.get o-meta (str (dec :_idx_))))))
        n))))
@@ -83,14 +72,14 @@
 
 (defn create-factorial-proc-fns
   [n]
-  (create-proc-fns
+  (create-proc-fn-vec-from-template
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
      n))
 
 (defn create-busy-sleep-proc-fns
   [n]
-  (create-proc-fns
+  (create-proc-fn-vec-from-template
     '(fn [i _] (dsbdp.ExperimentHelper/busySleep ^long (i :_idx_)) 0)
     '(fn [i _] (dsbdp.ExperimentHelper/busySleep ^long (i :_idx_)) 0)
      n))
