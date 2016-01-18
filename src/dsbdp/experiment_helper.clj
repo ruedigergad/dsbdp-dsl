@@ -17,9 +17,7 @@
     [dsbdp.data-processing-dsl :refer :all]
     [dsbdp.processing-fn-utils :refer :all]
     [opennlp.nlp :refer :all]
-    [opennlp.treebank :refer :all]
-    
-    ) 
+    [opennlp.treebank :refer :all])
   (:import
     (dsbdp ExperimentHelper)
     (java.util HashMap Map)
