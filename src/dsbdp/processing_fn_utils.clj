@@ -26,3 +26,10 @@
         (vec
           (map eval fns))))))
 
+(defn create-mapped-proc-fn
+  [fn-vec start-idx end-idx]
+  (if (= 0 start-idx)
+    nil
+    nil
+    ))
+
