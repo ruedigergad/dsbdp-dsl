@@ -28,8 +28,9 @@
 
 (defn create-mapped-proc-fn
   [fn-vec start-idx end-idx]
-  (if (= 0 start-idx)
-    nil
-    nil
-    ))
+  (fn [in out]
+    (loop [fns (subvec fn-vec start-idx end-idx) o out]
+      (if (empty? fns)
+        o
+        (recur (rest fns) ((first fns) in o))))))
 
