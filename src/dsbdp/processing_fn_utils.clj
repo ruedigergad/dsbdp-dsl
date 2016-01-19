@@ -26,7 +26,7 @@
         (vec
           (map eval fns))))))
 
-(defn create-mapped-proc-fn
+(defn combine-proc-fns
   [fn-vec start-idx end-idx]
   (fn [in out]
     (loop [fns (subvec fn-vec start-idx end-idx) o out]

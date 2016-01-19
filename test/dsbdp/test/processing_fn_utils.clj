@@ -40,22 +40,20 @@
                ((proc-fns 2) nil)
                ((proc-fns 3) nil))))))
 
-(deftest simple-create-mapped-proc-fn-test-1st
+(deftest simple-combine-proc-fns-1st-test
   (let [proc-fns (create-proc-fn-vec-from-template '(fn [i _] (+ i :_idx_ 1)) '(fn [_ o] (+ o :_idx_ 1)) 6)
-        mapped-proc-fn (create-mapped-proc-fn proc-fns 0 3)]
+        mapped-proc-fn (combine-proc-fns proc-fns 0 3)]
     (is (= 1 ((proc-fns 0) 0 nil)))
     (is (= 2 ((proc-fns 1) nil 0)))
     (is (= 6 ((proc-fns 5) nil 0)))
     (is (= 6 (mapped-proc-fn 0 nil)))
     (is (= 10 (mapped-proc-fn 4 nil)))))
 
-(deftest simple-create-mapped-proc-fn-test-nth
+(deftest simple-combine-proc-fns-nth-test
   (let [proc-fns (create-proc-fn-vec-from-template '(fn [i _] (+ i :_idx_ 1)) '(fn [_ o] (+ o :_idx_ 1)) 6)
-        mapped-proc-fn (create-mapped-proc-fn proc-fns 3 5)]
+        mapped-proc-fn (combine-proc-fns proc-fns 3 5)]
     (is (= 4 ((proc-fns 3) nil 0)))
     (is (= 5 ((proc-fns 4) nil 0)))
     (is (= 9 (mapped-proc-fn nil 0)))
-    (is (= 15 (mapped-proc-fn nil 6)))
-    )
-  )
+    (is (= 15 (mapped-proc-fn nil 6)))))
 
