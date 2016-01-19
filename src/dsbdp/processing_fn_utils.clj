@@ -34,3 +34,13 @@
         o
         (recur (rest fns) ((first fns) in o))))))
 
+(defn combine-proc-fn-vec
+  [fn-mapping fn-vec]
+  (reduce
+    (fn [v m]
+      (let [start-idx (reduce + (subvec fn-mapping 0 (count v)))]
+        (conj v (combine-proc-fns fn-vec start-idx (+ start-idx m)))))
+    (let [f (combine-proc-fns fn-vec 0 (first fn-mapping))]
+      [f])
+    (rest fn-mapping)))
+

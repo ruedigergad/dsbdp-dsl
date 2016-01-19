@@ -57,3 +57,13 @@
     (is (= 9 (combined-proc-fn nil 0)))
     (is (= 15 (combined-proc-fn nil 6)))))
 
+(deftest simple-combine-proc-fn-vec-test
+  (let [proc-fns (create-proc-fn-vec-from-template '(fn [i _] (+ i :_idx_ 1)) '(fn [_ o] (+ o :_idx_ 1)) 6)
+        combined-proc-fn-vec (combine-proc-fn-vec [3 2 1] proc-fns)]
+    (is (= 1 ((proc-fns 0) 0 nil)))
+    (is (= 2 ((proc-fns 1) nil 0)))
+    (is (= 6 ((proc-fns 5) nil 0)))
+    (is (= 6 ((combined-proc-fn-vec 0) 0 nil)))
+    (is (= 9 ((combined-proc-fn-vec 1) nil 0)))
+    (is (= 6 ((combined-proc-fn-vec 2) nil 0)))))
+
