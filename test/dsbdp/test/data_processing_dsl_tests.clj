@@ -217,7 +217,7 @@
 ;;;
 ;;; Tests for generating vectors of functions that can be used in the data processing pipeline.
 ;;;
-(deftest create-mapped-proc-fn-test-1
+(deftest combine-proc-fns-1st-test
   (let [input-ba (byte-array (map byte [0 1 2 3 4 5 6 7 8 9]))
         expected {"a" 0, "b" 1, "c" 2, "d" 3}
         dsl-expression {:output-type :clj-map
@@ -231,10 +231,10 @@
                                 ['h '(int8 7)]
                                 ['i '(int8 8)]
                                 ['j '(int8 9)]]}
-        proc-fn (create-mapped-proc-fn dsl-expression 0 4)]
+        proc-fn (combine-proc-fns dsl-expression 0 4)]
     (is (= expected (proc-fn input-ba)))))
 
-(deftest create-mapped-proc-fn-test-2
+(deftest combine-proc-fns-nth-test
   (let [input-ba (byte-array (map byte [0 1 2 3 4 5 6 7 8 9]))
         expected {"e" 4, "f" 5, "g" 6}
         dsl-expression {:output-type :clj-map
@@ -248,10 +248,10 @@
                                 ['h '(int8 7)]
                                 ['i '(int8 8)]
                                 ['j '(int8 9)]]}
-        proc-fn (create-mapped-proc-fn dsl-expression 4 7)]
+        proc-fn (combine-proc-fns dsl-expression 4 7)]
     (is (= expected (proc-fn input-ba {})))))
 
-(deftest dsl-expression-to-mapped-function-vector-test-1
+(deftest dsl-expression-to-combined-function-vector-test-1
   (let [input-ba (byte-array (map byte [0 1 2 3 4 5 6 7 8 9]))
         expected-0 {"a" 0, "b" 1, "c" 2, "d" 3}
         expected-1 {"e" 4, "f" 5, "g" 6}
@@ -268,7 +268,7 @@
                                 ['h '(int8 7)]
                                 ['i '(int8 8)]
                                 ['j '(int8 9)]]}
-        proc-fns-vec (create-mapped-proc-fns-vec
+        proc-fns-vec (combine-proc-fns-vec
                        [4 3 2 1]
                        dsl-expression)]
     (is (vector? proc-fns-vec))

@@ -15,7 +15,7 @@
     [clojure.pprint :refer :all]
     [dsbdp.byte-array-conversion :refer :all]
     [dsbdp.data-processing-dsl :refer :all]
-    [dsbdp.processing-fn-utils :refer :all]
+    [dsbdp.processing-fn-utils :as utils]
     [opennlp.nlp :refer :all]
     [opennlp.treebank :refer :all])
   (:import
@@ -39,14 +39,14 @@
 
 (defn create-no-op-proc-fns
   [n]
-  (create-proc-fn-vec-from-template
+  (utils/create-proc-fn-vec-from-template
     '(fn [_ _] 0)
     '(fn [_ _] 1)
     n))
 
 (defn create-inc-proc-fns
   [n]
-  (create-proc-fn-vec-from-template
+  (utils/create-proc-fn-vec-from-template
     '(fn [i _] (inc i))
     '(fn [_ o] (inc o))
     n))
@@ -55,7 +55,7 @@
   [n]
   (let [o-sym 'o]
     (let [o-meta (vary-meta o-sym assoc :tag 'java.util.Map)]
-     (create-proc-fn-vec-from-template
+     (utils/create-proc-fn-vec-from-template
        '(fn [i _] (doto (java.util.HashMap.) (.put (str :_idx_) (inc i))))
        '(fn [_ o-meta] (.put o-meta (str :_idx_) (inc (.get o-meta (str (dec :_idx_))))))
        n))))
@@ -70,14 +70,14 @@
 
 (defn create-factorial-proc-fns
   [n]
-  (create-proc-fn-vec-from-template
+  (utils/create-proc-fn-vec-from-template
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
      n))
 
 (defn create-busy-sleep-proc-fns
   [n]
-  (create-proc-fn-vec-from-template
+  (utils/create-proc-fn-vec-from-template
     '(fn [i _] (dsbdp.ExperimentHelper/busySleep ^long (i :_idx_)) 0)
     '(fn [i _] (dsbdp.ExperimentHelper/busySleep ^long (i :_idx_)) 0)
      n))
