@@ -34,7 +34,7 @@
         o
         (recur (rest fns) ((first fns) in o))))))
 
-(defn combine-proc-fn-vec
+(defn combine-proc-fns-vec
   [fn-mapping fn-vec]
   (reduce
     (fn [v m]
