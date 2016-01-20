@@ -253,9 +253,20 @@
                     (interrupt pe))
                   (.interrupt out-proc-loop))
      :in-fn (fn [in]
-              (enqueue in-queue (LocalTransferContainer. in nil) in-counter in-drop-counter))}))
+              (enqueue in-queue (LocalTransferContainer. in nil) in-counter in-drop-counter))
+     :set-proc-fns-vec (fn [new-proc-fns-vec]
+                         (doall
+                           (map
+                             (fn [pe f]
+                               (set-proc-fn pe f))
+                             proc-elements
+                             new-proc-fns-vec)))}))
 
 (defn get-in-fn
   [obj]
   (obj :in-fn))
+
+(defn set-proc-fns-vec
+  [obj fns]
+  ((obj :set-proc-fns-vec) fns))
 

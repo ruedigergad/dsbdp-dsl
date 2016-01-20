@@ -230,3 +230,27 @@
     (is (= 3 @out))
     (interrupt pipeline)))
 
+(deftest simple-pipeline-set-proc-fns-vec-test
+  (let [flag-out (atom (prepare-flag))
+        out (atom nil)
+        proc-fns-1 [(fn [in _] (inc in))
+                    (fn [_ out] (inc out))
+                    (fn [_ out] (inc out))]
+        proc-fns-2 [(fn [in _] (dec in))
+                    (fn [_ out] (dec out))
+                    (fn [_ out] (dec out))]
+        pipeline (create-local-processing-pipeline
+                   proc-fns-1
+                   (fn [_ o] (reset! out o) (set-flag @flag-out)))]
+    ((get-in-fn pipeline) 0)
+    (await-flag @flag-out)
+    (is (flag-set? @flag-out))
+    (is (= 3 @out))
+    (set-proc-fns-vec pipeline proc-fns-2)
+    (reset! flag-out (prepare-flag))
+    ((get-in-fn pipeline) 0)
+    (await-flag @flag-out)
+    (is (flag-set? @flag-out))
+    (is (= -3 @out))
+    (interrupt pipeline)))
+
