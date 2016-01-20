@@ -149,6 +149,56 @@
       (is (= 3 (:dropped cntr))))
     (interrupt proc-element)))
 
+(deftest simple-local-processing-element-change-proc-fn-test
+  (let [in-queue (LinkedTransferQueue.)
+        flag-1 (prepare-flag)
+        flag-2 (prepare-flag)
+        flag-3 (prepare-flag)
+        tmp-flag (prepare-flag)
+        out (atom nil)
+        proc-fn-1 (fn [in out]
+                    (set-flag flag-1)
+                    "foo")
+        proc-fn-2 (fn [in out]
+                    (set-flag flag-2)
+                    "bar")
+        proc-fn-3 (fn [in out]
+                    (set-flag flag-3)
+                    "baz")
+        proc-element (create-local-processing-element
+                       in-queue
+                       proc-fn-1)]
+    (doto
+      (ProcessingLoop. (fn []
+                         (set-flag tmp-flag)
+                         (let [v (.take (get-out-queue proc-element))]
+                           (reset! out v))))
+      (.start))
+    (await-flag tmp-flag)
+    (.put in-queue (LocalTransferContainer. "in-1" "out-1"))
+    (await-flag flag-1)
+    (is (= "in-1" (.getIn @out)))
+    (is (= "foo" (.getOut @out)))
+    (let [cntr (get-counts proc-element)]
+      (is (= 1 (:out cntr)))
+      (is (= 0 (:dropped cntr))))
+    (set-proc-fn proc-element proc-fn-2)
+    (.put in-queue (LocalTransferContainer. "in-2" "out-2"))
+    (await-flag flag-2)
+    (is (= "in-2" (.getIn @out)))
+    (is (= "bar" (.getOut @out)))
+    (let [cntr (get-counts proc-element)]
+      (is (= 2 (:out cntr)))
+      (is (= 0 (:dropped cntr))))
+    (set-proc-fn proc-element proc-fn-3)
+    (.put in-queue (LocalTransferContainer. "in-3" "out-3"))
+    (await-flag flag-1)
+    (is (= "in-3" (.getIn @out)))
+    (is (= "baz" (.getOut @out)))
+    (let [cntr (get-counts proc-element)]
+      (is (= 3 (:out cntr)))
+      (is (= 0 (:dropped cntr))))
+    (interrupt proc-element)))
 
 
 (deftest simple-local-pipeline-send-test

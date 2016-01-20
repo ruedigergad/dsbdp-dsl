@@ -189,6 +189,8 @@
                     (.interrupt proc-loop))
        :out-queue out-queue
        :id id
+       :set-proc-fn (fn [new-proc-fn]
+                      (reset! proc-fn new-proc-fn))
        :thread-name thread-name})))
 
 (defn interrupt
@@ -210,6 +212,10 @@
 (defn get-counts
   [obj]
   ((obj :get-counts-fn)))
+
+(defn set-proc-fn
+  [obj proc-fn]
+  ((obj :set-proc-fn) proc-fn))
 
 (defn create-local-processing-pipeline
   [fns out-fn]
