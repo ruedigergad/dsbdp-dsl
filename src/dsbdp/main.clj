@@ -137,10 +137,11 @@
                             (.inc out-cntr)))
                       (not (nil? in-data)) (let [in-fn (get-in-fn pipeline)]
                                              (fn []
-                                               (doseq [i (repeat 2000 0)]
+                                         ;      (doseq [i (repeat 2000 0)]
                                                  (in-fn in-data)
                                                  (.inc in-cntr))
-                                               (sleep 1)))
+                                           )
+                                         ;      (sleep 1)))
                       :default (fn [] (.inc out-cntr))))
           thread-info-fn (create-thread-info-fn)
           stats-fn (fn []
@@ -159,7 +160,7 @@
       (.start in-loop)
       (run-repeat (executor) (fn []
                                (stats-fn)
-                               (thread-info-fn) (println)
+;                               (thread-info-fn) (println)
                                )
                   1000)
       (run-once (executor) (fn [] (System/exit 0)) 120000))))
