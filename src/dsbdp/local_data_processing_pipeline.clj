@@ -153,18 +153,19 @@
 
 
 (defn create-local-processing-element
-  ([^BlockingQueue in-queue proc-fn]
-    (create-local-processing-element in-queue proc-fn nil))
-  ([^BlockingQueue in-queue proc-fn id]
+  ([^BlockingQueue in-queue initial-proc-fn]
+    (create-local-processing-element in-queue initial-proc-fn nil))
+  ([^BlockingQueue in-queue initial-proc-fn id]
     (let [running (atom true)
           out-queue (create-queue)
           out-counter (Counter.)
           out-drop-counter (Counter.)
+          proc-fn (atom initial-proc-fn)
           handler-fn (fn []
                        (try
                          (let [^LocalTransferContainer c (take-from-queue in-queue)
                                new-out (if (not (nil? c))
-                                         (proc-fn (.getIn c) (.getOut c)))]
+                                         (@proc-fn (.getIn c) (.getOut c)))]
                            (when (not (nil? new-out))
                              (.setOut c new-out)
                              (enqueue out-queue c out-counter out-drop-counter)))
