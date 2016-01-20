@@ -9,7 +9,7 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Unit tests for utility functions for easing the handling of processing fns."}
-  dsbdp.test.processing-fn-utils
+  dsbdp.test.processing-fn-utils-tests
   (:require
     [clojure.test :refer :all]
     [dsbdp.processing-fn-utils :refer :all]))
