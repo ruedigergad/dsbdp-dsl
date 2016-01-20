@@ -153,32 +153,32 @@
 
 
 (defn create-local-processing-element
-  ([^BlockingQueue in-queue f]
-    (create-local-processing-element in-queue f nil))
-  ([^BlockingQueue in-queue f id]
+  ([^BlockingQueue in-queue proc-fn]
+    (create-local-processing-element in-queue proc-fn nil))
+  ([^BlockingQueue in-queue proc-fn id]
     (let [running (atom true)
           out-queue (create-queue)
           out-counter (Counter.)
           out-drop-counter (Counter.)
-          proc-fn (fn []
-                    (try
-                      (let [^LocalTransferContainer c (take-from-queue in-queue)
-                            new-out (if (not (nil? c))
-                                      (f (.getIn c) (.getOut c)))]
-                        (when (not (nil? new-out))
-                          (.setOut c new-out)
-                          (enqueue out-queue c out-counter out-drop-counter)))
-                      (catch InterruptedException e
-                        (if @running
-                          (throw e)))))
+          handler-fn (fn []
+                       (try
+                         (let [^LocalTransferContainer c (take-from-queue in-queue)
+                               new-out (if (not (nil? c))
+                                         (proc-fn (.getIn c) (.getOut c)))]
+                           (when (not (nil? new-out))
+                             (.setOut c new-out)
+                             (enqueue out-queue c out-counter out-drop-counter)))
+                         (catch InterruptedException e
+                           (if @running
+                             (throw e)))))
           thread-name (if (not (nil? id))
                         (str "ProcessingElement_" id))
           proc-loop (if (not (nil? thread-name))
                       (ProcessingLoop.
                         thread-name
-                        proc-fn)
+                        handler-fn)
                       (ProcessingLoop.
-                        proc-fn))]
+                        handler-fn))]
       (.start proc-loop)
       {:get-counts-fn (fn []
                         {:out (.value out-counter)
