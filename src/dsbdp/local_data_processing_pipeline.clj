@@ -239,11 +239,6 @@
                                       (if @running
                                         (throw e))))))
         out-proc-loop (atom (create-out-proc-loop))
-        restart-out-proc-loop #(do
-                                 (reset! running false)
-                                 (.interrupt @out-proc-loop)
-                                 (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
-                                 (reset! running true))
         in-counter (Counter.)
         in-drop-counter (Counter.)]
     (.start @out-proc-loop)
@@ -263,13 +258,26 @@
               (enqueue in-queue (LocalTransferContainer. in nil) in-counter in-drop-counter))
      :set-proc-fns-vec (fn [new-proc-fns-vec]
                          (when (< (count @proc-elements) (count new-proc-fns-vec))
-                           
-                           )
+                           (reset! running false)
+                           (.interrupt @out-proc-loop)
+                           (swap! proc-elements (fn [v]
+                                                 (conj
+                                                   v
+                                                   (create-local-processing-element
+                                                     (get-out-queue (last v))
+                                                     (last new-proc-fns-vec)
+                                                     (count v)))))
+                           (reset! out-queue (get-out-queue (last @proc-elements)))
+                           (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
+                           (reset! running true))
                          (when (> (count @proc-elements) (count new-proc-fns-vec))
                            (interrupt (last @proc-elements))
                            (swap! proc-elements pop)
                            (reset! out-queue (get-out-queue (last @proc-elements)))
-                           (restart-out-proc-loop))
+                           (reset! running false)
+                           (.interrupt @out-proc-loop)
+                           (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
+                           (reset! running true))
                          (doall
                            (map
                              (fn [pe f]
