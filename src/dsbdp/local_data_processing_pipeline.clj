@@ -261,13 +261,18 @@
                            (when (> count-delta 0)
                              (reset! running false)
                              (.interrupt @out-proc-loop)
-                             (swap! proc-elements (fn [v]
-                                                   (conj
-                                                     v
-                                                     (create-local-processing-element
-                                                       (get-out-queue (last v))
-                                                       (last new-proc-fns-vec)
-                                                       (count v)))))
+                             (swap! proc-elements (fn [pes]
+                                                    (reduce
+                                                      (fn [v f]
+                                                        (conj
+                                                          v
+                                                          (create-local-processing-element
+                                                            (get-out-queue (last v))
+                                                            f
+                                                            (count v))))
+                                                      pes
+                                                      (subvec new-proc-fns-vec (count pes))
+                                                      )))
                              (reset! out-queue (get-out-queue (last @proc-elements)))
                              (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
                              (reset! running true))
