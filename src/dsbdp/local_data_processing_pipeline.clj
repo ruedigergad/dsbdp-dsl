@@ -257,27 +257,29 @@
      :in-fn (fn [in]
               (enqueue in-queue (LocalTransferContainer. in nil) in-counter in-drop-counter))
      :set-proc-fns-vec (fn [new-proc-fns-vec]
-                         (when (< (count @proc-elements) (count new-proc-fns-vec))
-                           (reset! running false)
-                           (.interrupt @out-proc-loop)
-                           (swap! proc-elements (fn [v]
-                                                 (conj
-                                                   v
-                                                   (create-local-processing-element
-                                                     (get-out-queue (last v))
-                                                     (last new-proc-fns-vec)
-                                                     (count v)))))
-                           (reset! out-queue (get-out-queue (last @proc-elements)))
-                           (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
-                           (reset! running true))
-                         (when (> (count @proc-elements) (count new-proc-fns-vec))
-                           (interrupt (last @proc-elements))
-                           (swap! proc-elements pop)
-                           (reset! out-queue (get-out-queue (last @proc-elements)))
-                           (reset! running false)
-                           (.interrupt @out-proc-loop)
-                           (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
-                           (reset! running true))
+                         (let [count-delta (- (count new-proc-fns-vec) (count @proc-elements))]
+                           (when (> count-delta 0)
+                             (reset! running false)
+                             (.interrupt @out-proc-loop)
+                             (swap! proc-elements (fn [v]
+                                                   (conj
+                                                     v
+                                                     (create-local-processing-element
+                                                       (get-out-queue (last v))
+                                                       (last new-proc-fns-vec)
+                                                       (count v)))))
+                             (reset! out-queue (get-out-queue (last @proc-elements)))
+                             (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
+                             (reset! running true))
+                           (when (< count-delta 0)
+                             (doseq [pe (subvec @proc-elements (+ (count @proc-elements) count-delta))]
+                               (interrupt pe))
+                             (swap! proc-elements #(subvec % 0 (+ (count %) count-delta)))
+                             (reset! out-queue (get-out-queue (last @proc-elements)))
+                             (reset! running false)
+                             (.interrupt @out-proc-loop)
+                             (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
+                             (reset! running true)))
                          (doall
                            (map
                              (fn [pe f]
