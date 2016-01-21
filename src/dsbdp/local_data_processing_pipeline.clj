@@ -271,8 +271,7 @@
                                                             f
                                                             (count v))))
                                                       pes
-                                                      (subvec new-proc-fns-vec (count pes))
-                                                      )))
+                                                      (subvec new-proc-fns-vec (count pes)))))
                              (reset! out-queue (get-out-queue (last @proc-elements)))
                              (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
                              (reset! running true))
