@@ -221,45 +221,60 @@
   [fns out-fn]
   (let [running (atom true)
         in-queue (create-queue)
-        proc-elements (reduce
-                        (fn [v f]
-                          (conj v (create-local-processing-element (get-out-queue (last v)) f (count v))))
-                        [(create-local-processing-element in-queue (first fns) 0)]
-                        (rest fns))
-        ^BlockingQueue out-queue (get-out-queue (last proc-elements))
-        out-proc-loop (ProcessingLoop.
-                        "PipelineOut"
-                        (fn []
-                          (try
-                            (let [^LocalTransferContainer c (take-from-queue out-queue)]
-                              (if (not (nil? c))
-                                (out-fn (.getIn c) (.getOut c))))
-                            (catch InterruptedException e
-                              (if @running
-                                (throw e))))))
+        proc-elements (atom
+                        (reduce
+                          (fn [v f]
+                            (conj v (create-local-processing-element (get-out-queue (last v)) f (count v))))
+                          [(create-local-processing-element in-queue (first fns) 0)]
+                          (rest fns)))
+        out-queue (atom (get-out-queue (last @proc-elements)))
+        create-out-proc-loop #(ProcessingLoop.
+                                "PipelineOut"
+                                (fn []
+                                  (try
+                                    (let [^LocalTransferContainer c (take-from-queue ^BlockingQueue @out-queue)]
+                                      (if (not (nil? c))
+                                        (out-fn (.getIn c) (.getOut c))))
+                                    (catch InterruptedException e
+                                      (if @running
+                                        (throw e))))))
+        out-proc-loop (atom (create-out-proc-loop))
+        restart-out-proc-loop #(do
+                                 (reset! running false)
+                                 (.interrupt @out-proc-loop)
+                                 (reset! out-proc-loop (doto (create-out-proc-loop) (.start)))
+                                 (reset! running true))
         in-counter (Counter.)
         in-drop-counter (Counter.)]
-    (.start out-proc-loop)
+    (.start @out-proc-loop)
     {:get-counts-fn (fn []
                       (reduce
                         (fn [m pe]
                           (assoc m (get-id pe) (get-counts pe)))
                         {:pipeline {:in (.value in-counter)
                                     :dropped (.value in-drop-counter)}}
-                        proc-elements))
+                        @proc-elements))
      :interrupt (fn []
                   (reset! running false)
-                  (doseq [pe proc-elements]
+                  (doseq [pe @proc-elements]
                     (interrupt pe))
-                  (.interrupt out-proc-loop))
+                  (.interrupt @out-proc-loop))
      :in-fn (fn [in]
               (enqueue in-queue (LocalTransferContainer. in nil) in-counter in-drop-counter))
      :set-proc-fns-vec (fn [new-proc-fns-vec]
+                         (when (< (count @proc-elements) (count new-proc-fns-vec))
+                           
+                           )
+                         (when (> (count @proc-elements) (count new-proc-fns-vec))
+                           (interrupt (last @proc-elements))
+                           (swap! proc-elements pop)
+                           (reset! out-queue (get-out-queue (last @proc-elements)))
+                           (restart-out-proc-loop))
                          (doall
                            (map
                              (fn [pe f]
                                (set-proc-fn pe f))
-                             proc-elements
+                             @proc-elements
                              new-proc-fns-vec)))}))
 
 (defn get-in-fn
