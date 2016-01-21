@@ -14,3 +14,10 @@
     [clojure.test :refer :all]
     [dsbdp.local-dpp-self-adaptivity :refer :all]))
 
+(def four-staged-pipeline-stats-example
+  {3 {:out 17460, :dropped 1082},
+   2 {:out 18542, :dropped 1697469},
+   1 {:out 1716523, :dropped 611647},
+   0 {:out 2328170, :dropped 2911553},
+   :pipeline {:in 5239723, :dropped 7764598}})
+
