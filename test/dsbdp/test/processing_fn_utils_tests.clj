@@ -83,3 +83,9 @@
         expected [2 2 2 2]]
     (is (= expected (calculate-distribution-mapping in-seq ratios)))))
 
+(deftest calculate-distribution-mapping-6-to-4-test
+  (let [in-seq (repeat 6 nil)
+        ratios [0.25 0.25 0.25 0.25]
+        expected [2 2 1 1]]
+    (is (= expected (calculate-distribution-mapping in-seq ratios)))))
+
