@@ -44,3 +44,11 @@
       [f])
     (rest fn-mapping)))
 
+(defn calculate-distribution-mapping
+  [in-seq ratios]
+  (reduce
+    (fn [v r]
+      (conj v (int (* (count in-seq) r))))
+    []
+    ratios))
+

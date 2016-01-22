@@ -40,6 +40,8 @@
                ((proc-fns 2) nil)
                ((proc-fns 3) nil))))))
 
+
+
 (deftest simple-combine-proc-fns-1st-test
   (let [proc-fns (create-proc-fn-vec-from-template '(fn [i _] (+ i :_idx_ 1)) '(fn [_ o] (+ o :_idx_ 1)) 6)
         combined-proc-fn (combine-proc-fns proc-fns 0 3)]
@@ -66,4 +68,12 @@
     (is (= 6 ((combined-proc-fns-vec 0) 0 nil)))
     (is (= 9 ((combined-proc-fns-vec 1) nil 0)))
     (is (= 6 ((combined-proc-fns-vec 2) nil 0)))))
+
+
+
+(deftest calculate-distribution-mapping-4-to-4-test
+  (let [in-seq (repeat 4 nil)
+        ratios [0.25 0.25 0.25 0.25]
+        expected [1 1 1 1]]
+    (is (= expected (calculate-distribution-mapping in-seq ratios)))))
 
