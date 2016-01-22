@@ -46,9 +46,13 @@
 
 (defn calculate-distribution-mapping
   [in-seq ratios]
-  (reduce
-    (fn [v r]
-      (conj v (int (* (count in-seq) r))))
-    []
-    ratios))
+  (let [mapping (reduce
+                  (fn [v r]
+                    (conj v (int (* (count in-seq) r))))
+                  []
+                  ratios)]
+    (loop [m mapping, idx 0]
+      (if (= (count in-seq) (reduce + m))
+        m
+        (recur (assoc m idx (inc (m idx))) (inc idx))))))
 
