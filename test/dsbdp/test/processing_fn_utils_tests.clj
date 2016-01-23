@@ -83,9 +83,33 @@
         expected [2 2 2 2]]
     (is (= expected (calculate-distribution-mapping in-seq ratios)))))
 
-(deftest calculate-distribution-mapping-6-to-4-test
+(deftest calculate-distribution-mapping-6-to-4-uniform-test
   (let [in-seq (repeat 6 nil)
         ratios [0.25 0.25 0.25 0.25]
         expected [2 2 1 1]]
+    (is (= expected (calculate-distribution-mapping in-seq ratios)))))
+
+(deftest calculate-distribution-mapping-6-to-4-skewed-test
+  (let [in-seq (repeat 6 nil)
+        ratios [0.1 0.1 0.4 0.4]
+        expected [1 1 2 2]]
+    (is (= expected (calculate-distribution-mapping in-seq ratios)))))
+
+(deftest calculate-distribution-mapping-12-to-4-skewed-test-1
+  (let [in-seq (repeat 12 nil)
+        ratios [0.1 0.1 0.4 0.4]
+        expected [2 2 4 4]]
+    (is (= expected (calculate-distribution-mapping in-seq ratios)))))
+
+(deftest calculate-distribution-mapping-12-to-4-skewed-test-2
+  (let [in-seq (repeat 12 nil)
+        ratios [0.166 0.166 0.33 0.33]
+        expected [2 2 4 4]]
+    (is (= expected (calculate-distribution-mapping in-seq ratios)))))
+
+(deftest calculate-distribution-mapping-15-to-4-skewed-test-1
+  (let [in-seq (repeat 15 nil)
+        ratios [0.166 0.166 0.33 0.33]
+        expected [2 2 4 4]]
     (is (= expected (calculate-distribution-mapping in-seq ratios)))))
 
