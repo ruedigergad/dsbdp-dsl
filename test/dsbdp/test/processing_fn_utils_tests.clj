@@ -107,9 +107,15 @@
         expected [2 2 4 4]]
     (is (= expected (calculate-distribution-mapping in-seq ratios)))))
 
-(deftest calculate-distribution-mapping-15-to-4-skewed-test-1
+(deftest calculate-distribution-mapping-15-to-4-skewed-test
   (let [in-seq (repeat 15 nil)
         ratios [0.166 0.166 0.33 0.33]
-        expected [2 2 4 4]]
+        expected [3 3 5 4]]
     (is (= expected (calculate-distribution-mapping in-seq ratios)))))
+
+(deftest calculate-distribution-mapping-15-to-4-skewed-fill-end-test
+  (let [in-seq (repeat 15 nil)
+        ratios [0.166 0.166 0.33 0.33]
+        expected [2 3 5 5]]
+    (is (= expected (calculate-distribution-mapping in-seq ratios {:fill-end true})))))
 
