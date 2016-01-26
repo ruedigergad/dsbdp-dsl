@@ -120,7 +120,7 @@
                                            sample-pcap-processing-definition-json))
                        out-fn))
           in-loop (ProcessingLoop.
-                    "InLoop"
+                    "DataGenerationLoop"
                     (cond
                       (.endsWith scenario "-direct")
                         (let [proc-fn (condp = scenario
