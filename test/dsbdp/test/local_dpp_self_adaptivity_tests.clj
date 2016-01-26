@@ -28,6 +28,28 @@
    0 {:out 2329170, :dropped 2912553},
    :pipeline {:in 5240723, :dropped 7765598}})
 
+(deftest stat-delta-test-1
+  (let [stat-1 {0 {:out 1, :dropped 2}, 1 {:out 3, :dropped 4}, :pipeline {:in 5, :dropped 6}}
+        stat-2 {0 {:out 10, :dropped 20}, 1 {:out 30, :dropped 40}, :pipeline {:in 50, :dropped 60}}
+        expected-delta-1 {0 {:out-delta 1, :dropped-delta 2}, 1 {:out-delta 3, :dropped-delta 4},
+                          :pipeline {:in-delta 5, :dropped-delta 6}}
+        expected-delta-2 {0 {:out-delta 9, :dropped-delta 18}, 1 {:out-delta 27, :dropped-delta 36},
+                          :pipeline {:in-delta 45, :dropped-delta 54}}
+        stat-d-cntr (create-stat-delta-counter 2)]
+    (is (= expected-delta-1 (stat-d-cntr stat-1)))
+    (is (= expected-delta-2 (stat-d-cntr stat-2)))))
+
+(deftest stat-delta-test-2
+  (let [expected-delta-1 {0 {:out-delta 2328170, :dropped-delta 2911553}, 1 {:out-delta 1716523, :dropped-delta 611647},
+                          2 {:out-delta 18542, :dropped-delta 1697469}, 3 {:out-delta 17460, :dropped-delta 1082},
+                          :pipeline {:in-delta 5239723, :dropped-delta 7764598}}
+        expected-delta-2 {0 {:out-delta 1000, :dropped-delta 1000}, 1 {:out-delta 1000, :dropped-delta 1000},
+                          2 {:out-delta 1000, :dropped-delta 1000}, 3 {:out-delta 1000, :dropped-delta 1000},
+                          :pipeline {:in-delta 1000, :dropped-delta 1000}}
+        stat-d-cntr (create-stat-delta-counter 4)]
+    (is (= expected-delta-1 (stat-d-cntr four-staged-pipeline-stats-example-1)))
+    (is (= expected-delta-2 (stat-d-cntr four-staged-pipeline-stats-example-2)))))
+
 (deftest simple-repetition-detection-test-1
   (let [detector (create-repetition-detector 3)]
     (is (not (detector (fn [] true))))

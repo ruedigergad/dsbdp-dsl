@@ -14,6 +14,34 @@
     [clj-assorted-utils.util :refer :all]
     [clojure.pprint :refer :all]))
 
+(defn create-stat-delta-counter
+  [n]
+  (let [delta-cntr (delta-counter)]
+    (doseq [e (reduce
+                (fn [m n]
+                  (assoc m n {:out 0, :dropped 0}))
+                {:pipeline {:in 0, :dropped 0}}
+                (range 0 n))]
+      (let [k (key e)
+            v (val e)]
+        (if (= :pipeline k)
+          (delta-cntr (keyword (str k "-in")) (:in v))
+          (delta-cntr (keyword (str k "-out")) (:out v)))
+        (delta-cntr (keyword (str k "-dropped")) (:dropped v))))
+    (fn [current-stats]
+      (reduce
+        (fn [m e]
+          (let [k (key e)
+                v (val e)]
+            (assoc m k
+                   (if (= :pipeline k)
+                     {:in-delta (delta-cntr (keyword (str k "-in")) (:in v))
+                      :dropped-delta (delta-cntr (keyword (str k "-dropped")) (:dropped v))}
+                     {:out-delta (delta-cntr (keyword (str k "-out")) (:out v))
+                      :dropped-delta (delta-cntr (keyword (str k "-dropped")) (:dropped v))}))))
+        {}
+        current-stats))))
+
 (defn create-repetition-detector
   [repetitions]
   (let [cntr (counter)]
