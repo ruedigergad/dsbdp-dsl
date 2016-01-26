@@ -52,7 +52,15 @@
                        (delta-cntr (str "blocked-" t-id) blocked)))))))))
 
 (def cli-options
-  [["-h" "--help"]
+  [["-b" "--batch-size BATCH-SIZE"
+    "The number of data instances to be generated for one batch."
+    :default 2000
+    :parse-fn #(Integer/parseInt %)]
+   ["-d" "--batch-delay BATCH-DELAY"
+    "The delay in ms between generating batches."
+    :default 1
+    :parse-fn #(Integer/parseInt %)]
+   ["-h" "--help"]
    ["-i" "--in-data IN-DATA"
     "The input data to be used."
     :default nil
@@ -66,7 +74,8 @@
     :parse-fn #(binding [*read-eval* false] (read-string %))]
    ["-s" "--scenario SCENARIO"
     "The scenario that is to be used."
-    :default "no-op"]])
+    :default "no-op"]
+   ])
 
 (defn -main [& args]
   (println "Starting dsbdp main...")
@@ -119,6 +128,8 @@
                                            fn-mapping
                                            sample-pcap-processing-definition-json))
                        out-fn))
+          batch-delay (:batch-delay options)
+          batch-size (:batch-size options)
           in-loop (ProcessingLoop.
                     "DataGenerationLoop"
                     (cond
@@ -135,13 +146,19 @@
                           (fn []
                             (proc-fn in-data)
                             (.inc out-cntr)))
-                      (not (nil? in-data)) (let [in-fn (get-in-fn pipeline)]
-                                             (fn []
-                                         ;      (doseq [i (repeat 2000 0)]
-                                                 (in-fn in-data)
-                                                 (.inc in-cntr))
-                                           )
-                                         ;      (sleep 1)))
+                      (and
+                        in-data
+                        (> batch-delay 0)
+                        (> batch-size 0)) (let [in-fn (get-in-fn pipeline)]
+                                           (fn []
+                                             (doseq [i (repeat batch-size 0)]
+                                               (in-fn in-data)
+                                               (.inc in-cntr)))
+                                             (sleep batch-delay))
+                      in-data (let [in-fn (get-in-fn pipeline)]
+                                (fn []
+                                  (in-fn in-data)
+                                  (.inc in-cntr)))
                       :default (fn [] (.inc out-cntr))))
           thread-info-fn (create-thread-info-fn)
           stats-fn (fn []
