@@ -11,6 +11,17 @@
     :doc "Functions for self-adaptive local data processing pipelines."}
   dsbdp.local-dpp-self-adaptivity
   (:require
-    [clojure.walk :refer :all]
+    [clj-assorted-utils.util :refer :all]
     [clojure.pprint :refer :all]))
+
+(defn create-repetition-detector
+  [repetitions]
+  (let [cntr (counter)]
+    (fn [pred-f]
+      (if (>= (cntr) repetitions)
+        (cntr (fn [_] 0)))
+      (if (pred-f)
+        (cntr inc)
+        (cntr (fn [_] 0)))
+      (= repetitions (cntr)))))
 

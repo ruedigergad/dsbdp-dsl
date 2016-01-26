@@ -28,3 +28,20 @@
    0 {:out 2329170, :dropped 2912553},
    :pipeline {:in 5240723, :dropped 7765598}})
 
+(deftest simple-repetition-detection-test-1
+  (let [detector (create-repetition-detector 3)]
+    (is (not (detector (fn [] true))))
+    (is (not (detector (fn [] true))))
+    (is (detector (fn [] true)))
+    (is (not (detector (fn [] true))))))
+
+(deftest simple-repetition-detection-test-2
+  (let [detector (create-repetition-detector 3)]
+    (is (not (detector (fn [] true))))
+    (is (not (detector (fn [] true))))
+    (is (not (detector (fn [] false))))
+    (is (not (detector (fn [] true))))
+    (is (not (detector (fn [] true))))
+    (is (detector (fn [] true)))
+    (is (not (detector (fn [] true))))))
+
