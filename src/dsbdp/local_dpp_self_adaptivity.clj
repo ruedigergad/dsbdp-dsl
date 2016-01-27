@@ -53,3 +53,12 @@
         (cntr (fn [_] 0)))
       (= repetitions (cntr)))))
 
+(defn create-moving-average-calculator
+  [cnt]
+  (let [data (ref (vec (repeat cnt 0)))]
+    (fn
+      ([]
+        (/ (apply + @data) cnt))
+      ([value]
+        (dosync (alter data (fn [d v] (-> d (subvec 1) (conj v))) value))))))
+

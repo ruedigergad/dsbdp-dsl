@@ -67,3 +67,29 @@
     (is (detector (fn [] true)))
     (is (not (detector (fn [] true))))))
 
+(deftest moving-average-calculator-test-1
+  (let [mvg-avg-calc (create-moving-average-calculator 3)]
+    (is (= 0 (mvg-avg-calc)))
+    (mvg-avg-calc 1000)
+    (is (= (/ 1000 3) (mvg-avg-calc)))
+    (mvg-avg-calc 1000)
+    (is (= (/ 2000 3) (mvg-avg-calc)))
+    (mvg-avg-calc 1000)
+    (is (= 1000 (mvg-avg-calc)))))
+
+(deftest moving-average-calculator-test-2
+  (let [mvg-avg-calc (create-moving-average-calculator 3)]
+    (mvg-avg-calc 1000)
+    (mvg-avg-calc 2000)
+    (mvg-avg-calc 3000)
+    (is (= 2000 (mvg-avg-calc)))))
+
+(deftest moving-average-calculator-test-3
+  (let [mvg-avg-calc (create-moving-average-calculator 3)]
+    (mvg-avg-calc 1000)
+    (mvg-avg-calc 1000)
+    (mvg-avg-calc 1000)
+    (mvg-avg-calc 2000)
+    (mvg-avg-calc 3000)
+    (is (= 2000 (mvg-avg-calc)))))
+
