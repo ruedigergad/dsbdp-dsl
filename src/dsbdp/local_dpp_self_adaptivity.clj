@@ -62,3 +62,16 @@
       ([value]
         (dosync (alter data (fn [d v] (-> d (subvec 1) (conj v))) value))))))
 
+(defn create-drop-detector
+  [n-repetitions n-detectors threshold]
+  (let [rep-detectors (reduce
+                        (fn [v _] (conj v (create-repetition-detector n-repetitions)))
+                        []
+                        (repeat n-detectors 0))]
+    (fn [deltas]
+      (reduce
+        (fn [v e]
+          (conj v ((rep-detectors (inc (key e))) #(> (:dropped-delta (val e)) threshold))))
+        [((rep-detectors 0) #(> (get-in deltas [:pipeline :dropped-delta]) threshold))]
+        (sort (dissoc deltas :pipeline))))))
+

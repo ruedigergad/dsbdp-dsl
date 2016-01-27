@@ -93,3 +93,21 @@
     (mvg-avg-calc 3000)
     (is (= 2000 (mvg-avg-calc)))))
 
+(deftest detect-repeated-dropped-test-1
+  (let [deltas {0 {:out-delta 10, :dropped-delta 10}, 1 {:out-delta 10, :dropped-delta 10},
+                :pipeline {:in-delta 10, :dropped-delta 10}}
+        detector (create-drop-detector 3 (count deltas) 5)]
+    (is (= [false false false] (detector deltas)))
+    (is (= [false false false] (detector deltas)))
+    (is (= [true true true] (detector deltas)))))
+
+(deftest detect-repeated-dropped-test-2
+  (let [deltas {0 {:out-delta 10, :dropped-delta 10}, 1 {:out-delta 10, :dropped-delta 10},
+                2 {:out-delta 10, :dropped-delta 10}, 3 {:out-delta 10, :dropped-delta 10},
+                :pipeline {:in-delta 10, :dropped-delta 10}}
+        detector (create-drop-detector 4 (count deltas) 5)]
+    (is (= [false false false false false] (detector deltas)))
+    (is (= [false false false false false] (detector deltas)))
+    (is (= [false false false false false] (detector deltas)))
+    (is (= [true true true true true] (detector deltas)))))
+
