@@ -20,6 +20,28 @@
 
 
 
+(deftest simple-documentation-example-test-1
+  (let [proc-fns [(fn [in out] (.toLowerCase in))
+                  (fn [in out] (clojure.string/split out #"/"))
+                  (fn [in out] (reverse out))
+                  (fn [in out] (filter #(not (.isEmpty %)) out))
+                  (fn [in out] (clojure.string/join "." out))]
+        in-data "/com/Example/WWW"
+        expected "www.example.com"
+        out-flag (prepare-flag)
+        out-data (atom nil)
+        pipeline (create-local-processing-pipeline
+                   proc-fns
+                   (fn [in out]
+                     (println "in:" in "; out:" out)
+                     (reset! out-data out) (set-flag out-flag)))]
+    ((get-in-fn pipeline) in-data)
+    (await-flag out-flag)
+    (is (= expected @out-data))
+    (interrupt pipeline)))
+
+
+
 (deftest local-transfer-container-constructor-test
   (let [container (LocalTransferContainer. "foo" "bar")]
     (is (= "foo" (.getIn container)))
