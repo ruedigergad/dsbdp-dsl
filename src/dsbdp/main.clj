@@ -107,6 +107,7 @@
                       "nil" nil))
           _ (println "in-data:" in-data)
           fn-mapping (:fn-mapping options)
+          _ (println "fn-mapping:" fn-mapping)
           pipeline-length (:pipeline-length options)
           pipeline (if (and
                          (not (nil? in-data))
@@ -153,8 +154,8 @@
                                            (fn []
                                              (doseq [i (repeat batch-size 0)]
                                                (in-fn in-data)
-                                               (.inc in-cntr)))
-                                             (sleep batch-delay))
+                                               (.inc in-cntr))
+                                             (sleep batch-delay)))
                       in-data (let [in-fn (get-in-fn pipeline)]
                                 (fn []
                                   (in-fn in-data)
@@ -177,7 +178,7 @@
       (.start in-loop)
       (run-repeat (executor) (fn []
                                (stats-fn)
-;                               (thread-info-fn) (println)
+                               (thread-info-fn) (println)
                                )
                   1000)
       (run-once (executor) (fn [] (System/exit 0)) 120000))))
