@@ -15,6 +15,21 @@
             [dsbdp.experiment-helper :refer :all]) 
   (:import (java.util ArrayList HashMap List Map)))
 
+
+
+(deftest simple-documenation-example-test-1
+  (let [in-vector [1.23 "FOO" 42 "bar" "baz"]
+        expected "{\"myFloat\":1.23,\"myStr\":\"foo\",\"myRatio\":0.42,\"myStr2\":\"barbaz\"}"
+        dsl-expression {:output-type :json-str
+                        :rules [['myFloat '(nth 0)]
+                                ['myStr '(clojure.string/lower-case (nth 1)) :string]
+                                ['myRatio '(float (/ (nth 2) 100.0))]
+                                ['myStr2 '(str (nth 3) (nth 4)) :string]]}
+        data-processing-fn (create-proc-fn dsl-expression)]
+    (is (= expected (str (data-processing-fn in-vector))))))
+
+
+
 ;;;
 ;;; Tests for byte array input and various output types.
 ;;;
