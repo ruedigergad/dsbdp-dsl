@@ -138,8 +138,8 @@
                                       [(fn [i _] (pcap-fn i))])
                          "pcap-csv-inc" (combine-proc-fns-vec
                                           fn-mapping
-                                          sample-pcap-processing-definition-csv)
-                       out-fn)))
+                                          sample-pcap-processing-definition-csv))
+                       out-fn))
           batch-delay (:batch-delay options)
           batch-size (:batch-size options)
           in-loop (ProcessingLoop.
