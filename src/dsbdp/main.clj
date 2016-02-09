@@ -17,7 +17,8 @@
       [data-processing-dsl :refer :all]
       [byte-array-conversion :refer :all]
       [experiment-helper :refer :all]
-      [local-data-processing-pipeline :refer :all]))
+      [local-data-processing-pipeline :refer :all]
+      [processing-fn-utils :as utils]))
   (:import
     (dsbdp Counter ExperimentHelper ProcessingLoop)
     (java.lang.management ManagementFactory ThreadInfo ThreadMXBean)
@@ -118,7 +119,9 @@
                          "busy-sleep" (create-busy-sleep-proc-fns (count in-data))
                          "factorial" [(fn [i _] (factorial i))]
                          "factorial-inc" (create-factorial-proc-fns pipeline-length)
-                         "opennlp-single-inc" opennlp-single-sentence-inc-test-fns
+                         "opennlp-single-inc" (utils/combine-proc-fns-vec
+                                                fn-mapping
+                                                opennlp-single-sentence-inc-test-fns)
                          "pcap-clj-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-clj-map)]
                                           [(fn [i _] (pcap-fn i))])
                          "pcap-clj-map-inc" (combine-proc-fns-vec
