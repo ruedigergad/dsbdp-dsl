@@ -101,6 +101,10 @@
    ['udp-checksum '(float (/ (int16 56) 65535))]
    ['udp-payload '(ba-to-str 58 16) :string]])
 
+(def sample-pcap-processing-definition-csv
+  {:output-type :csv-str
+   :rules sample-pcap-processing-definition-rules})
+
 (def sample-pcap-processing-definition-json
   {:output-type :json-str
    :rules sample-pcap-processing-definition-rules})

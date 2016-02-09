@@ -121,13 +121,24 @@
                          "opennlp-single-inc" opennlp-single-sentence-inc-test-fns
                          "pcap-clj-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-clj-map)]
                                           [(fn [i _] (pcap-fn i))])
+                         "pcap-clj-map-inc" (combine-proc-fns-vec
+                                              fn-mapping
+                                              sample-pcap-processing-definition-clj-map)
                          "pcap-java-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-java-map)]
                                            [(fn [i _] (pcap-fn i))])
+                         "pcap-java-map-inc" (combine-proc-fns-vec
+                                               fn-mapping
+                                               sample-pcap-processing-definition-java-map)
                          "pcap-json" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-json)]
                                        [(fn [i _] (pcap-fn i))])
                          "pcap-json-inc" (combine-proc-fns-vec
                                            fn-mapping
                                            sample-pcap-processing-definition-json))
+                         "pcap-csv" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-csv)]
+                                      [(fn [i _] (pcap-fn i))])
+                         "pcap-csv-inc" (combine-proc-fns-vec
+                                          fn-mapping
+                                          sample-pcap-processing-definition-csv)
                        out-fn))
           batch-delay (:batch-delay options)
           batch-size (:batch-size options)
@@ -143,6 +154,7 @@
                                         "pcap-clj-map-direct" (create-proc-fn sample-pcap-processing-definition-clj-map)
                                         "pcap-java-map-direct" (create-proc-fn sample-pcap-processing-definition-java-map)
                                         "pcap-json-direct" (create-proc-fn sample-pcap-processing-definition-json)
+                                        "pcap-csv-direct" (create-proc-fn sample-pcap-processing-definition-csv)
                                         nil)]
                           (fn []
                             (proc-fn in-data)
