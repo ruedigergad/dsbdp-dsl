@@ -133,13 +133,13 @@
                                        [(fn [i _] (pcap-fn i))])
                          "pcap-json-inc" (combine-proc-fns-vec
                                            fn-mapping
-                                           sample-pcap-processing-definition-json))
+                                           sample-pcap-processing-definition-json)
                          "pcap-csv" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-csv)]
                                       [(fn [i _] (pcap-fn i))])
                          "pcap-csv-inc" (combine-proc-fns-vec
                                           fn-mapping
                                           sample-pcap-processing-definition-csv)
-                       out-fn))
+                       out-fn)))
           batch-delay (:batch-delay options)
           batch-size (:batch-size options)
           in-loop (ProcessingLoop.
