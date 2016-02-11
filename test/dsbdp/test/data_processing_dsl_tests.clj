@@ -30,9 +30,11 @@
         data-proc-fn-csv-str (create-proc-fn dsl-expression)
         data-proc-fn-json-str (create-proc-fn (assoc dsl-expression :output-type :json-str))
         data-proc-fn-clj-map (create-proc-fn (assoc dsl-expression :output-type :clj-map))
+        data-proc-fn-java-map (create-proc-fn (assoc dsl-expression :output-type :java-map))
         ]
     (is (= expected-csv-str (str (data-proc-fn-csv-str in-vector))))
     (is (= expected-json-str (str (data-proc-fn-json-str in-vector))))
+    (is (= expected-clj-map (data-proc-fn-java-map in-vector)))
     (is (= expected-clj-map (data-proc-fn-clj-map in-vector)))))
 
 
