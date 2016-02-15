@@ -95,39 +95,41 @@
   []
   (let [limit-reached (atom #{})]
     (fn [orig-mapping drop-det-vec]
-      (let [fn-drops (subvec drop-det-vec 0 (dec (count drop-det-vec)))
-            drop-indices (get-drop-indices drop-det-vec)
+      (let [fn-drops (into [] (subvec drop-det-vec 0 (dec (count drop-det-vec))))
+            drop-indices (get-drop-indices fn-drops)
             last-drop (last drop-indices)
-            non-drop-indices (get-non-drop-indices drop-det-vec)
+            non-drop-indices (get-non-drop-indices fn-drops)
             last-non-drop (last non-drop-indices)]
-      (cond
-        (every? #(= false %) fn-drops)
-          orig-mapping
-        (> last-drop last-non-drop)
-          nil
-        (< last-drop last-non-drop)
-          (let [available (- last-non-drop last-drop)
-                incremented-mapping (reduce-kv
-                                      (fn [o k v]
-                                        (if (> k last-drop)
-                                          (conj o (inc v))
-                                          (conj o v)))
-                                      []
-                                      orig-mapping)]
-            (loop [av available idx 0 m incremented-mapping]
-              (if (> av 1)
-                (recur
-                  (dec av)
-                  (if (< (inc idx) (count drop-indices))
-                    (inc idx)
-                    0)
-                  (update m (drop-indices idx) dec))
-                m
+        (println drop-indices)
+        (println non-drop-indices)
+        (cond
+          (every? #(= false %) fn-drops)
+            orig-mapping
+          (> last-drop last-non-drop)
+            nil
+          (< last-drop last-non-drop)
+            (let [available (- last-non-drop last-drop)
+                  incremented-mapping (reduce-kv
+                                        (fn [o k v]
+                                          (if (> k last-drop)
+                                            (conj o (inc v))
+                                            (conj o v)))
+                                        []
+                                        orig-mapping)]
+              (loop [av available idx 0 m incremented-mapping]
+                (if (> av 0)
+                  (recur
+                    (dec av)
+                    (if (< (inc idx) (count drop-indices))
+                      (inc idx)
+                      0)
+                    (update m (drop-indices idx) dec))
+                  m
+                  )
                 )
               )
-            )
-        :default nil
-        ))
+          :default nil
+          ))
     ))
   )
 
