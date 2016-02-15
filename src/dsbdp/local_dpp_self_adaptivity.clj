@@ -78,10 +78,11 @@
 (defn create-mapping-updater
   []
   (fn [orig-mapping drop-det-vec]
+    (let [fn-drops (subvec drop-det-vec 0 (dec (count drop-det-vec)))]
     (cond
-      (every? #(= false %) drop-det-vec) orig-mapping
+      (every? #(= false %) fn-drops) orig-mapping
       :default nil
-      )
+      ))
     )
   )
 
