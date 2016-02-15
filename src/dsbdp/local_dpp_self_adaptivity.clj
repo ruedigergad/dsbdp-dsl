@@ -116,13 +116,15 @@
                                             (conj o v)))
                                         []
                                         orig-mapping)]
-              (loop [av available idx 0 m incremented-mapping]
+              (loop [av available
+                     idx (dec (count drop-indices))
+                     m incremented-mapping]
                 (if (> av 0)
                   (recur
                     (dec av)
-                    (if (< (inc idx) (count drop-indices))
-                      (inc idx)
-                      0)
+                    (if (< (dec idx) 0)
+                      (dec (count drop-indices))
+                      (dec idx))
                     (update m (drop-indices idx) dec))
                   m
                   )
