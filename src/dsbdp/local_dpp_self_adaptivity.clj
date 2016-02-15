@@ -78,7 +78,10 @@
 (defn create-mapping-updater
   []
   (fn [orig-mapping drop-det-vec]
-    nil
+    (cond
+      (every? #(= false %) drop-det-vec) orig-mapping
+      :default nil
+      )
     )
   )
 
