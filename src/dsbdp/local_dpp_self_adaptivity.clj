@@ -75,6 +75,16 @@
         [((rep-detectors 0) #(> (get-in deltas [:pipeline :dropped-delta]) threshold))]
         (sort (dissoc deltas :pipeline))))))
 
+(defn get-drop-indices
+  [drop-det-vec]
+  nil
+  )
+
+(defn get-non-drop-indices
+  [drop-det-vec]
+  nil
+  )
+
 (defn create-mapping-updater
   []
   (fn [orig-mapping drop-det-vec]

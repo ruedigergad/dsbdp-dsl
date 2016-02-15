@@ -111,6 +111,36 @@
     (is (= [false false false false false] (detector deltas)))
     (is (= [true true true true true] (detector deltas)))))
 
+(deftest get-drop-indices-test-1
+  (let [drop-detector-vec [false false false false]
+        expected []]
+    (is (=  expected (get-drop-indices drop-detector-vec)))))
+
+(deftest get-drop-indices-test-2
+  (let [drop-detector-vec [false true false false]
+        expected [1]]
+    (is (=  expected (get-drop-indices drop-detector-vec)))))
+
+(deftest get-drop-indices-test-3
+  (let [drop-detector-vec [false true false true]
+        expected [1 3]]
+    (is (=  expected (get-drop-indices drop-detector-vec)))))
+
+(deftest get-non-drop-indices-test-1
+  (let [drop-detector-vec [false false false false]
+        expected []]
+    (is (=  expected (get-non-drop-indices drop-detector-vec)))))
+
+(deftest get-non-drop-indices-test-2
+  (let [drop-detector-vec [false true false false]
+        expected [1]]
+    (is (=  expected (get-non-drop-indices drop-detector-vec)))))
+
+(deftest get-non-drop-indices-test-3
+  (let [drop-detector-vec [false true false true]
+        expected [1 3]]
+    (is (=  expected (get-non-drop-indices drop-detector-vec)))))
+
 (deftest update-fns-mapping-for-three-staged-pipeline-test-1
   (let [mapping-updater (create-mapping-updater)
         original-mapping [14 1 1]
