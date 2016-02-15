@@ -77,13 +77,19 @@
 
 (defn get-drop-indices
   [drop-det-vec]
-  nil
-  )
+  (vec
+    (reduce-kv
+      (fn [o k v] (if v (conj o k) o))
+      []
+      drop-det-vec)))
 
 (defn get-non-drop-indices
   [drop-det-vec]
-  nil
-  )
+  (vec
+    (reduce-kv
+      (fn [o k v] (if (not v) (conj o k) o))
+      []
+      drop-det-vec)))
 
 (defn create-mapping-updater
   []

@@ -128,17 +128,17 @@
 
 (deftest get-non-drop-indices-test-1
   (let [drop-detector-vec [false false false false]
-        expected []]
+        expected [0 1 2 3]]
     (is (=  expected (get-non-drop-indices drop-detector-vec)))))
 
 (deftest get-non-drop-indices-test-2
   (let [drop-detector-vec [false true false false]
-        expected [1]]
+        expected [0 2 3]]
     (is (=  expected (get-non-drop-indices drop-detector-vec)))))
 
 (deftest get-non-drop-indices-test-3
   (let [drop-detector-vec [false true false true]
-        expected [1 3]]
+        expected [0 2]]
     (is (=  expected (get-non-drop-indices drop-detector-vec)))))
 
 (deftest update-fns-mapping-for-three-staged-pipeline-test-1
