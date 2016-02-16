@@ -100,13 +100,12 @@
             last-drop (last drop-indices)
             non-drop-indices (get-non-drop-indices fn-drops)
             last-non-drop (last non-drop-indices)]
-        (println drop-indices)
-        (println non-drop-indices)
         (cond
           (every? #(= false %) fn-drops)
             orig-mapping
           (> last-drop last-non-drop)
-            nil
+            (let [decremented-mapping (update orig-mapping last-drop dec)]
+              (update decremented-mapping last-non-drop inc))
           (< last-drop last-non-drop)
             (let [available (- last-non-drop last-drop)
                   incremented-mapping (reduce-kv
