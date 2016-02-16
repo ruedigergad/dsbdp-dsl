@@ -91,6 +91,10 @@
       []
       drop-det-vec)))
 
+(defn update
+  [v idx f]
+  (assoc v idx (f (v idx))))
+
 (defn create-mapping-updater
   []
   (let [limit-reached (atom (sorted-set))]
