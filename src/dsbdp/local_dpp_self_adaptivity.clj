@@ -110,7 +110,12 @@
             orig-mapping
           (>= last-drop last-non-drop)
             (let [decremented-mapping (update orig-mapping last-drop dec)]
-              (if (= (inc last-drop) (- (count fn-drops) (count @limit-reached)))
+              (if
+                (=
+                  (inc last-drop)
+                  (-
+                    (count fn-drops)
+                    (count @limit-reached)))
                 (swap! limit-reached conj last-drop))
               (update decremented-mapping last-non-drop inc))
           (< last-drop last-non-drop)
