@@ -105,7 +105,7 @@
                                         "The first example sentence is followed by another example sentence. "
                                         "The second sentence is followed by another example sentence.")
                       "pcap" pcap-byte-array-test-data
-                      "self-adaptivity" 1
+                      "self-adaptive" 1
                       "nil" nil))
           _ (println "in-data:" in-data)
           fn-mapping (atom (:fn-mapping options))
