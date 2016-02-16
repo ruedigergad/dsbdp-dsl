@@ -93,18 +93,25 @@
 
 (defn create-mapping-updater
   []
-  (let [limit-reached (atom #{})]
+  (let [limit-reached (atom (sorted-set))]
     (fn [orig-mapping drop-det-vec]
       (let [fn-drops (into [] (subvec drop-det-vec 0 (dec (count drop-det-vec))))
             drop-indices (get-drop-indices fn-drops)
             last-drop (last drop-indices)
             non-drop-indices (get-non-drop-indices fn-drops)
-            last-non-drop (last non-drop-indices)]
+            last-non-drop (last
+                            (filter
+                              #(not (@limit-reached %))
+                              non-drop-indices))]
         (cond
           (every? #(= false %) fn-drops)
             orig-mapping
-          (> last-drop last-non-drop)
+          (nil? last-non-drop)
+            orig-mapping
+          (>= last-drop last-non-drop)
             (let [decremented-mapping (update orig-mapping last-drop dec)]
+              (if (= (inc last-drop) (- (count fn-drops) (count @limit-reached)))
+                (swap! limit-reached conj last-drop))
               (update decremented-mapping last-non-drop inc))
           (< last-drop last-non-drop)
             (let [available (- last-non-drop last-drop)

@@ -197,3 +197,29 @@
         expected-mapping [5 5 6 4]]
     (is (= expected-mapping (mapping-updater original-mapping drop-detector-vec)))))
 
+(deftest update-fns-mapping-for-three-staged-pipeline-test-5
+  (let [mapping-updater (create-mapping-updater)
+        original-mapping [5 5 5]
+        drop-detector-vec-1 [false false true false]
+        drop-detector-vec-2 [false true false false]
+        drop-detector-vec-3 [true false false false]
+        expected-mapping-1 [5 6 4]
+        expected-mapping-2 [6 5 4]
+        expected-mapping-3 [6 5 4]]
+    (is (= expected-mapping-1 (mapping-updater original-mapping drop-detector-vec-1)))
+    (is (= expected-mapping-2 (mapping-updater expected-mapping-1 drop-detector-vec-2)))
+    (is (= expected-mapping-3 (mapping-updater expected-mapping-2 drop-detector-vec-3)))))
+
+(deftest update-fns-mapping-for-four-staged-pipeline-test-5
+  (let [mapping-updater (create-mapping-updater)
+        original-mapping [5 5 5 5]
+        drop-detector-vec-1 [false false false true false]
+        drop-detector-vec-2 [false false true false false]
+        drop-detector-vec-3 [false true false false false]
+        expected-mapping-1 [5 5 6 4]
+        expected-mapping-2 [5 6 5 4]
+        expected-mapping-3 [6 5 5 4]]
+    (is (= expected-mapping-1 (mapping-updater original-mapping drop-detector-vec-1)))
+    (is (= expected-mapping-2 (mapping-updater expected-mapping-1 drop-detector-vec-2)))
+    (is (= expected-mapping-3 (mapping-updater expected-mapping-2 drop-detector-vec-3)))))
+
