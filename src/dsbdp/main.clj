@@ -139,7 +139,16 @@
                                     [(fn [i _] (pcap-fn i))])
                        "pcap-csv-inc" (combine-proc-fns-vec
                                         @fn-mapping
-                                        sample-pcap-processing-definition-csv)))
+                                        sample-pcap-processing-definition-csv)
+                       "self-adaptive-low-throughput" (utils/combine-proc-fns-vec
+                                                        @fn-mapping
+                                                        synthetic-low-throughput-self-adaptivity-processing-fns)
+                       "self-adaptive-average-throughput" (utils/combine-proc-fns-vec
+                                                            @fn-mapping
+                                                            synthetic-average-throughput-self-adaptivity-processing-fns)
+                       "self-adaptive-high-throughput" (utils/combine-proc-fns-vec
+                                                         @fn-mapping
+                                                         synthetic-high-throughput-self-adaptivity-processing-fns)))
           pipeline (if (and
                          (not (nil? in-data))
                          (not (.endsWith scenario "-direct")))
