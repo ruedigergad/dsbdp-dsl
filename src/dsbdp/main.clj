@@ -105,43 +105,46 @@
                                         "The first example sentence is followed by another example sentence. "
                                         "The second sentence is followed by another example sentence.")
                       "pcap" pcap-byte-array-test-data
+                      "self-adaptivity" 1
                       "nil" nil))
           _ (println "in-data:" in-data)
-          fn-mapping (:fn-mapping options)
-          _ (println "fn-mapping:" fn-mapping)
+          fn-mapping (atom (:fn-mapping options))
+          _ (println "fn-mapping:" @fn-mapping)
           pipeline-length (:pipeline-length options)
+          proc-fns (atom
+                     (condp = scenario
+                       "no-op" (create-no-op-proc-fns pipeline-length)
+                       "busy-sleep" (create-busy-sleep-proc-fns (count in-data))
+                       "factorial" [(fn [i _] (factorial i))]
+                       "factorial-inc" (create-factorial-proc-fns pipeline-length)
+                       "opennlp-single-inc" (utils/combine-proc-fns-vec
+                                              @fn-mapping
+                                              opennlp-single-sentence-inc-test-fns)
+                       "pcap-clj-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-clj-map)]
+                                        [(fn [i _] (pcap-fn i))])
+                       "pcap-clj-map-inc" (combine-proc-fns-vec
+                                            @fn-mapping
+                                            sample-pcap-processing-definition-clj-map)
+                       "pcap-java-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-java-map)]
+                                         [(fn [i _] (pcap-fn i))])
+                       "pcap-java-map-inc" (combine-proc-fns-vec
+                                             @fn-mapping
+                                             sample-pcap-processing-definition-java-map)
+                       "pcap-json" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-json)]
+                                     [(fn [i _] (pcap-fn i))])
+                       "pcap-json-inc" (combine-proc-fns-vec
+                                         @fn-mapping
+                                         sample-pcap-processing-definition-json)
+                       "pcap-csv" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-csv)]
+                                    [(fn [i _] (pcap-fn i))])
+                       "pcap-csv-inc" (combine-proc-fns-vec
+                                        @fn-mapping
+                                        sample-pcap-processing-definition-csv)))
           pipeline (if (and
                          (not (nil? in-data))
                          (not (.endsWith scenario "-direct")))
                      (create-local-processing-pipeline
-                       (condp = scenario
-                         "no-op" (create-no-op-proc-fns pipeline-length)
-                         "busy-sleep" (create-busy-sleep-proc-fns (count in-data))
-                         "factorial" [(fn [i _] (factorial i))]
-                         "factorial-inc" (create-factorial-proc-fns pipeline-length)
-                         "opennlp-single-inc" (utils/combine-proc-fns-vec
-                                                fn-mapping
-                                                opennlp-single-sentence-inc-test-fns)
-                         "pcap-clj-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-clj-map)]
-                                          [(fn [i _] (pcap-fn i))])
-                         "pcap-clj-map-inc" (combine-proc-fns-vec
-                                              fn-mapping
-                                              sample-pcap-processing-definition-clj-map)
-                         "pcap-java-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-java-map)]
-                                           [(fn [i _] (pcap-fn i))])
-                         "pcap-java-map-inc" (combine-proc-fns-vec
-                                               fn-mapping
-                                               sample-pcap-processing-definition-java-map)
-                         "pcap-json" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-json)]
-                                       [(fn [i _] (pcap-fn i))])
-                         "pcap-json-inc" (combine-proc-fns-vec
-                                           fn-mapping
-                                           sample-pcap-processing-definition-json)
-                         "pcap-csv" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-csv)]
-                                      [(fn [i _] (pcap-fn i))])
-                         "pcap-csv-inc" (combine-proc-fns-vec
-                                          fn-mapping
-                                          sample-pcap-processing-definition-csv))
+                       @proc-fns
                        out-fn))
           batch-delay (:batch-delay options)
           batch-size (:batch-size options)
