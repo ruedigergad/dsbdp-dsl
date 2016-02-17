@@ -12,7 +12,9 @@
   dsbdp.test.local-dpp-self-adaptivity-tests
   (:require
     [clojure.test :refer :all]
-    [dsbdp.local-dpp-self-adaptivity :refer :all]))
+    [dsbdp.experiment-helper :refer :all]
+    [dsbdp.local-dpp-self-adaptivity :refer :all]
+    [dsbdp.processing-fn-utils :refer :all]))
 
 (def four-staged-pipeline-stats-example-1
   {3 {:out 17460, :dropped 1082},
@@ -222,4 +224,37 @@
     (is (= expected-mapping-1 (mapping-updater original-mapping drop-detector-vec-1)))
     (is (= expected-mapping-2 (mapping-updater expected-mapping-1 drop-detector-vec-2)))
     (is (= expected-mapping-3 (mapping-updater expected-mapping-2 drop-detector-vec-3)))))
+
+(deftest self-adaptivity-controller-test-1
+  (let [orig-proc-fns (create-no-op-proc-fns 15)
+        stat-1 {:pipeline {:in 5, :dropped 1},
+                0 {:out 1, :dropped 2},
+                1 {:out 3, :dropped 30},
+                2 {:out 3, :dropped 4}}
+        stat-2 {:pipeline {:in 5, :dropped 1},
+                0 {:out 1, :dropped 20},
+                1 {:out 3, :dropped 3},
+                2 {:out 3, :dropped 4}}
+        stat-3 {:pipeline {:in 5, :dropped 1},
+                0 {:out 1, :dropped 20},
+                1 {:out 3, :dropped 3},
+                2 {:out 3, :dropped 4}}
+        expected-mapping-1 [5 6 4]
+        expected-mapping-2 [5 6 4]
+        expected-mapping-3 [6 5 4]
+        controller-cfg {:inactivity 1 :threshold 10 :repetition 1}
+        mapping (atom [5 5 5])
+        proc-fns (atom (combine-proc-fns-vec @mapping orig-proc-fns))
+        mock-pipeline (fn [_] (fn [& _]))
+        self-adaptivity-controller (create-self-adaptivity-controller
+                                     mock-pipeline
+                                     orig-proc-fns
+                                     proc-fns
+                                     mapping)]
+    (update-stats self-adaptivity-controller stat-1)
+    (is (= expected-mapping-1 @mapping))
+    (update-stats self-adaptivity-controller stat-2)
+    (is (= expected-mapping-2 @mapping))
+    (update-stats self-adaptivity-controller stat-3)
+    (is (= expected-mapping-3 @mapping))))
 

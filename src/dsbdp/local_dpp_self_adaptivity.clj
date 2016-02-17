@@ -148,3 +148,11 @@
           :default nil
           )))))
 
+(defn create-self-adaptivity-controller
+  [pipeline orig-fns fns mapping]
+  (fn [_] (fn [_])))
+
+(defn update-stats
+  [obj stats]
+  ((obj :update-stats-fn) stats))
+
