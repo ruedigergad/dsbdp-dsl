@@ -194,6 +194,7 @@
                                   (in-fn in-data)
                                   (.inc in-cntr)))
                       :default (fn [] (.inc out-cntr))))
+          self-adaptivity-cfg (options :self-adaptivity-cfg)
           thread-info-fn (create-thread-info-fn)
           stats-fn (fn []
                      (let [in (double (/ (.value in-cntr) 1000.0))

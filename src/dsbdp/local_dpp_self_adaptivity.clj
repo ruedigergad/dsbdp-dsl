@@ -151,13 +151,13 @@
           )))))
 
 (defn create-self-adaptivity-controller
-  [cfg pipeline orig-fns fns mapping]
+  [cfg pipeline orig-fns mapping]
   (let [inactivity (cfg :inactivity)
         inactivity-counter (counter inactivity)
-        stats-delta-counter (create-stat-delta-counter (count @fns))
+        stats-delta-counter (create-stat-delta-counter (count @mapping))
         drop-detector (create-drop-detector
                         (cfg :repetition)
-                        (inc (count @fns))
+                        (inc (count @mapping))
                         (cfg :threshold))
         mapping-updater (create-mapping-updater)]
     (add-watch

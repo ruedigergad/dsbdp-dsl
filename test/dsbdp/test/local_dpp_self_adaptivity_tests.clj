@@ -251,7 +251,6 @@
                                      controller-cfg
                                      mock-pipeline
                                      orig-proc-fns
-                                     proc-fns
                                      mapping)]
     (update-stats self-adaptivity-controller stat-1)
     (is (= expected-mapping-1 @mapping))
@@ -285,7 +284,6 @@
                                      controller-cfg
                                      mock-pipeline
                                      orig-proc-fns
-                                     proc-fns
                                      mapping)]
     (update-stats self-adaptivity-controller stat-1)
     (is (= expected-mapping-1 @mapping))
@@ -319,7 +317,6 @@
                                      controller-cfg
                                      mock-pipeline
                                      orig-proc-fns
-                                     proc-fns
                                      mapping)]
     (update-stats self-adaptivity-controller stat-1)
     (is (= expected-mapping-1 @mapping))
