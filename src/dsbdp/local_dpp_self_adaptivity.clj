@@ -143,10 +143,7 @@
                       (dec (count drop-indices))
                       (dec idx))
                     (update m (drop-indices idx) dec))
-                  m
-                  )
-                )
-              )
+                  m)))
           :default nil
           )))))
 

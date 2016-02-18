@@ -226,6 +226,19 @@
     (is (= expected-mapping-2 (mapping-updater expected-mapping-1 drop-detector-vec-2)))
     (is (= expected-mapping-3 (mapping-updater expected-mapping-2 drop-detector-vec-3)))))
 
+(deftest update-fns-mapping-for-four-staged-pipeline-test-6
+  (let [mapping-updater (create-mapping-updater)
+        original-mapping [3 4 4 4]
+        drop-detector-vec-1 [true false false false false]
+        drop-detector-vec-2 [false true false false false false]
+        drop-detector-vec-3 [false true false false false false]
+        expected-mapping-1 [1 4 5 5]
+        expected-mapping-2 [1 2 6 6]
+        expected-mapping-3 [1 1 6 7]]
+    (is (= expected-mapping-1 (mapping-updater original-mapping drop-detector-vec-1)))
+    (is (= expected-mapping-2 (mapping-updater expected-mapping-1 drop-detector-vec-2)))
+    (is (= expected-mapping-3 (mapping-updater expected-mapping-2 drop-detector-vec-3)))))
+
 (deftest self-adaptivity-controller-test-1
   (let [orig-proc-fns (create-no-op-proc-fns 15)
         stat-1 {:pipeline {:in 1, :dropped 1},
