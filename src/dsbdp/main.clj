@@ -18,6 +18,7 @@
       [byte-array-conversion :refer :all]
       [experiment-helper :refer :all]
       [local-data-processing-pipeline :refer :all]
+      [local-dpp-self-adaptivity :refer :all]
       [processing-fn-utils :as utils]))
   (:import
     (dsbdp Counter ExperimentHelper ProcessingLoop)
@@ -76,6 +77,10 @@
    ["-s" "--scenario SCENARIO"
     "The scenario that is to be used."
     :default "no-op"]
+   ["-S" "--self-adaptivity-cfg SELF-ADAPTIVITY-CFG"
+    "Configuration for self-adaptive adjustment of the data processing pipeline."
+    :default nil
+    :parse-fn #(binding [*read-eval* false] (read-string %))]
    ])
 
 (defn -main [& args]
