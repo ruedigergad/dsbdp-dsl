@@ -230,8 +230,8 @@
   (let [mapping-updater (create-mapping-updater)
         original-mapping [3 4 4 4]
         drop-detector-vec-1 [true false false false false]
-        drop-detector-vec-2 [false true false false false false]
-        drop-detector-vec-3 [false true false false false false]
+        drop-detector-vec-2 [true true false false false]
+        drop-detector-vec-3 [true true false false false]
         expected-mapping-1 [1 4 5 5]
         expected-mapping-2 [1 2 6 6]
         expected-mapping-3 [1 1 6 7]]

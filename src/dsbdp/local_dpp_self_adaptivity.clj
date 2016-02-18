@@ -101,7 +101,7 @@
   []
   (let [limit-reached (atom (sorted-set))]
     (fn [orig-mapping drop-det-vec]
-      (let [fn-drops (into [] (subvec drop-det-vec 0 (dec (count drop-det-vec))))
+      (let [fn-drops (into [] (subvec drop-det-vec 0 (- (count drop-det-vec) 1)))
             drop-indices (get-drop-indices fn-drops)
             last-drop (last drop-indices)
             non-drop-indices (get-non-drop-indices fn-drops)
@@ -125,24 +125,41 @@
                 (swap! limit-reached conj last-drop))
               (update decremented-mapping last-non-drop inc))
           (< last-drop last-non-drop)
-            (let [available (- last-non-drop last-drop)
-                  incremented-mapping (reduce-kv
-                                        (fn [o k v]
-                                          (if (> k last-drop)
-                                            (conj o (inc v))
-                                            (conj o v)))
-                                        []
-                                        orig-mapping)]
+            (let [delta (- last-non-drop last-drop)
+                  drop-sum (-
+                             (reduce
+                               (fn [s idx]
+                                 (+ s (orig-mapping idx)))
+                               0
+                               drop-indices)
+                             (count drop-indices))
+                  available (min delta drop-sum)
+                  incremented-mapping (loop [av available
+                                             idx (dec (count non-drop-indices))
+                                             m orig-mapping]
+                                        (if (> av 0)
+                                          (recur
+                                            (dec av)
+                                            (if (< (dec idx) 0)
+                                              (dec (count non-drop-indices))
+                                              (dec idx))
+                                            (update m (non-drop-indices idx) inc))
+                                          m))
+                  ]
               (loop [av available
                      idx (dec (count drop-indices))
                      m incremented-mapping]
                 (if (> av 0)
                   (recur
-                    (dec av)
+                    (if (> (orig-mapping (drop-indices idx)) 1)
+                      (dec av)
+                      av)
                     (if (< (dec idx) 0)
                       (dec (count drop-indices))
                       (dec idx))
-                    (update m (drop-indices idx) dec))
+                    (if (> (orig-mapping (drop-indices idx)) 1)
+                      (update m (drop-indices idx) dec)
+                      m))
                   m)))
           :default nil
           )))))
