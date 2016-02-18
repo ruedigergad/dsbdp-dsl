@@ -154,6 +154,7 @@
                        "self-adaptive-high-throughput" (utils/combine-proc-fns-vec
                                                          @fn-mapping
                                                          synthetic-high-throughput-self-adaptivity-processing-fns)))
+          _ (println "Proc-fns:" @proc-fns)
           pipeline (if (and
                          (not (nil? in-data))
                          (not (.endsWith scenario "-direct")))
@@ -183,11 +184,11 @@
                         in-data
                         (> batch-delay 0)
                         (> batch-size 0)) (let [in-fn (get-in-fn pipeline)]
-                                           (fn []
-                                             (doseq [i (repeat batch-size 0)]
-                                               (in-fn in-data)
-                                               (.inc in-cntr))
-                                             (sleep batch-delay)))
+                                            (fn []
+                                              (doseq [i (repeat batch-size 0)]
+                                                (in-fn in-data)
+                                                (.inc in-cntr))
+                                              (sleep batch-delay)))
                       in-data (let [in-fn (get-in-fn pipeline)]
                                 (fn []
                                   (in-fn in-data)
