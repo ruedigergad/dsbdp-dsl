@@ -12,7 +12,9 @@
   dsbdp.local-dpp-self-adaptivity
   (:require
     [clj-assorted-utils.util :refer :all]
-    [clojure.pprint :refer :all]))
+    [clojure.pprint :refer :all]
+    [dsbdp.local-data-processing-pipeline :refer :all]
+    [dsbdp.processing-fn-utils :refer :all]))
 
 (defn create-stat-delta-counter
   [n]
@@ -149,10 +151,31 @@
           )))))
 
 (defn create-self-adaptivity-controller
-  [pipeline orig-fns fns mapping]
-  (fn [_] (fn [_])))
+  [cfg pipeline orig-fns fns mapping]
+  (let [inactivity (cfg :inactivity)
+        inactivity-counter (counter inactivity)
+        stats-delta-counter (create-stat-delta-counter (count @fns))
+        drop-detector (create-drop-detector
+                        (cfg :repetition)
+                        (inc (count @fns))
+                        (cfg :threshold))
+        mapping-updater (create-mapping-updater)]
+    (add-watch
+      mapping
+      nil
+      (fn [_ r old-state new-state]
+        (println "Mapping changed from" old-state "to" new-state)
+        (set-proc-fns-vec pipeline (combine-proc-fns-vec new-state orig-fns))))
+    (fn [stats]
+      (let [stats-delta (stats-delta-counter stats)]
+        (if (< (inactivity-counter) inactivity)
+          (inactivity-counter inc)
+          (let [calculated-mapping (mapping-updater @mapping (drop-detector stats-delta))]
+            (inactivity-counter (fn [_] 0))
+            (when (not= @mapping calculated-mapping)
+              (reset! mapping calculated-mapping))))))))
 
 (defn update-stats
   [obj stats]
-  ((obj :update-stats-fn) stats))
+  (obj stats))
 
