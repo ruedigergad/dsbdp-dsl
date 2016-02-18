@@ -216,7 +216,7 @@
                          "out-delta:" (delta-cntr :out out) "k/s;")
                        (if (not (nil? pipeline))
                          (let [counts (get-counts pipeline)]
-                           (println @fn-mapping)
+                           (println "mapping:" @fn-mapping)
                            (println counts)
                            (if (not (nil? self-adaptivity-controller))
                              (update-stats self-adaptivity-controller counts))))))]
