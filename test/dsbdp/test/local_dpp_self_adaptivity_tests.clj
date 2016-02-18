@@ -260,3 +260,71 @@
     (update-stats self-adaptivity-controller stat-3)
     (is (= expected-mapping-3 @mapping))))
 
+(deftest self-adaptivity-controller-test-2
+  (let [orig-proc-fns (create-no-op-proc-fns 15)
+        stat-1 {:pipeline {:in 1, :dropped 1},
+                0 {:out 1, :dropped 1},
+                1 {:out 1, :dropped 20},
+                2 {:out 1, :dropped 1}}
+        stat-2 {:pipeline {:in 1, :dropped 1},
+                0 {:out 1, :dropped 1},
+                1 {:out 1, :dropped 20},
+                2 {:out 1, :dropped 1}}
+        stat-3 {:pipeline {:in 1, :dropped 1},
+                0 {:out 1, :dropped 20},
+                1 {:out 1, :dropped 20},
+                2 {:out 1, :dropped 1}}
+        expected-mapping-1 [5 6 4]
+        expected-mapping-2 [5 6 4]
+        expected-mapping-3 [6 5 4]
+        controller-cfg {:inactivity 1 :threshold 10 :repetition 1}
+        mapping (atom [5 5 5])
+        proc-fns (atom (combine-proc-fns-vec @mapping orig-proc-fns))
+        mock-pipeline (fn [_] (fn [& _]))
+        self-adaptivity-controller (create-self-adaptivity-controller
+                                     controller-cfg
+                                     mock-pipeline
+                                     orig-proc-fns
+                                     proc-fns
+                                     mapping)]
+    (update-stats self-adaptivity-controller stat-1)
+    (is (= expected-mapping-1 @mapping))
+    (update-stats self-adaptivity-controller stat-2)
+    (is (= expected-mapping-2 @mapping))
+    (update-stats self-adaptivity-controller stat-3)
+    (is (= expected-mapping-3 @mapping))))
+
+(deftest self-adaptivity-controller-test-3
+  (let [orig-proc-fns (create-no-op-proc-fns 15)
+        stat-1 {:pipeline {:in 1, :dropped 1},
+                0 {:out 1, :dropped 1},
+                1 {:out 1, :dropped 20},
+                2 {:out 1, :dropped 1}}
+        stat-2 {:pipeline {:in 1, :dropped 1},
+                0 {:out 1, :dropped 20},
+                1 {:out 1, :dropped 20},
+                2 {:out 1, :dropped 1}}
+        stat-3 {:pipeline {:in 1, :dropped 1},
+                0 {:out 1, :dropped 20},
+                1 {:out 1, :dropped 20},
+                2 {:out 1, :dropped 1}}
+        expected-mapping-1 [5 6 4]
+        expected-mapping-2 [5 6 4]
+        expected-mapping-3 [5 6 4]
+        controller-cfg {:inactivity 1 :threshold 10 :repetition 1}
+        mapping (atom [5 5 5])
+        proc-fns (atom (combine-proc-fns-vec @mapping orig-proc-fns))
+        mock-pipeline (fn [_] (fn [& _]))
+        self-adaptivity-controller (create-self-adaptivity-controller
+                                     controller-cfg
+                                     mock-pipeline
+                                     orig-proc-fns
+                                     proc-fns
+                                     mapping)]
+    (update-stats self-adaptivity-controller stat-1)
+    (is (= expected-mapping-1 @mapping))
+    (update-stats self-adaptivity-controller stat-2)
+    (is (= expected-mapping-2 @mapping))
+    (update-stats self-adaptivity-controller stat-3)
+    (is (= expected-mapping-3 @mapping))))
+
