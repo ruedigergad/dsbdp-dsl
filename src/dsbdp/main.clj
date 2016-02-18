@@ -195,6 +195,15 @@
                                   (.inc in-cntr)))
                       :default (fn [] (.inc out-cntr))))
           self-adaptivity-cfg (options :self-adaptivity-cfg)
+          self-adaptivity-controller (if (not (nil? self-adaptivity-cfg))
+                                       (create-self-adaptivity-controller
+                                         self-adaptivity-cfg
+                                         pipeline
+                                         (condp = scenario
+                                           "self-adaptive-low-throughput" synthetic-low-throughput-self-adaptivity-processing-fns
+                                           "self-adaptive-average-throughput" synthetic-average-throughput-self-adaptivity-processing-fns
+                                           "self-adaptive-high-throughput" synthetic-high-throughput-self-adaptivity-processing-fns)
+                                         fn-mapping))
           thread-info-fn (create-thread-info-fn)
           stats-fn (fn []
                      (let [in (double (/ (.value in-cntr) 1000.0))
@@ -206,7 +215,11 @@
                          "in-delta:" (delta-cntr :in in) "k/s;"
                          "out-delta:" (delta-cntr :out out) "k/s;")
                        (if (not (nil? pipeline))
-                         (println (get-counts pipeline)))))]
+                         (let [counts (get-counts pipeline)]
+                           (println @fn-mapping)
+                           (println counts)
+                           (if (not (nil? self-adaptivity-controller))
+                             (update-stats self-adaptivity-controller counts))))))]
       (println "Starting experiment...")
       (.setName (Thread/currentThread) "Main")
       (.start in-loop)
