@@ -1,6 +1,6 @@
 (defproject dsbdp "0.1.0-SNAPSHOT"
-  :description "FIXME: write description"
-  :url "http://example.com/FIXME"
+  :description "Dynamic Stream and Batch Data Processing (dsbdp)"
+  :url "https://github.com/ruedigergad/dsbdp"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.6.0"]
@@ -12,5 +12,6 @@
   :java-source-paths ["src-java"]
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]
   :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.2" :exclusions  [org.clojure/clojure]]]}}
+  :plugins [[lein-cloverage "1.0.6"]]
   :aot :all
   :main dsbdp.main)
