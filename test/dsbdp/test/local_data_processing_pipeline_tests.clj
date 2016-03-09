@@ -199,6 +199,7 @@
     (await-flag tmp-flag)
     (.put in-queue (LocalTransferContainer. "in-1" "out-1"))
     (await-flag flag-1)
+    (sleep 100)
     (is (= "in-1" (.getIn @out)))
     (is (= "foo" (.getOut @out)))
     (let [cntr (get-counts proc-element)]
@@ -207,6 +208,7 @@
     (set-proc-fn proc-element proc-fn-2)
     (.put in-queue (LocalTransferContainer. "in-2" "out-2"))
     (await-flag flag-2)
+    (sleep 100)
     (is (= "in-2" (.getIn @out)))
     (is (= "bar" (.getOut @out)))
     (let [cntr (get-counts proc-element)]
@@ -214,7 +216,8 @@
       (is (= 0 (:dropped cntr))))
     (set-proc-fn proc-element proc-fn-3)
     (.put in-queue (LocalTransferContainer. "in-3" "out-3"))
-    (await-flag flag-1)
+    (await-flag flag-3)
+    (sleep 100)
     (is (= "in-3" (.getIn @out)))
     (is (= "baz" (.getOut @out)))
     (let [cntr (get-counts proc-element)]
