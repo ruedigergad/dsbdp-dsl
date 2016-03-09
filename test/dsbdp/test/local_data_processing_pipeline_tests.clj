@@ -111,13 +111,13 @@
         proc-element (create-local-processing-element
                        in-queue
                        (fn [in out]
-                         (set-flag flag)
                          "foobar"))]
     (doto
       (ProcessingLoop. (fn []
                          (set-flag tmp-flag)
                          (let [v (.take (get-out-queue proc-element))]
-                           (reset! out v))))
+                           (reset! out v)
+                           (set-flag flag))))
       (.start))
     (await-flag tmp-flag)
     (.put in-queue (LocalTransferContainer. "in" "out"))
