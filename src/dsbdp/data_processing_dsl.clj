@@ -118,7 +118,7 @@
                       (do
                         (println "Unknown output type:" output-type)
                         (println "Defaulting to :java-map as output type.")
-                        (create-proc-fn-body-java-map-out input-sym nil rules)))
+                        (create-proc-fn-body-java-map-out input-sym rules output-sym)))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (reverse (into '() fn-body-vec))
 ;        _ (println "Created data processing function body:" fn-body)
