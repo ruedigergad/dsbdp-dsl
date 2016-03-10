@@ -225,7 +225,6 @@
       (is (= 0 (:dropped cntr))))
     (interrupt proc-element)))
 
-
 (deftest simple-local-pipeline-send-test
   (let [flag-proc (prepare-flag)
         flag-out (prepare-flag)
@@ -373,5 +372,21 @@
     (await-flag @flag-out)
     (is (flag-set? @flag-out))
     (is (= -2 @out))
+    (interrupt pipeline)))
+
+(deftest get-pipeline-counts-test
+  (let [flag-proc (prepare-flag)
+        flag-out (prepare-flag)
+        proc-fns [(fn [_ _] (set-flag flag-proc) 0)]
+        pipeline (create-local-processing-pipeline
+                   proc-fns
+                   (fn [_ _] (set-flag flag-out)))]
+    (is (= {0 {:out 0, :dropped 0}, :pipeline {:in 0, :dropped 0}} (get-counts pipeline)))
+    ((get-in-fn pipeline) "foo")
+    (await-flag flag-proc)
+    (await-flag flag-out)
+    (is (flag-set? flag-proc))
+    (is (flag-set? flag-out))
+    (is (= {0 {:out 1, :dropped 0}, :pipeline {:in 1, :dropped 0}} (get-counts pipeline)))
     (interrupt pipeline)))
 
