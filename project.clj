@@ -14,5 +14,7 @@
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]
   :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.2" :exclusions  [org.clojure/clojure]]]}}
   :plugins [[lein-cloverage "1.0.6"]]
+  :test2junit-output-dir "ghpages/test-results"
+  :test2junit-run-ant true  
   :aot :all
   :main dsbdp.main)
