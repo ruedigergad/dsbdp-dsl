@@ -155,7 +155,7 @@
 (defn combine-proc-fns-vec
   "Based on the function mapping fn-mapping and the DSL expression dsl-expression, create a vector of data processing functions.
    The mapping definition defines the number of processing rules to be included in each processing function.
-   For a vector of procssing rules [a b c d e f], a mapping definition [1 2 3] will result in the following association of processing rules to processing functions f_x: [f_1(a), f_2(b, c), f_3(d e f)]."
+   For a vector of processing rules [a b c d e f], a mapping definition [1 2 3] will result in the following association of processing rules to processing functions f_x: [f_1(a), f_2(b, c), f_3(d e f)]."
   [fn-mapping dsl-expression]
   (reduce
     (fn [v m]
