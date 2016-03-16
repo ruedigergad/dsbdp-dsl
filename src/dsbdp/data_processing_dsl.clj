@@ -14,7 +14,11 @@
 
 (def ^:dynamic *incremental-indicator-suffix* "#inc")
 
-(defn create-proc-sub-fn
+(defn- create-proc-sub-fn
+  "Create a sub part of a processing function.
+   The data-processing-definition will be processed recursively.
+   This function is responsible for actually resolving the given data processing functions.
+   The input symbol will be placed as first argument on the innermost terms."
   [data-processing-definition input]
   (into
     '()
@@ -102,7 +106,16 @@
     rules))
 
 (defn create-proc-fn
-  "Create a data processing function based on the given dsl-expression."
+  "Create a data processing function based on the given dsl-expression.
+   An example of a dsl-expression for processing a Clojure seq is given below:
+  
+   {:output-type :clj-map
+    :rules [['myFloat '(nth 0)]
+            ['myStr '(clojure.string/lower-case (nth 1)) :string]
+            ['myRatio '(/ (nth 2) 100.0)]
+            ['myStr2 '(str (nth 3) (nth 4)) :string]]}
+   
+   The resulting function will for the input [1.23 \"FOO\" 42 \"bar\" \"baz\"] produce the output {\"myFloat\" 1.23, \"myStr\" \"foo\", \"myRatio\" 0.42, \"myStr2\" \"barbaz\"}."
   [dsl-expression]
 ;  (println "Got DSL expression:" dsl-expression)
   (let [input-sym 'input
@@ -128,6 +141,8 @@
     data-processing-fn))
 
 (defn combine-proc-fns
+  "Based on the DSL expression dsl-expression, create a data processing function in which the processing rules starting at start-idx, inclusive, up to end-idx, non inclusive, are combined.
+   Please note that it is usually more appropriate to use combine-proc-fns-vec."
   [dsl-expression start-idx end-idx]
   (if (= 0 start-idx)
     (create-proc-fn
@@ -138,6 +153,9 @@
        :rules (subvec (:rules dsl-expression) start-idx end-idx)})))
 
 (defn combine-proc-fns-vec
+  "Based on the function mapping fn-mapping and the DSL expression dsl-expression, create a vector of data processing functions.
+   The mapping definition defines the number of processing rules to be included in each processing function.
+   For a vector of procssing rules [a b c d e f], a mapping definition [1 2 3] will result in the following association of processing rules to processing functions f_x: [f_1(a), f_2(b, c), f_3(d e f)]."
   [fn-mapping dsl-expression]
   (reduce
     (fn [v m]
