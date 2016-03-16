@@ -21,6 +21,11 @@ Please note that, because the sole purpose of the dsbdp.main namespace is to ser
 Detailed test results are available as well:
 [http://ruedigergad.github.io/dsbdp/test-results/html/](http://ruedigergad.github.io/dsbdp/test-results/html/)
 
+## API Docs
+
+API docs are available:
+http://ruedigergad.github.io/dsbdp/doc/
+
 ## License
 
 Copyright © 2015, 2016 Ruediger Gad
