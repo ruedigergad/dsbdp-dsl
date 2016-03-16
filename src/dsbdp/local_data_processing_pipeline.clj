@@ -153,6 +153,9 @@
 
 
 (defn create-local-processing-element
+  "Create a local processing element that is intended to be used in a local data processing pipeline.
+   Input data will be read from the input queue in-queue and processed with the given initial processing function initial-proc-fn.
+   Optionally, the name of the worker thread for the newly created processing element can be set to ProcessingElement_id for which id is replaced with the given id."
   ([^BlockingQueue in-queue initial-proc-fn]
     (create-local-processing-element in-queue initial-proc-fn nil))
   ([^BlockingQueue in-queue initial-proc-fn id]
@@ -194,30 +197,40 @@
        :thread-name thread-name})))
 
 (defn interrupt
+  "Interrupt the given processing element or pipeline."
   [obj]
   ((obj :interrupt)))
 
 (defn get-out-queue
+  "Get the output queue of the given processing element or pipeline."
   [obj]
   (obj :out-queue))
 
 (defn get-id
+  "Get the id of the given processing element."
   [obj]
   (obj :id))
 
 (defn get-thread-name
+  "Get the thread name of the given processing element."
   [obj]
   (obj :thread-name))
 
 (defn get-counts
+  "Get the statistic counts of the given processing element or pipeline."
   [obj]
   ((obj :get-counts-fn)))
 
 (defn set-proc-fn
+  "Set the processing function for the given processing element obj to proc-fn."
   [obj proc-fn]
   ((obj :set-proc-fn) proc-fn))
 
 (defn create-local-processing-pipeline
+  "Create a local data processing pipeline.
+   fns is expected to be a vector of functions with two arguments.
+   For each function in fns, one processing element will be created in which the respective function is executed.
+   The output function out-fn is called with the result as emitted by the last processing element."
   [fns out-fn]
   (let [running (atom true)
         in-queue (create-queue)
@@ -292,10 +305,12 @@
                              new-proc-fns-vec)))}))
 
 (defn get-in-fn
+  "Get the input function of the given processing pipeline."
   [obj]
   (obj :in-fn))
 
 (defn set-proc-fns-vec
+  "Set the processing function vector of the given pipeline obj to fns."
   [obj fns]
   ((obj :set-proc-fns-vec) fns))
 
