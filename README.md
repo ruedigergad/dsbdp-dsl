@@ -1,4 +1,4 @@
-![dsbdp logo][dsbdp_logo_2.png]
+![dsbdp logo](https://github.com/ruedigergad/dsbdp/blob/master/dsbdp_logo_2.png)
 
 # Dynamic Stream and Batch Data Processing (dsbdp)
 
