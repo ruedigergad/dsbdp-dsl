@@ -1,3 +1,5 @@
+![dsbdp logo][dsbdp_logo_2.png]
+
 # Dynamic Stream and Batch Data Processing (dsbdp)
 
 ## Status
