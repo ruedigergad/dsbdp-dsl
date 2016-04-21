@@ -60,9 +60,10 @@
     expr))
 
 (defmacro enqueue
-  [queue data enqueued-counter dropped-counter]
+  [obj data enqueued-counter dropped-counter]
   (println "Enqueueing data via:")
-  (let [expr (condp (fn [^String v ^String s] (.contains s v)) queue-setup
+  (let [queue (with-meta obj {:tag 'java.util.concurrent.BlockingQueue})
+        expr (condp (fn [^String v ^String s] (.contains s v)) queue-setup
                "add-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
                                         (.add ~queue ~data)
@@ -138,9 +139,10 @@
     expr))
 
 (defmacro take-from-queue
-  [queue]
-  (println "Retrieving data from queue via:")
-  (let [expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
+  [obj]
+  (println "Retrieving data via:")
+  (let [queue (with-meta obj {:tag 'java.util.concurrent.BlockingQueue})
+        expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
                "remove-yield" `(if (not (.isEmpty ~queue))
                                  (.remove ~queue)
                                  (Thread/yield))
@@ -153,9 +155,9 @@
 
 
 (defn create-local-processing-element
-  ([^BlockingQueue in-queue initial-proc-fn]
+  ([in-queue initial-proc-fn]
     (create-local-processing-element in-queue initial-proc-fn nil))
-  ([^BlockingQueue in-queue initial-proc-fn id]
+  ([in-queue initial-proc-fn id]
     (let [running (atom true)
           out-queue (create-queue)
           out-counter (Counter.)
@@ -232,7 +234,7 @@
                                 "PipelineOut"
                                 (fn []
                                   (try
-                                    (let [^LocalTransferContainer c (take-from-queue ^BlockingQueue @out-queue)]
+                                    (let [^LocalTransferContainer c (take-from-queue @out-queue)]
                                       (if (not (nil? c))
                                         (out-fn (.getIn c) (.getOut c))))
                                     (catch InterruptedException e
