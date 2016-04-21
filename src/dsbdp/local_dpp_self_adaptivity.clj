@@ -17,6 +17,9 @@
     [dsbdp.processing-fn-utils :refer :all]))
 
 (defn create-stat-delta-counter
+  "Create a delta counter for calculating the differences between subsequent measurements of pipeline statistics.
+   Returns a function with one argument that takes the stats map as emitted from the pipeline.
+   The returned function calculates the difference between the values of the passed stats map between subsequent invocations."
   [n]
   (let [delta-cntr (delta-counter)]
     (doseq [e (reduce
@@ -45,6 +48,9 @@
         current-stats))))
 
 (defn create-repetition-detector
+  "Create a detector for detecting repetitions of pred-fn evaluating to true.
+   Returns a function with one argument that takes a predicate function, pred-fn, as argument.
+   The returned function only evaluates to true if pred-fn was true for the number of invocations defined by repetitions."
   [repetitions]
   (let [cntr (counter)]
     (fn [pred-f]
@@ -56,6 +62,9 @@
       (= repetitions (cntr)))))
 
 (defn create-moving-average-calculator
+  "Create a calculator for calculating a moving average of cnt instances.
+   Returns a single argument function that takes a numerical value as argument.
+   The returned function evaluates to the moving average of the last cnt instances of numerical values that were passed."
   [cnt]
   (let [data (ref (vec (repeat cnt 0)))]
     (fn
@@ -65,6 +74,12 @@
         (dosync (alter data (fn [d v] (-> d (subvec 1) (conj v))) value))))))
 
 (defn create-drop-detector
+  "Create a detector for detecting drops based on pipeline stats delta data.
+   n-repetitions define the number of subsequent repetitions of drops that have to occur in order to trigger a detection.
+   n-detectors defines the number of detectors that are to be used.
+   threshold defines the threshold of from which value on a drop is considered.
+   Returns a single argument function that serves as the actual detector.
+   The returned function takes the pipeline stats delta as argument and returns a vector of boolean values that indicate if drops were detected for a given pipeline stage."
   [n-repetitions n-detectors threshold]
   (let [rep-detectors (reduce
                         (fn [v _] (conj v (create-repetition-detector n-repetitions)))
@@ -78,6 +93,8 @@
         (sort (dissoc deltas :pipeline))))))
 
 (defn get-drop-indices
+  "Get a vector of the indices for which drops were detected in the input vector drop-det-vec.
+   More generically, returns a vector of the indices of the elements that were true in in the input vector."
   [drop-det-vec]
   (vec
     (reduce-kv
@@ -86,6 +103,8 @@
       drop-det-vec)))
 
 (defn get-non-drop-indices
+  "Get a vector of the indices for which no drops were detected in the input vector drop-det-vec.
+   More generically, returns a vector of the indices of the elements that were not true in the input vector."
   [drop-det-vec]
   (vec
     (reduce-kv
@@ -94,10 +113,13 @@
       drop-det-vec)))
 
 (defn update
+  "Update the element at the given index of the vector v by applying the function f to it."
   [v idx f]
   (assoc v idx (f (v idx))))
 
 (defn create-mapping-updater
+  "Create an updater for updating function mappings based on detected drops.
+   Returns a function that takes a function mapping and a vector of boolean values as returned from a drop detector as input and which calculates a new function mapping with the aim of avoiding drops."
   []
   (let [limit-reached (atom (sorted-set))]
     (fn [orig-mapping drop-det-vec]
@@ -165,6 +187,7 @@
           )))))
 
 (defn create-self-adaptivity-controller
+  "Create a controller for a self-adaptive data processing pipeline."
   [cfg pipeline orig-fns mapping]
   (let [inactivity (cfg :inactivity)
         inactivity-counter (counter inactivity)

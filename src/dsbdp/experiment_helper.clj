@@ -38,6 +38,7 @@
 (def chunker (make-treebank-chunker "resources/opennlp/models/en-chunker.bin"))
 
 (defn create-no-op-proc-fns
+  "Create a vector of n no-op functions."
   [n]
   (utils/create-proc-fn-vec-from-template
     '(fn [_ _] 0)
@@ -45,6 +46,8 @@
     n))
 
 (defn create-inc-proc-fns
+  "Create a vector of functions which each perform a single increment operation.
+   The first function will increment the input argument and subsequent functions will increment the output argument."
   [n]
   (utils/create-proc-fn-vec-from-template
     '(fn [i _] (inc i))
@@ -52,6 +55,7 @@
     n))
 
 (defn create-hashmap-inc-put-proc-fns
+  "The general behaviour is analogous to create-inc-proc-fns, however, the results are stored in a map in which the index of the processing function is used as key to which the result of the operation is associated as value."
   [n]
   (let [o-sym 'o]
     (let [o-meta (vary-meta o-sym assoc :tag 'java.util.Map)]
@@ -61,6 +65,7 @@
        n))))
 
 (defn factorial
+  "A purposely naive implementation for calculating factorials."
   ([n]
     (factorial 1N 1N n))
   ([result i n]
@@ -69,6 +74,7 @@
       result)))
 
 (defn create-factorial-proc-fns
+  "Create a vector of processing functions that each calculate the factorial of the input data."
   [n]
   (utils/create-proc-fn-vec-from-template
     '(fn [i _] (dsbdp.experiment-helper/factorial i))
@@ -76,6 +82,8 @@
      n))
 
 (defn create-busy-sleep-proc-fns
+  "Create a vector of processing functions that perform a busy sleep.
+   The duration of the busy sleep is given as input data in nanoseconds."
   [n]
   (utils/create-proc-fn-vec-from-template
     '(fn [i _] (dsbdp.ExperimentHelper/busySleep ^long (i :_idx_)) 0)

@@ -1,3 +1,5 @@
+![dsbdp logo](https://github.com/ruedigergad/dsbdp/blob/master/dsbdp_logo_2.png)
+
 # Dynamic Stream and Batch Data Processing (dsbdp)
 
 ## Status
@@ -15,6 +17,16 @@
 [![Coverage Status](https://coveralls.io/repos/github/ruedigergad/dsbdp/badge.svg?branch=master)](https://coveralls.io/github/ruedigergad/dsbdp?branch=master)
 
 Please note that, because the sole purpose of the dsbdp.main namespace is to serve as entry point for running experiments from the command line, the dsbdp.main namespace was excluded for the calculation of the code coverage.
+
+#### Detailed Test Results
+
+Detailed test results are available as well:
+[http://ruedigergad.github.io/dsbdp/test-results/html/](http://ruedigergad.github.io/dsbdp/test-results/html/)
+
+## API Docs
+
+API docs are available:
+http://ruedigergad.github.io/dsbdp/doc/
 
 ## License
 

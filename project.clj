@@ -15,5 +15,10 @@
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]
   :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.2.2" :exclusions  [org.clojure/clojure]]]}}
   :plugins [[lein-cloverage "1.0.6"]]
+  :test2junit-output-dir "ghpages/test-results"
+  :test2junit-run-ant true  
+  :html5-docs-docs-dir "ghpages/doc"
+  :html5-docs-ns-includes #"^dsbdp.*"
+  :html5-docs-repository-url "https://github.com/ruedigergad/dsbdp/blob/master"
   :aot :all
   :main dsbdp.main)

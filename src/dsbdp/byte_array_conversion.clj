@@ -51,24 +51,27 @@
   (ByteArrayHelper/getInt32BigEndian ba idx))
 
 (defn timestamp
-  "Get the (pcap) timestamp value of the four bytes starting at index idx in the byte-array ba."
+  "Get the (pcap) timestamp long value starting at index idx in the byte-array ba."
   [ba idx]
   (+ (* (ByteArrayHelper/getInt32 ba idx) 1000000000) (* (ByteArrayHelper/getInt32 ba (+ idx 4)) 1000)))
 
 (defn timestamp-be
-  "Get the (pcap) big endian timestamp value of the four bytes starting at index idx in the byte-array ba."
+  "Get the (pcap) big endian timestamp long value starting at index idx in the byte-array ba."
   [ba idx]
   (+ (* (ByteArrayHelper/getInt32BigEndian ba idx) 1000000000) (* (ByteArrayHelper/getInt32BigEndian ba (+ idx 4)) 1000)))
 
 (defn eth-mac-addr-str
+  "Starting at index idx of the byte array ba, convert the following bytes into the Ethernet MAC address String representation."
   [ba idx]
   (ByteArrayHelper/getEthMacAddrString ba idx))
 
 (defn ipv4-addr-str
+  "Starting at index idx of the byte array ba, convert the following bytes into the IPv4 address String representation."
   [ba idx]
   (ByteArrayHelper/getIpv4AddrString ba idx))
 
 (defn timestamp-to-str
+  "Convert a timestamp from its Long value to a formatted String."
   [ts]
   (->
     (SimpleDateFormat. "yyyy-MM-DD_HH:mm:ss")
@@ -77,14 +80,18 @@
         (long (/ ts 1000000))))))
 
 (defn timestamp-str
+  "Get the (pcap) timestamp String represenation starting at index idx in the byte-array ba."
   [ba idx]
   (timestamp-to-str (timestamp ba idx)))
 
 (defn timestamp-str-be
+  "Get the (pcap) big endian timestamp String representation starting at index idx in the byte-array ba."
   [ba idx]
   (timestamp-to-str (timestamp-be ba idx)))
 
 (defn ba-to-str
+  "Convert a byte array ba into a String representation, interpreting the ba content as ASCII values.
+   Starts at index idx and converts the number of len bytes."
   [ba idx len]
   (ByteArrayHelper/byteArrayToString ba idx len))
 
