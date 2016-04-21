@@ -12,8 +12,10 @@
   dsbdp.local-data-processing-pipeline
   (:require [dsbdp.data-processing-dsl :refer :all])
   (:require [clj-assorted-utils.util :refer :all])
+  (:require [clojure.core.async :as async])
   (:import
     (dsbdp Counter LocalTransferContainer ProcessingLoop)
+    (java.util Queue)
     (java.util.concurrent ArrayBlockingQueue BlockingQueue LinkedBlockingQueue LinkedTransferQueue TimeUnit TransferQueue)
     (uk.co.real_logic.queues OneToOneConcurrentArrayQueue3)))
 
@@ -49,20 +51,28 @@
 
 (defmacro create-queue
   []
-  (println "Setting up queue creation for:" queue-setup)
+  (println "Setting up data exchange via:" queue-setup)
   (let [expr (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
                "ArrayBlockingQueue" `(ArrayBlockingQueue. queue-size)
                "LinkedBlockingQueue" `(LinkedBlockingQueue. queue-size)
                "LinkedTransferQueue" `(LinkedTransferQueue.)
                "OneToOneConcurrentArrayQueue3" `(OneToOneConcurrentArrayQueue3. queue-size)
-               )]
+               "clojure_core_async_chan" `(async/chan queue-size))]
     (println expr)
     expr))
 
 (defmacro enqueue
   [obj data enqueued-counter dropped-counter]
   (println "Enqueueing data via:")
-  (let [queue (with-meta obj {:tag 'java.util.concurrent.BlockingQueue})
+  (let [queue (if (.contains queue-setup "Queue")
+                (with-meta
+                  obj
+                  {:tag (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
+                          "ArrayBlockingQueue" 'java.util.concurrent.BlockingQueue
+                          "LinkedBlockingQueue" 'java.util.concurrent.BlockingQueue
+                          "LinkedTransferQueue" 'java.util.concurrent.TransferQueue
+                          "OneToOneConcurrentArrayQueue3" 'java.util.Queue)})
+                obj)
         expr (condp (fn [^String v ^String s] (.contains s v)) queue-setup
                "add-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
@@ -134,20 +144,31 @@
                "tryTransfer-counted-100ms" `(if (.tryTransfer ~queue ~data 100 TimeUnit/MILLISECONDS)
                                               (.inc ~enqueued-counter)
                                               (.inc ~dropped-counter))
-               "tryTransfer" `(.tryTransfer ~queue ~data))]
-    (println expr)
-    expr))
+               "tryTransfer" `(.tryTransfer ~queue ~data)
+               "chan" `(async/>!! ~queue ~data)
+               )]
+      (println expr)
+      expr))
 
 (defmacro take-from-queue
   [obj]
   (println "Retrieving data via:")
-  (let [queue (with-meta obj {:tag 'java.util.concurrent.BlockingQueue})
+  (let [queue (if (.contains queue-setup "Queue")
+                (with-meta
+                  obj
+                  {:tag (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
+                          "ArrayBlockingQueue" 'java.util.concurrent.BlockingQueue
+                          "LinkedBlockingQueue" 'java.util.concurrent.BlockingQueue
+                          "LinkedTransferQueue" 'java.util.concurrent.TransferQueue
+                          "OneToOneConcurrentArrayQueue3" 'java.util.Queue)})
+                obj)
         expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
                "remove-yield" `(if (not (.isEmpty ~queue))
                                  (.remove ~queue)
                                  (Thread/yield))
                "remove" `(if (not (.isEmpty ~queue))
                            (.remove ~queue))
+               "chan" `(async/<!! ~queue)
                `(.take ~queue))]
     (println expr)
     expr))
