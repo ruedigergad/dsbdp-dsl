@@ -246,23 +246,23 @@
                                 (println "Starting async-pipeline-go counting.")
                                 (async/go
                                   (loop []
-                                    (async/<! in-chan)
+                                    (async/<! out-chan)
                                     (.inc ^Counter out-cntr)
                                     (recur))))
-;          async-pipeline (if
-;                           (and
-;                             (.contains scenario "-async-pipeline")
-;                             (not (nil? in-data)))
-;                           (async/pipeline
-;                             8
-;                             out-chan
-;                             (fn [rf]
-;                               (fn ([] (rf))
-;                               ([result] (rf result))
-;                               ([result data]
-;                                 (let [ret (direct-proc-fn data)]
-;                                   (rf result (if (nil? ret) 1 ret))))))
-;                             in-chan))
+          async-pipeline (if
+                           (and
+                             (.contains scenario "-async-pipeline")
+                             (not (nil? in-data)))
+                           (async/pipeline
+                             8
+                             out-chan
+                             (fn [rf]
+                               (fn ([] (rf))
+                               ([result] (rf result))
+                               ([result data]
+                                 (let [ret (direct-proc-fn data)]
+                                   (rf result (if (nil? ret) 1 ret))))))
+                             in-chan))
           self-adaptivity-cfg (options :self-adaptivity-cfg)
           self-adaptivity-controller (if (not (nil? self-adaptivity-cfg))
                                        (create-self-adaptivity-controller
