@@ -166,7 +166,8 @@
                                                             synthetic-average-throughput-self-adaptivity-processing-fns)
                        "self-adaptive-high-throughput" (utils/combine-proc-fns-vec
                                                          @fn-mapping
-                                                         synthetic-high-throughput-self-adaptivity-processing-fns)))
+                                                         synthetic-high-throughput-self-adaptivity-processing-fns)
+                       nil))
           _ (println "Proc-fns:" @proc-fns)
           pipeline (if (and
                          (not (nil? in-data))
