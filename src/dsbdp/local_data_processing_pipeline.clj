@@ -10,9 +10,10 @@
   ^{:author "Ruediger Gad",
     :doc "Pipeline for processing data"}
   dsbdp.local-data-processing-pipeline
-  (:require [dsbdp.data-processing-dsl :refer :all])
-  (:require [clj-assorted-utils.util :refer :all])
-  (:require [clojure.core.async :as async])
+  (:require
+    [dsbdp.data-processing-dsl :refer :all]
+    [clj-assorted-utils.util :refer :all]
+    [clojure.core.async :as async])
   (:import
     (dsbdp Counter LocalTransferContainer ProcessingLoop)
     (java.util Queue)
