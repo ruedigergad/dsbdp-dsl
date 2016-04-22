@@ -107,8 +107,6 @@
     (let [in-cntr (Counter.)
           out-cntr (Counter.)
           delta-cntr (delta-counter)
-          out-fn (fn [_ _]
-                   (.inc out-cntr))
           ^String scenario (:scenario options)
           in-data-arg (:in-data options)
           in-data (if (not (nil? in-data-arg))
@@ -169,6 +167,8 @@
                                                          synthetic-high-throughput-self-adaptivity-processing-fns)
                        nil))
           _ (println "Proc-fns:" @proc-fns)
+          out-fn (fn [_ _]
+                   (.inc out-cntr))
           pipeline (if (and
                          (not (nil? in-data))
                          (not (.endsWith scenario "-direct")))
