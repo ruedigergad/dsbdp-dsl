@@ -178,6 +178,10 @@
                          (.inc out-cntr))))
           batch-delay (:batch-delay options)
           batch-size (:batch-size options)
+          in-chan (if (.contains scenario "async-pipeline")
+                    (async/chan queue-size))
+          out-chan (if (.contains scenario "async-pipeline")
+                     (async/chan queue-size))
           in-loop (ProcessingLoop.
                     "DataGenerationLoop"
                     (cond
