@@ -168,10 +168,11 @@
                                                          synthetic-high-throughput-self-adaptivity-processing-fns)
                        nil))
           _ (println "Proc-fns:" @proc-fns)
-          pipeline (if (and
-                         (not (nil? in-data))
-                         (not (.endsWith scenario "-direct"))
-                         (not (.endsWith scenario "-pmap")))
+          pipeline (if
+                     (and
+                       (not (nil? in-data))
+                       (not (.endsWith scenario "-direct"))
+                       (not (.endsWith scenario "-pmap")))
                      (create-local-processing-pipeline
                        @proc-fns
                        (fn [_ _]
@@ -205,6 +206,20 @@
                           (fn []
                             (doseq [data (pmap proc-fn (repeat in-data))]
                               (.inc out-cntr))))
+                      (.endsWith scenario "-async-pipeline")
+                        (if
+                          (and
+                            (not (nil? in-data))
+                            (> batch-delay 0)
+                            (> batch-size 0))
+                          (create-batched-in-fn
+                            (fn [data]
+                              (async/>!! in-chan data)))
+                          (if
+                            (not (nil? in-data))
+                            (create-flood-in-fn
+                              (fn [data]
+                                (async/>!! in-chan data)))))
                       (and
                         (not (nil? in-data))
                         (> batch-delay 0)
