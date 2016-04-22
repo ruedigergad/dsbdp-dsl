@@ -171,7 +171,8 @@
                    (.inc out-cntr))
           pipeline (if (and
                          (not (nil? in-data))
-                         (not (.endsWith scenario "-direct")))
+                         (not (.endsWith scenario "-direct"))
+                         (not (.endsWith scenario "-pmap")))
                      (create-local-processing-pipeline
                        @proc-fns
                        out-fn))
