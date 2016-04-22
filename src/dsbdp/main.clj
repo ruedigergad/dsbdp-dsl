@@ -83,6 +83,19 @@
     :parse-fn #(binding [*read-eval* false] (read-string %))]
    ])
 
+(defn create-direct-proc-fn
+  [scenario]
+  (condp (fn [^String v ^String s] (.startsWith s v)) scenario
+    "busy-sleep" (fn [in] (ExperimentHelper/busySleep ^long (first in)))
+    "factorial" factorial
+    "opennlp-single" opennlp-single-sentence-direct-test-fn
+    "opennlp-multi" opennlp-multi-sentence-direct-test-fn
+    "pcap-clj-map" (create-proc-fn sample-pcap-processing-definition-clj-map)
+    "pcap-java-map" (create-proc-fn sample-pcap-processing-definition-java-map)
+    "pcap-json" (create-proc-fn sample-pcap-processing-definition-json)
+    "pcap-csv" (create-proc-fn sample-pcap-processing-definition-csv)
+    nil))
+
 (defn -main [& args]
   (println "Starting dsbdp main...")
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
@@ -167,19 +180,15 @@
                     "DataGenerationLoop"
                     (cond
                       (.endsWith scenario "-direct")
-                        (let [proc-fn (condp = scenario
-                                        "busy-sleep-direct" (fn [in] (ExperimentHelper/busySleep ^long (first in)))
-                                        "factorial-direct" factorial
-                                        "opennlp-single-direct" opennlp-single-sentence-direct-test-fn
-                                        "opennlp-multi-direct" opennlp-multi-sentence-direct-test-fn
-                                        "pcap-clj-map-direct" (create-proc-fn sample-pcap-processing-definition-clj-map)
-                                        "pcap-java-map-direct" (create-proc-fn sample-pcap-processing-definition-java-map)
-                                        "pcap-json-direct" (create-proc-fn sample-pcap-processing-definition-json)
-                                        "pcap-csv-direct" (create-proc-fn sample-pcap-processing-definition-csv)
-                                        nil)]
+                        (let [proc-fn (create-direct-proc-fn scenario)]
                           (fn []
                             (proc-fn in-data)
                             (.inc out-cntr)))
+                      (.endsWith scenario "-pmap")
+                        (let [proc-fn (create-direct-proc-fn scenario)]
+                          (fn []
+                            (doseq [data (pmap proc-fn (repeat in-data))]
+                              (.inc out-cntr))))
                       (and
                         in-data
                         (> batch-delay 0)
