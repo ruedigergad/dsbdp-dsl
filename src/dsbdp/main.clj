@@ -172,7 +172,8 @@
                      (and
                        (not (nil? in-data))
                        (not (.endsWith scenario "-direct"))
-                       (not (.endsWith scenario "-pmap")))
+                       (not (.endsWith scenario "-pmap"))
+                       (not (.contains scenario "async-pipeline")))
                      (create-local-processing-pipeline
                        @proc-fns
                        (fn [_ _]
@@ -221,10 +222,14 @@
                                 (async/>!! in-chan data)))))
                       (and
                         (not (nil? in-data))
+                        (not (nil? pipeline))
                         (> batch-delay 0)
                         (> batch-size 0)) (create-batched-in-fn (get-in-fn pipeline))
-                      (not (nil? in-data)) (create-flood-in-fn (get-in-fn pipeline))
-                      :default (fn [] (.inc out-cntr))))
+                      (and
+                        (not (nil? in-data))
+                        (not (nil? pipeline))) (create-flood-in-fn (get-in-fn pipeline))
+                      :default (if (not (.contains scenario "async-pipeline"))
+                                 (fn [] (.inc out-cntr)))))
           async-out-count-loop (if
                                  (and
                                    (.endsWith scenario "-async-pipeline")
@@ -232,13 +237,20 @@
                                  (ProcessingLoop.
                                    "AsyncOutputCountLoop"
                                    (fn []
-                                     (while true
-                                       (do
-                                         (async/<!! out-chan)
-                                         (.inc out-cntr))))))
+                                     (async/<!! out-chan)
+                                     (.inc out-cntr))))
+          async-count-channel (if
+                                (and
+                                  (.endsWith scenario "-async-pipeline-go")
+                                  (not (nil? in-data)))
+                                (async/go
+                                  (loop []
+                                    (async/<! out-chan)
+                                    (.inc out-cntr)
+                                    (recur))))
           async-pipeline (if
                            (and
-                             (.endsWith scenario "-async-pipeline")
+                             (.contains scenario "-async-pipeline")
                              (not (nil? in-data)))
                            (async/pipeline
                              8
@@ -278,10 +290,6 @@
                              (update-stats self-adaptivity-controller counts))))))]
       (println "Starting experiment...")
       (.setName (Thread/currentThread) "Main")
-      (.start in-loop)
-      (if
-        (not (nil? async-out-count-loop))
-        (.start async-out-count-loop))
       (run-repeat
         (executor)
         (fn []
@@ -291,5 +299,17 @@
         1000)
       (run-once
         (executor)
-        (fn [] (System/exit 0)) 120000))))
+        (fn [] (System/exit 0)) 120000)
+      (if (.endsWith scenario "-async-pipeline-go")
+        (do
+          (async/go
+            (loop []
+              (async/>! in-chan in-data)
+              (.inc in-cntr)
+              (recur)))
+          (sleep 130000))
+        (.start in-loop))
+      (if
+        (not (nil? async-out-count-loop))
+        (.start async-out-count-loop)))))
 
