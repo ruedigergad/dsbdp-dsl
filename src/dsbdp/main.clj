@@ -193,19 +193,18 @@
                                (fn []
                                  (in-fn in-data)
                                  (.inc in-cntr)))
+          direct-proc-fn (create-direct-proc-fn scenario)
           in-loop (ProcessingLoop.
                     "DataGenerationLoop"
                     (cond
                       (.endsWith scenario "-direct")
-                        (let [proc-fn (create-direct-proc-fn scenario)]
-                          (fn []
-                            (proc-fn in-data)
-                            (.inc out-cntr)))
+                        (fn []
+                          (direct-proc-fn in-data)
+                          (.inc out-cntr))
                       (.endsWith scenario "-pmap")
-                        (let [proc-fn (create-direct-proc-fn scenario)]
-                          (fn []
-                            (doseq [data (pmap proc-fn (repeat in-data))]
-                              (.inc out-cntr))))
+                        (fn []
+                          (doseq [data (pmap direct-proc-fn (repeat in-data))]
+                            (.inc out-cntr)))
                       (.endsWith scenario "-async-pipeline")
                         (if
                           (and
@@ -226,6 +225,31 @@
                         (> batch-size 0)) (create-batched-in-fn (get-in-fn pipeline))
                       (not (nil? in-data)) (create-flood-in-fn (get-in-fn pipeline))
                       :default (fn [] (.inc out-cntr))))
+          async-out-count-loop (if
+                                 (and
+                                   (.endsWith scenario "-async-pipeline")
+                                   (not (nil? in-data)))
+                                 (ProcessingLoop.
+                                   "AsyncOutputCountLoop"
+                                   (fn []
+                                     (while true
+                                       (do
+                                         (async/<!! out-chan)
+                                         (.inc out-cntr))))))
+          async-pipeline (if
+                           (and
+                             (.endsWith scenario "-async-pipeline")
+                             (not (nil? in-data)))
+                           (async/pipeline
+                             8
+                             out-chan
+                             (fn [rf]
+                               (fn ([] (rf))
+                               ([result] (rf result))
+                               ([result data]
+                                 (let [ret (direct-proc-fn data)]
+                                   (rf result (if (nil? ret) 1 ret))))))
+                             in-chan))
           self-adaptivity-cfg (options :self-adaptivity-cfg)
           self-adaptivity-controller (if (not (nil? self-adaptivity-cfg))
                                        (create-self-adaptivity-controller
@@ -255,10 +279,17 @@
       (println "Starting experiment...")
       (.setName (Thread/currentThread) "Main")
       (.start in-loop)
-      (run-repeat (executor) (fn []
-                               (stats-fn)
-                               (thread-info-fn) (println)
-                               )
-                  1000)
-      (run-once (executor) (fn [] (System/exit 0)) 120000))))
+      (if
+        (not (nil? async-out-count-loop))
+        (.start async-out-count-loop))
+      (run-repeat
+        (executor)
+        (fn []
+          (stats-fn)
+          (thread-info-fn) (println)
+          )
+        1000)
+      (run-once
+        (executor)
+        (fn [] (System/exit 0)) 120000))))
 
