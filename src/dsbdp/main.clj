@@ -182,6 +182,16 @@
                     (async/chan queue-size))
           out-chan (if (.contains scenario "async-pipeline")
                      (async/chan queue-size))
+          create-batched-in-fn (fn [in-fn]
+                                 (fn []
+                                   (doseq [i (repeat batch-size 0)]
+                                     (in-fn in-data)
+                                     (.inc in-cntr))
+                                   (sleep batch-delay)))
+          create-flood-in-fn (fn [in-fn]
+                               (fn []
+                                 (in-fn in-data)
+                                 (.inc in-cntr)))
           in-loop (ProcessingLoop.
                     "DataGenerationLoop"
                     (cond
@@ -198,16 +208,8 @@
                       (and
                         (not (nil? in-data))
                         (> batch-delay 0)
-                        (> batch-size 0)) (let [in-fn (get-in-fn pipeline)]
-                                            (fn []
-                                              (doseq [i (repeat batch-size 0)]
-                                                (in-fn in-data)
-                                                (.inc in-cntr))
-                                              (sleep batch-delay)))
-                      (not (nil? in-data)) (let [in-fn (get-in-fn pipeline)]
-                                             (fn []
-                                               (in-fn in-data)
-                                               (.inc in-cntr)))
+                        (> batch-size 0)) (create-batched-in-fn (get-in-fn pipeline))
+                      (not (nil? in-data)) (create-flood-in-fn (get-in-fn pipeline))
                       :default (fn [] (.inc out-cntr))))
           self-adaptivity-cfg (options :self-adaptivity-cfg)
           self-adaptivity-controller (if (not (nil? self-adaptivity-cfg))
