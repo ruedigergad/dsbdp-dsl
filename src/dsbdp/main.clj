@@ -12,6 +12,7 @@
   dsbdp.main
   (:require
     (clj-assorted-utils [util :refer :all])
+    (clojure.core [async :as async])
     (clojure.tools [cli :refer :all])
     (dsbdp
       [data-processing-dsl :refer :all]
