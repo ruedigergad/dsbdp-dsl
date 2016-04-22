@@ -74,9 +74,9 @@
     obj))
 
 (defmacro enqueue
-  [obj data enqueued-counter dropped-counter]
+  [q data enqueued-counter dropped-counter]
   (println "Enqueueing data via:")
-  (let [queue (add-type-hint obj)
+  (let [queue (add-type-hint q)
         expr (condp (fn [^String v ^String s] (.contains s v)) queue-setup
                "add-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
@@ -155,9 +155,9 @@
       expr))
 
 (defmacro take-from-queue
-  [obj]
+  [q]
   (println "Retrieving data via:")
-  (let [queue (add-type-hint obj)
+  (let [queue (add-type-hint q)
         expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
                "remove-yield" `(if (not (.isEmpty ~queue))
                                  (.remove ~queue)
