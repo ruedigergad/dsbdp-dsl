@@ -239,14 +239,15 @@
                                    (fn []
                                      (async/<!! out-chan)
                                      (.inc out-cntr))))
-          async-count-channel (if
+          async-count-channel (when
                                 (and
                                   (.endsWith scenario "-async-pipeline-go")
                                   (not (nil? in-data)))
+                                (println "Starting async-pipeline-go counting.")
                                 (async/go
                                   (loop []
                                     (async/<! out-chan)
-                                    (.inc out-cntr)
+                                    (.inc ^Counter out-cntr)
                                     (recur))))
           async-pipeline (if
                            (and
@@ -302,10 +303,11 @@
         (fn [] (System/exit 0)) 120000)
       (if (.endsWith scenario "-async-pipeline-go")
         (do
+          (println "Starting async-pipeline-go input creation.")
           (async/go
             (loop []
               (async/>! in-chan in-data)
-              (.inc in-cntr)
+              (.inc ^Counter in-cntr)
               (recur)))
           (sleep 130000))
         (.start in-loop))
