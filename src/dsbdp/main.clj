@@ -191,7 +191,7 @@
                             (doseq [data (pmap proc-fn (repeat in-data))]
                               (.inc out-cntr))))
                       (and
-                        in-data
+                        (not (nil? in-data))
                         (> batch-delay 0)
                         (> batch-size 0)) (let [in-fn (get-in-fn pipeline)]
                                             (fn []
