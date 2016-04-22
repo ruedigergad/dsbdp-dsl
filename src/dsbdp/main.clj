@@ -199,10 +199,10 @@
                                                 (in-fn in-data)
                                                 (.inc in-cntr))
                                               (sleep batch-delay)))
-                      in-data (let [in-fn (get-in-fn pipeline)]
-                                (fn []
-                                  (in-fn in-data)
-                                  (.inc in-cntr)))
+                      (not (nil? in-data)) (let [in-fn (get-in-fn pipeline)]
+                                             (fn []
+                                               (in-fn in-data)
+                                               (.inc in-cntr)))
                       :default (fn [] (.inc out-cntr))))
           self-adaptivity-cfg (options :self-adaptivity-cfg)
           self-adaptivity-controller (if (not (nil? self-adaptivity-cfg))
