@@ -167,15 +167,14 @@
                                                          synthetic-high-throughput-self-adaptivity-processing-fns)
                        nil))
           _ (println "Proc-fns:" @proc-fns)
-          out-fn (fn [_ _]
-                   (.inc out-cntr))
           pipeline (if (and
                          (not (nil? in-data))
                          (not (.endsWith scenario "-direct"))
                          (not (.endsWith scenario "-pmap")))
                      (create-local-processing-pipeline
                        @proc-fns
-                       out-fn))
+                       (fn [_ _]
+                         (.inc out-cntr))))
           batch-delay (:batch-delay options)
           batch-size (:batch-size options)
           in-loop (ProcessingLoop.
