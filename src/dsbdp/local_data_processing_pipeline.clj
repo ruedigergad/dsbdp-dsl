@@ -61,18 +61,22 @@
     (println expr)
     expr))
 
+(defn add-type-hint
+  [obj]
+  (if (.contains queue-setup "Queue")
+    (with-meta
+      obj
+      {:tag (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
+              "ArrayBlockingQueue" 'java.util.concurrent.BlockingQueue
+              "LinkedBlockingQueue" 'java.util.concurrent.BlockingQueue
+              "LinkedTransferQueue" 'java.util.concurrent.TransferQueue
+              "OneToOneConcurrentArrayQueue3" 'java.util.Queue)})
+    obj))
+
 (defmacro enqueue
   [obj data enqueued-counter dropped-counter]
   (println "Enqueueing data via:")
-  (let [queue (if (.contains queue-setup "Queue")
-                (with-meta
-                  obj
-                  {:tag (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
-                          "ArrayBlockingQueue" 'java.util.concurrent.BlockingQueue
-                          "LinkedBlockingQueue" 'java.util.concurrent.BlockingQueue
-                          "LinkedTransferQueue" 'java.util.concurrent.TransferQueue
-                          "OneToOneConcurrentArrayQueue3" 'java.util.Queue)})
-                obj)
+  (let [queue (add-type-hint obj)
         expr (condp (fn [^String v ^String s] (.contains s v)) queue-setup
                "add-counted-yield" `(if (< (.size ~queue) queue-size)
                                       (do
@@ -153,15 +157,7 @@
 (defmacro take-from-queue
   [obj]
   (println "Retrieving data via:")
-  (let [queue (if (.contains queue-setup "Queue")
-                (with-meta
-                  obj
-                  {:tag (condp (fn [^String v ^String s] (.startsWith s v)) queue-setup
-                          "ArrayBlockingQueue" 'java.util.concurrent.BlockingQueue
-                          "LinkedBlockingQueue" 'java.util.concurrent.BlockingQueue
-                          "LinkedTransferQueue" 'java.util.concurrent.TransferQueue
-                          "OneToOneConcurrentArrayQueue3" 'java.util.Queue)})
-                obj)
+  (let [queue (add-type-hint obj)
         expr (condp (fn [^String v ^String s] (.endsWith s v)) queue-setup
                "remove-yield" `(if (not (.isEmpty ~queue))
                                  (.remove ~queue)
