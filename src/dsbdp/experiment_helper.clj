@@ -20,8 +20,7 @@
     [opennlp.treebank :refer :all])
   (:import
     (dsbdp ExperimentHelper)
-    (java.util HashMap Map)
-    (org.apache.commons.math3.util CombinatoricsUtils)))
+    (java.util HashMap Map)))
 
 (def pcap-byte-array-test-data
   "The byte array representation of a UDP packet for being used as dummy data."
