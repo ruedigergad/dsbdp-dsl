@@ -254,7 +254,7 @@
                              (.contains scenario "-async-pipeline")
                              (not (nil? in-data)))
                            (async/pipeline
-                             8
+                             pipeline-length
                              out-chan
                              (fn [rf]
                                (fn ([] (rf))
