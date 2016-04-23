@@ -256,12 +256,12 @@
                            (async/pipeline
                              pipeline-length
                              out-chan
-                             (fn [rf]
-                               (fn ([] (rf))
-                               ([result] (rf result))
-                               ([result data]
-                                 (let [ret (direct-proc-fn data)]
-                                   (rf result (if (nil? ret) 1 ret))))))
+                             (map
+                               (fn [in-data]
+                                 (let [out-data (direct-proc-fn in-data)]
+                                   (if (nil? out-data)
+                                     1
+                                     out-data))))
                              in-chan))
           self-adaptivity-cfg (options :self-adaptivity-cfg)
           self-adaptivity-controller (if (not (nil? self-adaptivity-cfg))
