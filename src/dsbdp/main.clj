@@ -13,6 +13,7 @@
   (:require
     (clj-assorted-utils [util :refer :all])
     (clojure.core [async :as async])
+    (clojure.core [reducers :as reducers])
     (clojure.tools [cli :refer :all])
     (dsbdp
       [data-processing-dsl :refer :all]
@@ -206,6 +207,12 @@
                         (fn []
                           (doseq [data (pmap direct-proc-fn (repeat in-data))]
                             (.inc out-cntr)))
+                      (.endsWith scenario "-reducers-map")
+                        (fn []
+                          (loop []
+                            (doseq [data (into [] (reducers/map direct-proc-fn (repeat (* queue-size 1) in-data)))]
+                              (.inc out-cntr))
+                            (recur)))
                       (.endsWith scenario "-async-pipeline")
                         (if
                           (and
