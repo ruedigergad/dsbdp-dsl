@@ -213,7 +213,10 @@
                         (let [in-vec (vec (repeat (* 512 pipeline-length) in-data))]
                           (doall in-vec)
                           (fn []
-                            (doseq [_ (reducers/foldcat (reducers/map direct-proc-fn in-vec))]
+                            (doseq [
+                                    ;_ (reducers/foldcat (reducers/map direct-proc-fn in-vec))
+                                    _ (reducers/fold 16 reducers/cat reducers/append! (reducers/map direct-proc-fn in-vec))
+                                    ]
                               (.inc out-cntr))))
                       (.endsWith scenario "-async-pipeline")
                         (if

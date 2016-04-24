@@ -22,7 +22,8 @@
 
 
 
-(def ^Integer queue-size (int 512))
+(def ^Integer queue-size (int 1024))
+
 (def queue-setup
   (let [file-name "queue-setup.cfg"
         setup (if (file-exists? file-name)
