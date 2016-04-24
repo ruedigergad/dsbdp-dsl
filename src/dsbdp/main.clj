@@ -204,15 +204,17 @@
                           (direct-proc-fn in-data)
                           (.inc out-cntr))
                       (.endsWith scenario "-pmap")
-                        (fn []
-                          (doseq [data (pmap direct-proc-fn (repeat in-data))]
-                            (.inc out-cntr)))
+                        (let [d (repeat queue-size in-data)]
+                          (doall d)
+                          (fn []
+                            (doseq [_ (pmap direct-proc-fn d)]
+                              (.inc out-cntr))))
                       (.endsWith scenario "-reducers-map")
-                        (fn []
-                          (loop []
-                            (doseq [data (into [] (reducers/map direct-proc-fn (repeat (* queue-size 1) in-data)))]
-                              (.inc out-cntr))
-                            (recur)))
+                        (let [d (repeat (* 512 4) in-data)]
+                          (doall d)
+                          (fn []
+                            (doseq [_ (reducers/foldcat (reducers/map direct-proc-fn d))]
+                              (.inc out-cntr))))
                       (.endsWith scenario "-async-pipeline")
                         (if
                           (and
