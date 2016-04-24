@@ -210,10 +210,10 @@
                             (doseq [_ (pmap direct-proc-fn d)]
                               (.inc out-cntr))))
                       (.endsWith scenario "-reducers-map")
-                        (let [d (repeat (* 512 4) in-data)]
-                          (doall d)
+                        (let [in-vec (vec (repeat (* 512 pipeline-length) in-data))]
+                          (doall in-vec)
                           (fn []
-                            (doseq [_ (reducers/foldcat (reducers/map direct-proc-fn d))]
+                            (doseq [_ (reducers/foldcat (reducers/map direct-proc-fn in-vec))]
                               (.inc out-cntr))))
                       (.endsWith scenario "-async-pipeline")
                         (if
