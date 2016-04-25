@@ -166,6 +166,7 @@
                                  (Thread/yield))
                "remove" `(if (not (.isEmpty ~queue))
                            (.remove ~queue))
+               "take" `(.take ~queue)
                "chan" `(async/<!! ~queue)
                `(.take ~queue))]
     (println expr)
