@@ -60,6 +60,10 @@
     "The number of data instances to be generated for one batch."
     :default 2000
     :parse-fn #(Integer/parseInt %)]
+   ["-c" "--collection-size COLLECTION-SIZE"
+    "The size of the collection that is to be processed with pmap and reducers."
+    :default 512
+    :parse-fn #(Integer/parseInt %)]
    ["-d" "--batch-delay BATCH-DELAY"
     "The delay in ms between generating batches."
     :default 1
@@ -76,6 +80,10 @@
     "The mapping of dsl-expressions to processing functions."
     :default [5 5 4 3]
     :parse-fn #(binding [*read-eval* false] (read-string %))]
+   ["-p" "--partition-size PARTITION-SIZE"
+    "The size of the partitions that are used for the reducer-based processing."
+    :default 128
+    :parse-fn #(Integer/parseInt %)]
    ["-s" "--scenario SCENARIO"
     "The scenario that is to be used."
     :default "no-op"]
@@ -196,6 +204,8 @@
                                  (in-fn in-data)
                                  (.inc in-cntr)))
           direct-proc-fn (create-direct-proc-fn scenario)
+          collection-size (:collection-size options)
+          partition-size (:partition-size options)
           in-loop (ProcessingLoop.
                     "DataGenerationLoop"
                     (cond
@@ -204,18 +214,18 @@
                           (direct-proc-fn in-data)
                           (.inc out-cntr))
                       (.endsWith scenario "-pmap")
-                        (let [d (repeat queue-size in-data)]
+                        (let [d (repeat collection-size in-data)]
                           (doall d)
                           (fn []
                             (doseq [_ (pmap direct-proc-fn d)]
                               (.inc out-cntr))))
                       (.endsWith scenario "-reducers-map")
-                        (let [in-vec (vec (repeat (* 512 pipeline-length) in-data))]
+                        (let [in-vec (vec (repeat collection-size in-data))]
                           (doall in-vec)
                           (fn []
                             (doseq [
                                     ;_ (reducers/foldcat (reducers/map direct-proc-fn in-vec))
-                                    _ (reducers/fold 16 reducers/cat reducers/append! (reducers/map direct-proc-fn in-vec))
+                                    _ (reducers/fold partition-size reducers/cat reducers/append! (reducers/map direct-proc-fn in-vec))
                                     ]
                               (.inc out-cntr))))
                       (.endsWith scenario "-async-pipeline")
