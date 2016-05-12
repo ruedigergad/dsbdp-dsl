@@ -181,7 +181,8 @@
                      (and
                        (not (nil? in-data))
                        (not (.endsWith scenario "-direct"))
-                       (not (.endsWith scenario "-pmap"))
+                       (not (.endsWith scenario "-direct-pmap"))
+                       (not (.endsWith scenario "-direct-reducers-map"))
                        (not (.contains scenario "async-pipeline")))
                      (create-local-processing-pipeline
                        @proc-fns
@@ -213,20 +214,21 @@
                         (fn []
                           (direct-proc-fn in-data)
                           (.inc out-cntr))
-                      (.endsWith scenario "-pmap")
+                      (.endsWith scenario "-direct-pmap")
                         (let [d (repeat collection-size in-data)]
                           (doall d)
                           (fn []
                             (doseq [_ (pmap direct-proc-fn d)]
                               (.inc out-cntr))))
-                      (.endsWith scenario "-reducers-map")
+                      (.endsWith scenario "-direct-reducers-map")
                         (let [in-vec (vec (repeat collection-size in-data))]
                           (doall in-vec)
                           (fn []
-                            (doseq [
-                                    ;_ (reducers/foldcat (reducers/map direct-proc-fn in-vec))
-                                    _ (reducers/fold partition-size reducers/cat reducers/append! (reducers/map direct-proc-fn in-vec))
-                                    ]
+                            (doseq [_ (reducers/fold
+                                        partition-size
+                                        reducers/cat
+                                        reducers/append!
+                                        (reducers/map direct-proc-fn in-vec))]
                               (.inc out-cntr))))
                       (.endsWith scenario "-async-pipeline")
                         (if
