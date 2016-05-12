@@ -6,7 +6,7 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/core.async "0.2.374"]
-                 [clj-assorted-utils "1.11.1"]
+                 [clj-assorted-utils "1.12.0"]
                  [org.clojure/tools.cli "0.3.3"]
                  [rgad/clojure-opennlp "0.3.4-SNAPSHOT"]]
   :global-vars {*warn-on-reflection* true}

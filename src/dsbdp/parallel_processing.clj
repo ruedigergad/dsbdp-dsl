@@ -11,7 +11,32 @@
     :doc "Functionality for parallelized processing."}
   dsbdp.parallel-processing
   (:require
+    (clojure.core [reducers :as reducers])
     [dsbdp.local-data-processing-pipeline :refer :all]))
 
-(defn stub [])
+(defn create-simple-pmap-processor
+  [proc-fn batch-size out-fn]
+  (let [batch (atom [])
+        in-fn (fn [data]
+                (swap! batch conj data)
+                (when (>= (count @batch) batch-size)
+                  (doseq [out-element (pmap proc-fn @batch)]
+                    (out-fn out-element))
+                  (reset! batch [])))]
+    in-fn))
+
+(defn create-simple-reducers-map-processor
+  [proc-fn batch-size partition-size out-fn]
+  (let [batch (atom [])
+        in-fn (fn [data]
+                (swap! batch conj data)
+                (when (>= (count @batch) batch-size)
+                  (doseq [out-element (reducers/fold
+                                         partition-size
+                                         reducers/cat
+                                         reducers/append!
+                                         (reducers/map proc-fn @batch))]
+                    (out-fn out-element))
+                  (reset! batch [])))]
+    in-fn))
 
