@@ -171,6 +171,70 @@
     (println "proc-fns:" proc-fns)
     proc-fns))
 
+(defn prepare-in-fn
+  [options scenario in-data in-cntr out-cntr in-chan pipeline queue-size]
+  (let [batch-delay (:batch-delay options)
+        batch-size (:batch-size options)
+        create-batched-in-fn (fn [in-fn]
+                               (fn []
+                                 (doseq [i (repeat batch-size 0)]
+                                   (in-fn in-data)
+                                   (.inc in-cntr))
+                                 (sleep batch-delay)))
+        create-flood-in-fn (fn [in-fn]
+                             (fn []
+                               (in-fn in-data)
+                               (.inc in-cntr)))
+        direct-proc-fn (create-direct-proc-fn scenario)
+        collection-size (:collection-size options)
+        partition-size (:partition-size options)
+        in-fn (cond
+                (.endsWith scenario "-direct")
+                  (fn []
+                    (direct-proc-fn in-data)
+                    (.inc out-cntr))
+                (.endsWith scenario "-direct-pmap")
+                  (let [d (repeat collection-size in-data)]
+                    (doall d)
+                    (fn []
+                      (doseq [_ (pmap direct-proc-fn d)]
+                        (.inc out-cntr))))
+                (.endsWith scenario "-direct-reducers-map")
+                  (let [in-vec (vec (repeat collection-size in-data))]
+                    (doall in-vec)
+                    (fn []
+                      (doseq [_ (reducers/fold
+                                  partition-size
+                                  reducers/cat
+                                  reducers/append!
+                                  (reducers/map direct-proc-fn in-vec))]
+                        (.inc out-cntr))))
+                (.endsWith scenario "-async-pipeline")
+                  (if
+                    (and
+                      (not (nil? in-data))
+                      (> batch-delay 0)
+                      (> batch-size 0))
+                    (create-batched-in-fn
+                      (fn [data]
+                        (async/>!! in-chan data)))
+                    (if
+                      (not (nil? in-data))
+                      (create-flood-in-fn
+                        (fn [data]
+                          (async/>!! in-chan data)))))
+                (and
+                  (not (nil? in-data))
+                  (not (nil? pipeline))
+                  (> batch-delay 0)
+                  (> batch-size 0)) (create-batched-in-fn (get-in-fn pipeline))
+                (and
+                  (not (nil? in-data))
+                  (not (nil? pipeline))) (create-flood-in-fn (get-in-fn pipeline))
+                :default (if (not (.contains scenario "async-pipeline"))
+                           (fn [] (.inc out-cntr))))]
+    in-fn))
+
 (defn -main [& args]
   (println "Starting dsbdp main...")
   (let [{:keys [options arguments errors summary]} (parse-opts args cli-options)]
@@ -199,72 +263,14 @@
                        @proc-fns
                        (fn [_ _]
                          (.inc out-cntr))))
-          batch-delay (:batch-delay options)
-          batch-size (:batch-size options)
           in-chan (if (.contains scenario "async-pipeline")
                     (async/chan queue-size))
           out-chan (if (.contains scenario "async-pipeline")
                      (async/chan queue-size))
-          create-batched-in-fn (fn [in-fn]
-                                 (fn []
-                                   (doseq [i (repeat batch-size 0)]
-                                     (in-fn in-data)
-                                     (.inc in-cntr))
-                                   (sleep batch-delay)))
-          create-flood-in-fn (fn [in-fn]
-                               (fn []
-                                 (in-fn in-data)
-                                 (.inc in-cntr)))
-          direct-proc-fn (create-direct-proc-fn scenario)
-          collection-size (:collection-size options)
-          partition-size (:partition-size options)
+          in-fn (prepare-in-fn options scenario in-data in-cntr out-cntr in-chan pipeline queue-size)
           in-loop (ProcessingLoop.
                     "DataGenerationLoop"
-                    (cond
-                      (.endsWith scenario "-direct")
-                        (fn []
-                          (direct-proc-fn in-data)
-                          (.inc out-cntr))
-                      (.endsWith scenario "-direct-pmap")
-                        (let [d (repeat collection-size in-data)]
-                          (doall d)
-                          (fn []
-                            (doseq [_ (pmap direct-proc-fn d)]
-                              (.inc out-cntr))))
-                      (.endsWith scenario "-direct-reducers-map")
-                        (let [in-vec (vec (repeat collection-size in-data))]
-                          (doall in-vec)
-                          (fn []
-                            (doseq [_ (reducers/fold
-                                        partition-size
-                                        reducers/cat
-                                        reducers/append!
-                                        (reducers/map direct-proc-fn in-vec))]
-                              (.inc out-cntr))))
-                      (.endsWith scenario "-async-pipeline")
-                        (if
-                          (and
-                            (not (nil? in-data))
-                            (> batch-delay 0)
-                            (> batch-size 0))
-                          (create-batched-in-fn
-                            (fn [data]
-                              (async/>!! in-chan data)))
-                          (if
-                            (not (nil? in-data))
-                            (create-flood-in-fn
-                              (fn [data]
-                                (async/>!! in-chan data)))))
-                      (and
-                        (not (nil? in-data))
-                        (not (nil? pipeline))
-                        (> batch-delay 0)
-                        (> batch-size 0)) (create-batched-in-fn (get-in-fn pipeline))
-                      (and
-                        (not (nil? in-data))
-                        (not (nil? pipeline))) (create-flood-in-fn (get-in-fn pipeline))
-                      :default (if (not (.contains scenario "async-pipeline"))
-                                 (fn [] (.inc out-cntr)))))
+                    in-fn)
           async-out-count-loop (if
                                  (and
                                    (.endsWith scenario "-async-pipeline")
@@ -284,6 +290,7 @@
                                (async/<! out-chan)
                                (.inc ^Counter out-cntr)
                                (recur))))
+          direct-proc-fn (create-direct-proc-fn scenario)
           async-pipeline (if
                            (and
                              (.contains scenario "-async-pipeline")
