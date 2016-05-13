@@ -21,6 +21,7 @@
       [experiment-helper :refer :all]
       [local-data-processing-pipeline :refer :all]
       [local-dpp-self-adaptivity :refer :all]
+      [parallel-processing :refer :all]
       [processing-fn-utils :as utils]))
   (:import
     (dsbdp Counter ExperimentHelper ProcessingLoop)
@@ -172,7 +173,7 @@
     proc-fns))
 
 (defn prepare-in-fn
-  [options scenario in-data in-cntr out-cntr in-chan pipeline queue-size]
+  [options scenario in-data ^Counter in-cntr ^Counter out-cntr in-chan pipeline queue-size]
   (let [batch-delay (:batch-delay options)
         batch-size (:batch-size options)
         create-batched-in-fn (fn [in-fn]
@@ -209,6 +210,18 @@
                                   reducers/append!
                                   (reducers/map direct-proc-fn in-vec))]
                         (.inc out-cntr))))
+                (.endsWith scenario "-simple-pmap")
+                  (let [out-fn (fn [_] (.inc out-cntr))
+                        pmap-proc (create-simple-pmap-processor direct-proc-fn collection-size out-fn)]
+                    (fn [data]
+                      (pmap-proc data)
+                      (.inc in-cntr)))
+                (.endsWith scenario "-simple-reducers-map")
+                  (let [out-fn (fn [_] (.inc out-cntr))
+                        red-proc (create-simple-reducers-map-processor direct-proc-fn collection-size out-fn)]
+                    (fn [data]
+                      (red-proc data)
+                      (.inc in-cntr)))
                 (.endsWith scenario "-async-pipeline")
                   (if
                     (and
