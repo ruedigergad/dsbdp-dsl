@@ -110,7 +110,7 @@
 (defn prepare-in-data
   [options]
   (let [scenario (:scenario options)
-        in-data-arg (:in-data-arg options)
+        in-data-arg (:in-data options)
         in-data (if (not (nil? in-data-arg))
                   in-data-arg
                   (condp (fn [^String v ^String s] (.startsWith s v)) scenario
@@ -213,14 +213,14 @@
                 (.endsWith scenario "-simple-pmap")
                   (let [out-fn (fn [_] (.inc out-cntr))
                         pmap-proc (create-simple-pmap-processor direct-proc-fn collection-size out-fn)]
-                    (fn [data]
-                      (pmap-proc data)
+                    (fn []
+                      (pmap-proc in-data)
                       (.inc in-cntr)))
                 (.endsWith scenario "-simple-reducers-map")
                   (let [out-fn (fn [_] (.inc out-cntr))
-                        red-proc (create-simple-reducers-map-processor direct-proc-fn collection-size out-fn)]
-                    (fn [data]
-                      (red-proc data)
+                        red-proc (create-simple-reducers-map-processor direct-proc-fn collection-size partition-size out-fn)]
+                    (fn []
+                      (red-proc in-data)
                       (.inc in-cntr)))
                 (.endsWith scenario "-async-pipeline")
                   (if
