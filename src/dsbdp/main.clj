@@ -77,6 +77,8 @@
    ["-l" "--pipeline-length PIPELINE-LENGTH"
     :default 2
     :parse-fn #(Integer/parseInt %)]
+   ["-L" "--latency"
+    "Measure the latency that is introduced by the data processing."]
    ["-m" "--fn-mapping FN-MAPPING"
     "The mapping of dsl-expressions to processing functions."
     :default [5 5 4 3]
