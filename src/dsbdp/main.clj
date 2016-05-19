@@ -284,13 +284,13 @@
                        (not (.contains scenario "async-pipeline")))
                      (create-local-processing-pipeline
                        @proc-fns
-                       (fn [_ _]
-                         (.inc out-cntr))))
+                       (fn [in _]
+                         (out-fn in))))
           in-chan (if (.contains scenario "async-pipeline")
                     (async/chan queue-size))
           out-chan (if (.contains scenario "async-pipeline")
                      (async/chan queue-size))
-          in-fn (prepare-in-fn options scenario in-data in-cntr out-cntr in-chan pipeline queue-size)
+          in-fn (prepare-in-fn options scenario in-data in-cntr out-fn in-chan pipeline queue-size)
           in-loop (ProcessingLoop.
                     "DataGenerationLoop"
                     in-fn)
@@ -301,8 +301,7 @@
                                  (ProcessingLoop.
                                    "AsyncOutputCountLoop"
                                    (fn []
-                                     (async/<!! out-chan)
-                                     (.inc out-cntr))))
+                                     (out-fn (async/<!! out-chan)))))
           async-count-go (when
                            (and
                              (.endsWith scenario "-async-pipeline-go")
@@ -310,8 +309,7 @@
                            (println "Starting async-pipeline-go counting.")
                            (async/go
                              (loop []
-                               (async/<! out-chan)
-                               (.inc ^Counter out-cntr)
+                               (out-fn (async/<! out-chan))
                                (recur))))
           direct-proc-fn (create-direct-proc-fn scenario)
           async-pipeline (if
