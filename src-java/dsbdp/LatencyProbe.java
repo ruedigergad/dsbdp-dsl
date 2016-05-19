@@ -15,15 +15,25 @@ package dsbdp;
  */
 public class LatencyProbe {
 
-    private long startTime;
+    private final Object data;
+    private final long startTime;
     private long endTime;
 
     public LatencyProbe() {
+        this(null);
+    }
+
+    public LatencyProbe(Object data) {
+        this.data = data;
         this.startTime = System.nanoTime();
     }
 
     public void done() {
         this.endTime = System.nanoTime();
+    }
+
+    public Object getData() {
+        return this.data;
     }
 
     public long getDelta() {
