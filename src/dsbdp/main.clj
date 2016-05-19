@@ -175,7 +175,7 @@
     proc-fns))
 
 (defn prepare-in-fn
-  [options scenario in-data ^Counter in-cntr ^Counter out-cntr in-chan pipeline queue-size]
+  [options scenario in-data ^Counter in-cntr out-fn in-chan pipeline queue-size]
   (let [batch-delay (:batch-delay options)
         batch-size (:batch-size options)
         create-batched-in-fn (fn [in-fn]
@@ -194,33 +194,30 @@
         in-fn (cond
                 (.endsWith scenario "-direct")
                   (fn []
-                    (direct-proc-fn in-data)
-                    (.inc out-cntr))
+                    (out-fn (direct-proc-fn in-data)))
                 (.endsWith scenario "-direct-pmap")
                   (let [d (repeat collection-size in-data)]
                     (doall d)
                     (fn []
-                      (doseq [_ (pmap direct-proc-fn d)]
-                        (.inc out-cntr))))
+                      (doseq [obj (pmap direct-proc-fn d)]
+                        (out-fn obj))))
                 (.endsWith scenario "-direct-reducers-map")
                   (let [in-vec (vec (repeat collection-size in-data))]
                     (doall in-vec)
                     (fn []
-                      (doseq [_ (reducers/fold
-                                  partition-size
-                                  reducers/cat
-                                  reducers/append!
-                                  (reducers/map direct-proc-fn in-vec))]
-                        (.inc out-cntr))))
+                      (doseq [obj (reducers/fold
+                                    partition-size
+                                    reducers/cat
+                                    reducers/append!
+                                    (reducers/map direct-proc-fn in-vec))]
+                        (out-fn obj))))
                 (.endsWith scenario "-simple-pmap")
-                  (let [out-fn (fn [_] (.inc out-cntr))
-                        pmap-proc (create-simple-pmap-processor direct-proc-fn collection-size out-fn)]
+                  (let [pmap-proc (create-simple-pmap-processor direct-proc-fn collection-size out-fn)]
                     (fn []
                       (pmap-proc in-data)
                       (.inc in-cntr)))
                 (.endsWith scenario "-simple-reducers-map")
-                  (let [out-fn (fn [_] (.inc out-cntr))
-                        red-proc (create-simple-reducers-map-processor direct-proc-fn collection-size partition-size out-fn)]
+                  (let [red-proc (create-simple-reducers-map-processor direct-proc-fn collection-size partition-size out-fn)]
                     (fn []
                       (red-proc in-data)
                       (.inc in-cntr)))
@@ -247,7 +244,7 @@
                   (not (nil? in-data))
                   (not (nil? pipeline))) (create-flood-in-fn (get-in-fn pipeline))
                 :default (if (not (.contains scenario "async-pipeline"))
-                           (fn [] (.inc out-cntr))))]
+                           out-fn))]
     in-fn))
 
 (defn -main [& args]
@@ -260,6 +257,7 @@
     (println "Using args:" arguments)
     (let [in-cntr (Counter.)
           out-cntr (Counter.)
+          out-fn (fn [_] (.inc out-cntr))
           delta-cntr (delta-counter)
           ^String scenario (:scenario options)
           in-data (prepare-in-data options)
