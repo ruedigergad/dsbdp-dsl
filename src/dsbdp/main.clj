@@ -175,31 +175,31 @@
     proc-fns))
 
 (defn prepare-in-fn
-  [options scenario in-data ^Counter in-cntr out-fn in-chan pipeline queue-size]
+  [options scenario in-data pre-in-fn out-fn in-chan pipeline queue-size]
   (let [batch-delay (:batch-delay options)
         batch-size (:batch-size options)
         create-batched-in-fn (fn [in-fn]
                                (fn []
                                  (doseq [i (repeat batch-size 0)]
-                                   (in-fn in-data)
-                                   (.inc in-cntr))
+                                   (in-fn (pre-in-fn in-data)))
                                  (sleep batch-delay)))
         create-flood-in-fn (fn [in-fn]
                              (fn []
-                               (in-fn in-data)
-                               (.inc in-cntr)))
+                               (in-fn (pre-in-fn in-data))))
         direct-proc-fn (create-direct-proc-fn scenario)
         collection-size (:collection-size options)
         partition-size (:partition-size options)
         in-fn (cond
                 (.endsWith scenario "-direct")
                   (fn []
-                    (out-fn (direct-proc-fn in-data)))
+                    (out-fn
+                      (direct-proc-fn
+                        (pre-in-fn in-data))))
                 (.endsWith scenario "-direct-pmap")
                   (let [d (repeat collection-size in-data)]
                     (doall d)
                     (fn []
-                      (doseq [obj (pmap direct-proc-fn d)]
+                      (doseq [obj (pmap (fn [in-obj] (direct-proc-fn (pre-in-fn in-obj))) d)]
                         (out-fn obj))))
                 (.endsWith scenario "-direct-reducers-map")
                   (let [in-vec (vec (repeat collection-size in-data))]
@@ -209,18 +209,16 @@
                                     partition-size
                                     reducers/cat
                                     reducers/append!
-                                    (reducers/map direct-proc-fn in-vec))]
+                                    (reducers/map (fn [in-obj] (direct-proc-fn (pre-in-fn in-obj))) in-vec))]
                         (out-fn obj))))
                 (.endsWith scenario "-simple-pmap")
                   (let [pmap-proc (create-simple-pmap-processor direct-proc-fn collection-size out-fn)]
                     (fn []
-                      (pmap-proc in-data)
-                      (.inc in-cntr)))
+                      (pmap-proc (pre-in-fn in-data))))
                 (.endsWith scenario "-simple-reducers-map")
                   (let [red-proc (create-simple-reducers-map-processor direct-proc-fn collection-size partition-size out-fn)]
                     (fn []
-                      (red-proc in-data)
-                      (.inc in-cntr)))
+                      (red-proc (pre-in-fn in-data))))
                 (.endsWith scenario "-async-pipeline")
                   (if
                     (and
@@ -256,6 +254,17 @@
     (println "Using options:" options)
     (println "Using args:" arguments)
     (let [in-cntr (Counter.)
+          pre-in-fn (if (:latency options)
+                      (do
+                        (println "Creating latency measurement pre-in-fn.")
+                        (fn [in-obj]
+                          (.inc in-cntr)
+                          (LatencyProbe. in-obj)))
+                      (do
+                        (println "Creating default measurement pre-in-fn.")
+                        (fn [in-obj]
+                          (.inc in-cntr)
+                          in-obj)))
           out-cntr (Counter.)
           latency-probe-collector (LatencyProbeCollector.)
           out-fn (if (:latency options)
@@ -290,7 +299,7 @@
                     (async/chan queue-size))
           out-chan (if (.contains scenario "async-pipeline")
                      (async/chan queue-size))
-          in-fn (prepare-in-fn options scenario in-data in-cntr out-fn in-chan pipeline queue-size)
+          in-fn (prepare-in-fn options scenario in-data pre-in-fn out-fn in-chan pipeline queue-size)
           in-loop (ProcessingLoop.
                     "DataGenerationLoop"
                     in-fn)
@@ -369,8 +378,7 @@
           (println "Starting async-pipeline-go input creation.")
           (async/go
             (loop []
-              (async/>! in-chan in-data)
-              (.inc ^Counter in-cntr)
+              (async/>! in-chan (pre-in-fn in-data))
               (recur)))
           (sleep 130000))
         (do
