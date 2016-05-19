@@ -24,7 +24,7 @@
       [parallel-processing :refer :all]
       [processing-fn-utils :as utils]))
   (:import
-    (dsbdp Counter ExperimentHelper ProcessingLoop)
+    (dsbdp Counter ExperimentHelper LatencyProbe LatencyProbeCollector ProcessingLoop)
     (java.lang.management ManagementFactory ThreadInfo ThreadMXBean)
     (java.util HashMap Map))
   (:gen-class))
@@ -257,7 +257,17 @@
     (println "Using args:" arguments)
     (let [in-cntr (Counter.)
           out-cntr (Counter.)
-          out-fn (fn [_] (.inc out-cntr))
+          latency-probe-collector (LatencyProbeCollector.)
+          out-fn (if (:latency options)
+                   (do
+                     (println "Creating latency measurement out-fn.")
+                     (fn [^LatencyProbe lp]
+                       (.done lp)
+                       (.addProbe latency-probe-collector lp)
+                       (.inc out-cntr)))
+                   (do
+                     (println "Creating default measurement out-fn.")
+                     (fn [_] (.inc out-cntr))))
           delta-cntr (delta-counter)
           ^String scenario (:scenario options)
           in-data (prepare-in-data options)
