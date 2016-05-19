@@ -365,7 +365,9 @@
               (.inc ^Counter in-cntr)
               (recur)))
           (sleep 130000))
-        (.start in-loop))
+        (do
+          (println "Starting in-loop.")
+          (.start in-loop)))
       (if
         (not (nil? async-out-count-loop))
         (.start async-out-count-loop)))))
