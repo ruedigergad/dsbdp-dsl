@@ -186,7 +186,16 @@
         create-flood-in-fn (fn [in-fn]
                              (fn []
                                (in-fn (pre-in-fn in-data))))
-        direct-proc-fn (create-direct-proc-fn scenario)
+        direct-proc-fn (let [f (create-direct-proc-fn scenario)]
+                         (if (:latency options)
+                           (do
+                             (println "Wrapping direct processing fn for latency measurements.")
+                             (fn [^LatencyProbe lp]
+                               (f (.getData lp))
+                               lp))
+                           (do
+                             (println "Using default direct processing fn.")
+                             f)))
         collection-size (:collection-size options)
         partition-size (:partition-size options)
         in-fn (cond
@@ -320,7 +329,16 @@
                              (loop []
                                (out-fn (async/<! out-chan))
                                (recur))))
-          direct-proc-fn (create-direct-proc-fn scenario)
+          direct-proc-fn (let [f (create-direct-proc-fn scenario)]
+                           (if (:latency options)
+                             (do
+                               (println "Wrapping async-pipeline direct processing fn for latency measurements.")
+                               (fn [^LatencyProbe lp]
+                                 (f (.getData lp))
+                                 lp))
+                             (do
+                               (println "Using default async-pipeline direct processing fn.")
+                               f)))
           async-pipeline (if
                            (and
                              (.contains scenario "-async-pipeline")
