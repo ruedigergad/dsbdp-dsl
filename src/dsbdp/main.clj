@@ -379,7 +379,7 @@
                          "out:" out "k;"
                          "in-delta:" (delta-cntr :in in) "k/s;"
                          "out-delta:" (delta-cntr :out out) "k/s;"
-                         "latency:" (.getMean latency-probe-collector))
+                         "latency:" (format "%.0f" (.getMean latency-probe-collector)))
                        (.reset latency-probe-collector)
                        (if (not (nil? pipeline))
                          (let [counts (get-counts pipeline)]
