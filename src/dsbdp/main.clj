@@ -175,7 +175,7 @@
       (if (and (vector? fns) (:latency options))
         (do
           (println "Wrapping proc-fns for latency measurement.")
-          (vec (map (fn [f] (fn [^LatencyProbe lp out] (f (.getData lp) out)) fns))))
+          (vec (map (fn [f] (fn [^LatencyProbe lp out] (f (.getData lp) out))) fns)))
         (do
           (println "Using fns vector as-is for proc-fns.")
           fns)))))
