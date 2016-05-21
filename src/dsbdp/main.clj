@@ -107,6 +107,7 @@
     "pcap-java-map" (create-proc-fn sample-pcap-processing-definition-java-map)
     "pcap-json" (create-proc-fn sample-pcap-processing-definition-json)
     "pcap-csv" (create-proc-fn sample-pcap-processing-definition-csv)
+    "no-op" (fn [_] 1)
     nil))
 
 (defn prepare-in-data
