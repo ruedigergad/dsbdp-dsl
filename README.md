@@ -18,6 +18,8 @@
 
 Please note that, because the sole purpose of the dsbdp.main namespace is to serve as entry point for running experiments from the command line, the dsbdp.main namespace was excluded for the calculation of the code coverage.
 
+Furthermore, please also note that there should be _no_ "queue-setup.cfg" file in the main project directory when executing the tests and that "lein clean" should be run before running "lein test".
+
 #### Detailed Test Results
 
 Detailed test results are available as well:
