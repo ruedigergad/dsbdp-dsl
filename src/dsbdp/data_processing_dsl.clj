@@ -57,9 +57,9 @@
 
 (defn- create-let-expression
   [input rules body-vec]
-  `[let
-    ~(create-bindings-vector input rules)
-    ~(reverse (into '() body-vec))])
+  ['let
+    (create-bindings-vector input rules)
+    (reverse (into '() body-vec))])
 
 (defn- create-let-body-vec-java-map-out
   [rules output]
