@@ -57,9 +57,9 @@
 
 (defn- create-let-expression
   [input rules body-vec]
-  ['let
-    (create-bindings-vector input rules)
-    (reverse (into '() body-vec))])
+  `(let
+    ~(create-bindings-vector input rules)
+    ~(reverse (into '() body-vec))))
 
 (defn- create-let-body-vec-java-map-out
   [rules output]
@@ -146,7 +146,7 @@
                          (println "Defaulting to :java-map as output type.")
                          (create-let-body-vec-java-map-out rules output-sym)))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
-        fn-body (reverse (into '() (create-let-expression input-sym rules let-body-vec)))
+        fn-body (create-let-expression input-sym rules let-body-vec)
 ;        _ (println "Created data processing function body:" fn-body)
         data-processing-fn (if (not (nil? output-sym))
                              (eval `(fn [~input-sym ~output-sym] ~fn-body))
