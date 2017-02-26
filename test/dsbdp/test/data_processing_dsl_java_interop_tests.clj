@@ -11,6 +11,7 @@
     :doc "Unit tests for data processing DSL Java Interoperation"}
   dsbdp.test.data-processing-dsl-java-interop-tests
   (:require [clojure.test :refer :all]
+            [clojure.string :as string]
             [dsbdp.experiment-helper :refer :all]) 
   (:import (dsbdp DslHelper)
            (java.util ArrayList HashMap List Map)))
@@ -35,7 +36,31 @@
     (is (= expected-csv-str (str (data-proc-fn-csv-str in-vector))))
     (is (= expected-json-str (str (data-proc-fn-json-str in-vector))))
     (is (= expected-clj-map (data-proc-fn-java-map in-vector)))
-    (is (= expected-clj-map (data-proc-fn-clj-map in-vector)))  
+    (is (= expected-clj-map (data-proc-fn-clj-map in-vector)))
+    (is (= expected-csv-str (str (.invoke data-proc-fn-csv-str in-vector))))
+    (is (= expected-json-str (str (.invoke data-proc-fn-json-str in-vector))))
+    (is (= expected-clj-map (.invoke data-proc-fn-java-map in-vector)))
+    (is (= expected-clj-map (.invoke data-proc-fn-clj-map in-vector)))))
+
+(deftest simple-documenation-example-test-2-from-string
+  (let [in-vector [1.23 "FOO" 42 "bar" "baz"]
+        expected-clj-map {"myFloat" 1.23, "myStr" "foo", "myRatio" 0.42, "myStr2" "barbaz"}
+        expected-json-str "{\"myFloat\":1.23,\"myStr\":\"foo\",\"myRatio\":0.42,\"myStr2\":\"barbaz\"}"
+        expected-csv-str "1.23,\"foo\",0.42,\"barbaz\""
+        dsl-expression-str (str "{:output-type :csv-str "
+                                " :rules [[myFloat (nth 0)] "
+                                "         [myStr (clojure.string/lower-case (nth 1)) :string] "
+                                "         [myRatio (/ (nth 2) 100.0)] "
+                                "         [myStr2 (str (nth 3) (nth 4)) :string]]}")
+        data-proc-fn-csv-str (DslHelper/generateProcessingFn dsl-expression-str)
+        data-proc-fn-json-str (DslHelper/generateProcessingFn (string/replace dsl-expression-str ":csv-str" ":json-str"))
+        data-proc-fn-clj-map (DslHelper/generateProcessingFn (string/replace dsl-expression-str ":csv-str" ":clj-map"))
+        data-proc-fn-java-map (DslHelper/generateProcessingFn (string/replace dsl-expression-str ":csv-str" ":java-map"))
+        ]
+    (is (= expected-csv-str (str (data-proc-fn-csv-str in-vector))))
+    (is (= expected-json-str (str (data-proc-fn-json-str in-vector))))
+    (is (= expected-clj-map (data-proc-fn-java-map in-vector)))
+    (is (= expected-clj-map (data-proc-fn-clj-map in-vector)))
     (is (= expected-csv-str (str (.invoke data-proc-fn-csv-str in-vector))))
     (is (= expected-json-str (str (.invoke data-proc-fn-json-str in-vector))))
     (is (= expected-clj-map (.invoke data-proc-fn-java-map in-vector)))
