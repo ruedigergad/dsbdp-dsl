@@ -71,44 +71,44 @@
 ;;;
 ;;; Tests for byte array input and various output types.
 ;;;
-;(deftest byte-array-to-java-map-test
-;  (let [expected {"udpSrc" 2048, "udpDst" 4096}
-;        dsl-expression {:output-type :java-map
-;                        :rules [['udpSrc '(int16 50)]
-;                                ['udpDst '(int16 52)]]}
-;        data-processing-fn (create-proc-fn dsl-expression)
-;        result (data-processing-fn pcap-byte-array-test-data)]
-;    (is (instance? Map result))
-;    (is (= expected result))))
-;
-;(deftest byte-array-to-clj-map-test
-;  (let [expected {"udpSrc" 2048, "udpDst" 4096}
-;        dsl-expression {:output-type :clj-map
-;                        :rules [['udpSrc '(int16 50)]
-;                                ['udpDst '(int16 52)]]}
-;        data-processing-fn (create-proc-fn dsl-expression)
-;        result (data-processing-fn pcap-byte-array-test-data)]
-;    (is (map? result))
-;    (is (= expected result))))
-;
-;(deftest byte-array-to-csv-str-test
-;  (let [expected "2048,4096"
-;        dsl-expression {:output-type :csv-str
-;                        :rules [['udpSrc '(int16 50)]
-;                                ['udpDst '(int16 52)]]}
-;        data-processing-fn (create-proc-fn dsl-expression)
-;        result (data-processing-fn pcap-byte-array-test-data)]
-;    (is (= expected (str result)))))
-;
-;(deftest byte-array-to-json-str-test
-;  (let [expected "{\"udpSrc\":2048,\"udpDst\":4096}"
-;        dsl-expression {:output-type :json-str
-;                        :rules [['udpSrc '(int16 50)]
-;                                ['udpDst '(int16 52)]]}
-;        data-processing-fn (create-proc-fn dsl-expression)
-;        result (data-processing-fn pcap-byte-array-test-data)]
-;    (is (= expected (str result)))))
-;
+(deftest byte-array-to-java-map-test
+  (let [expected {"udpSrc" 2048, "udpDst" 4096}
+        dsl-expression-str (str "{:output-type :java-map "
+                                " :rules [[udpSrc (int16 50)] "
+                                "         [udpDst (int16 52)]]}")
+        data-processing-fn (DslHelper/generateProcessingFn dsl-expression-str)
+        result (.invoke data-processing-fn pcap-byte-array-test-data)]
+    (is (instance? Map result))
+    (is (= expected result))))
+
+(deftest byte-array-to-clj-map-test
+  (let [expected {"udpSrc" 2048, "udpDst" 4096}
+        dsl-expression-str (str "{:output-type :clj-map "
+                                " :rules [[udpSrc (int16 50)] "
+                                "         [udpDst (int16 52)]]}")
+        data-processing-fn (DslHelper/generateProcessingFn dsl-expression-str)
+        result (.invoke data-processing-fn pcap-byte-array-test-data)]
+    (is (map? result))
+    (is (= expected result))))
+
+(deftest byte-array-to-csv-str-test
+  (let [expected "2048,4096"
+        dsl-expression-str (str "{:output-type :csv-str "
+                                " :rules [[udpSrc (int16 50)] "
+                                "         [udpDst (int16 52)]]}")
+        data-processing-fn (DslHelper/generateProcessingFn dsl-expression-str)
+        result (.invoke data-processing-fn pcap-byte-array-test-data)]
+    (is (= expected (str result)))))
+
+(deftest byte-array-to-json-str-test
+  (let [expected "{\"udpSrc\":2048,\"udpDst\":4096}"
+        dsl-expression-str (str "{:output-type :json-str "
+                                " :rules [[udpSrc (int16 50)] "
+                                "         [udpDst (int16 52)]]}")
+        data-processing-fn (DslHelper/generateProcessingFn dsl-expression-str)
+        result (.invoke data-processing-fn pcap-byte-array-test-data)]
+    (is (= expected (str result)))))
+
 ;(deftest byte-array-to-csv-str-qm-test
 ;  (let [expected "\"2048\",4096"
 ;        dsl-expression {:output-type :csv-str
