@@ -1,12 +1,12 @@
-(defproject dsbdp "0.2.0-SNAPSHOT"
-;(defproject dsbdp "0.1.0"
+;(defproject dsbdp "0.3.0-SNAPSHOT"
+(defproject dsbdp "0.2.0"
   :description "Dynamic Stream and Batch Data Processing (dsbdp)"
   :url "https://github.com/ruedigergad/dsbdp"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/core.async "0.2.374"]
-                 [clj-assorted-utils "1.12.0"]
+                 [clj-assorted-utils "1.17.1"]
                  [org.clojure/tools.cli "0.3.3"]
                  [rgad/clojure-opennlp "0.3.4-SNAPSHOT"]]
   :global-vars {*warn-on-reflection* true}
