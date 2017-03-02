@@ -366,3 +366,24 @@
     (is (map? result))
     (is (= expected result))))
 
+;(deftest byte-array-packet-to-nested-json-str-test
+;  (let [expected (str "{\"len\":58,"
+;                       "\"data\":{\"dst\":\"FF:FE:FD:F2:F1:F0\","
+;                                 "\"src\":\"01:02:03:04:05:06\","
+;                                 "\"data\":{\"src\":\"1.2.3.4\","
+;                                           "\"dst\":\"252.253.254.255\","
+;                                           "\"data\":{\"src\":2048,"
+;                                                     "\"dst\":4096}}}}")
+;        dsl-expression {:output-type :json-str
+;                        :rules [['len '(int32be 8)]
+;                                ['data [['dst '(eth-mac-addr-str 16)]
+;                                        ['src '(eth-mac-addr-str 22)]
+;                                        ['data [['src '(ipv4-addr-str 42)]
+;                                                ['dst '(ipv4-addr-str 46)]
+;                                                ['data [['src '(int16 50)]
+;                                                        ['dst '(int16 52)]]]]]]]]}
+;        data-processing-fn (create-proc-fn dsl-expression)
+;        result (data-processing-fn pcap-byte-array-test-data)]
+;    (is (map? result))
+;    (is (= expected result))))
+
