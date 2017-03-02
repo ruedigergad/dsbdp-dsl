@@ -7,8 +7,7 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/core.async "0.2.374"]
                  [clj-assorted-utils "1.17.1"]
-                 [org.clojure/tools.cli "0.3.3"]
-                 [rgad/clojure-opennlp "0.3.4-SNAPSHOT"]]
+                 [org.clojure/tools.cli "0.3.3"]]
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["src-java"]
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]

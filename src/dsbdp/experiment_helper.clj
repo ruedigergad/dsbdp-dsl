@@ -15,9 +15,7 @@
     [clojure.pprint :refer :all]
     [dsbdp.byte-array-conversion :refer :all]
     [dsbdp.data-processing-dsl :refer :all]
-    [dsbdp.processing-fn-utils :as utils]
-    [opennlp.nlp :refer :all]
-    [opennlp.treebank :refer :all])
+    [dsbdp.processing-fn-utils :as utils])
   (:import
     (dsbdp ExperimentHelper)
     (java.util HashMap Map)))
@@ -30,11 +28,6 @@
                69 0 0 44   0 3 64 0   7 17 115 -57   1 2 3 4   -4 -3 -2 -1       ; 20 byte IP header
                8 0 16 0 0 16 -25 -26                                              ; 8 byte UDP header
                97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112])))  ; 16 byte data "abcdefghijklmnop"
-
-(def get-sentences (make-sentence-detector "resources/opennlp/models/en-sent.bin"))
-(def tokenize (make-tokenizer "resources/opennlp/models/en-token.bin"))
-(def pos-tag (make-pos-tagger "resources/opennlp/models/en-pos-maxent.bin"))
-(def chunker (make-treebank-chunker "resources/opennlp/models/en-chunker.bin"))
 
 (defn create-no-op-proc-fns
   "Create a vector of n no-op functions."
@@ -123,21 +116,6 @@
 (def sample-pcap-processing-definition-java-map
   {:output-type :java-map
    :rules sample-pcap-processing-definition-rules})
-
-(defn opennlp-single-sentence-direct-test-fn
-  [sentence]
-  (phrases (chunker (pos-tag (tokenize sentence)))))
-
-(defn opennlp-multi-sentence-direct-test-fn
-  [in-str]
-  (doseq [sentence (get-sentences in-str)]
-    (opennlp-single-sentence-direct-test-fn sentence)))
-
-(def opennlp-single-sentence-inc-test-fns
-  [(fn [in _] (tokenize in))
-   (fn [_ out] (pos-tag out))
-   (fn [_ out] (chunker out))
-   (fn [_ out] (phrases out))])
 
 (def synthetic-low-throughput-self-adaptivity-processing-fns
   [(fn [i _] (dsbdp.ExperimentHelper/busySleep 200000) i)
