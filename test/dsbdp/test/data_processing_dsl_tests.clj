@@ -318,3 +318,31 @@
              ((proc-fns-vec 2) input-ba)
              ((proc-fns-vec 3) input-ba))))))
 
+
+
+;;;
+;;; Tests for nested output data structures.
+;;;
+
+(deftest byte-array-packet-to-nested-java-map-test
+  (let [expected {"len" 58,
+                  "data" {"dst" "FF:FE:FD:F2:F1:F0",
+                          "src" "01:02:03:04:05:06",
+                          "data" {"src" "1.2.3.4",
+                                  "dst" "252.253.254.255",
+                                  "data" {"src" 2048
+                                          "dst" 4096
+                                          "data" "abcdefghijklmnop"}}}}
+        dsl-expression {:output-type :java-map
+                        :rules [['len '(int32 8)]
+                                ['data [['dst '(eth-mac-addr-str 16)]
+                                        ['src '(eth-mac-addr-str 22)]
+                                        ['data [['dst '(ipv4-addr-str 42)]
+                                                ['src '(ipv4-addr-str 46)]
+                                                ['data [['dst '(int16 50)]
+                                                        ['src '(int16 52)]]]]]]]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn pcap-byte-array-test-data)]
+    (is (instance? Map result))
+    (is (= expected result))))
+

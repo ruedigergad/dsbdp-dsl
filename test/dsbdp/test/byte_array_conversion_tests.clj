@@ -54,7 +54,7 @@
     (is (= expected (timestamp ba 0)))))
 
 (deftest timestamp-be-conversion-test
-  (let [ba (byte-array (map byte [-5 -106 -57 84 15 -54 14 0 -5]))
+  (let [ba (byte-array (map byte [-5 -106 -57 84 15 -54 14 0]))
         expected 1422366459969231000]
     (is (= expected (timestamp-be ba 0)))))
 

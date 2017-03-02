@@ -23,10 +23,14 @@
 (def pcap-byte-array-test-data
   "The byte array representation of a UDP packet for being used as dummy data."
   (byte-array
-    (map byte [-5 -106 -57 84   15 -54 14 0   58 0 0 0   58 0 0 0                ; 16 byte pcap header
-               -1 -2 -3 -14 -15 -16 1 2 3 4 5 6 8 0                              ; 14 byte Ethernet header
+    (map byte [-5 -106 -57 84   15 -54 14 0          58 0 0 0   58 0 0 0         ; 16 byte pcap header
+;              1422366459969231000 (Unix Timestamp)
+               -1 -2 -3 -14 -15 -16    1 2 3 4 5 6          8 0                  ; 14 byte Ethernet header
+;              FF:FE:FD:F2:F1:F0       01:02:03:04:05:06
                69 0 0 44   0 3 64 0   7 17 115 -57   1 2 3 4   -4 -3 -2 -1       ; 20 byte IP header
-               8 0 16 0 0 16 -25 -26                                              ; 8 byte UDP header
+;                                                    1.2.3.4   252.253.254.255
+               8 0     16 0    0 16 -25 -26                                      ; 8 byte UDP header
+;              2048    4096
                97 98 99 100 101 102 103 104 105 106 107 108 109 110 111 112])))  ; 16 byte data "abcdefghijklmnop"
 
 (defn create-no-op-proc-fns
