@@ -331,16 +331,15 @@
                           "data" {"src" "1.2.3.4",
                                   "dst" "252.253.254.255",
                                   "data" {"src" 2048
-                                          "dst" 4096
-                                          "data" "abcdefghijklmnop"}}}}
+                                          "dst" 4096}}}}
         dsl-expression {:output-type :java-map
-                        :rules [['len '(int32 8)]
+                        :rules [['len '(int32be 8)]
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['src '(eth-mac-addr-str 22)]
-                                        ['data [['dst '(ipv4-addr-str 42)]
-                                                ['src '(ipv4-addr-str 46)]
-                                                ['data [['dst '(int16 50)]
-                                                        ['src '(int16 52)]]]]]]]]}
+                                        ['data [['src '(ipv4-addr-str 42)]
+                                                ['dst '(ipv4-addr-str 46)]
+                                                ['data [['src '(int16 50)]
+                                                        ['dst '(int16 52)]]]]]]]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn pcap-byte-array-test-data)]
     (is (instance? Map result))

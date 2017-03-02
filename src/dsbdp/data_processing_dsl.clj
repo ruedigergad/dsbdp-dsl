@@ -45,29 +45,53 @@
         [] data-processing-definition))))
 
 (defn- create-bindings-vector
-  [input rules]
+  [input rules nesting-level]
   (reduce
     (fn [v rule]
-      (conj
-        v
-        (first rule)
-        (create-proc-sub-fn (second rule) input)))
+      (cond
+        (list? (second rule)) (conj v
+                                    (if (> 1 nesting-level)
+                                      (first rule)
+                                      (symbol (str "__" nesting-level "_" (first rule))))
+                                    (create-proc-sub-fn (second rule) input))
+        (vector? (second rule)) (do
+                                  ;(println "Binding: Got a VECTOR..." (first rule) (second rule))
+                                  (into
+                                    (conj v
+                                          (first rule)
+                                          nil)
+                                    (create-bindings-vector
+                                      input
+                                      (second rule)
+                                      (inc nesting-level))))
+        :default (println "Binding: unknown element for rule:" (str rule))))
     []
     rules))
 
 (defn- create-let-expression
   [input rules body-vec]
   `(let
-    ~(create-bindings-vector input rules)
+    ~(create-bindings-vector input rules 0)
     ~(reverse (into '() body-vec))))
 
 (defn- create-let-body-vec-java-map-out
-  [rules output]
+  [rules output nesting-level]
   (reduce
     (fn [v rule]
-      (conj v `(.put
-                ~(name (first rule))
-                ~(first rule))))
+      (cond
+        (list? (second rule)) (conj v
+                                    `(.put
+                                      ~(name (first rule))
+                                      ~(if (> 1 nesting-level)
+                                         (first rule)
+                                         (symbol (str "__" nesting-level "_" (first rule))))))
+        (vector? (second rule)) (do
+                                  ;(println "Java Map Body: Got a Vector..." (first rule) (second rule))
+                                  (conj v
+                                        `(.put
+                                           ~(name (first rule))
+                                           ~(reverse (into '() (create-let-body-vec-java-map-out (second rule) nil (inc nesting-level)))))))
+        :default (println "Java Map Body: unknown element for rule:" (str rule))))
     (if (nil? output)
       '[doto (java.util.HashMap.)]
       '[doto ^java.util.Map output])
@@ -137,14 +161,14 @@
         output-sym (if (.endsWith output-type *incremental-indicator-suffix*)
                      'output)
         let-body-vec (condp (fn [^String v ^String s] (.startsWith s v)) output-type
-                       "java-map" (create-let-body-vec-java-map-out rules output-sym)
+                       "java-map" (create-let-body-vec-java-map-out rules output-sym 0)
                        "clj-map" (create-let-body-vec-clj-map-out rules output-sym)
                        "csv-str" (create-let-body-vec-csv-str-out rules output-sym)
                        "json-str" (create-let-body-vec-json-str-out rules output-sym)
                        (do
                          (println "Unknown output type:" output-type)
                          (println "Defaulting to :java-map as output type.")
-                         (create-let-body-vec-java-map-out rules output-sym)))
+                         (create-let-body-vec-java-map-out rules output-sym 0)))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (create-let-expression input-sym rules let-body-vec)
 ;        _ (println "Created data processing function body:" fn-body)
