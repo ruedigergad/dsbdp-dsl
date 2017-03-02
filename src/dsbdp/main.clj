@@ -101,8 +101,6 @@
   (condp (fn [^String v ^String s] (.startsWith s v)) scenario
     "busy-sleep" (fn [in] (ExperimentHelper/busySleep ^long (first in)))
     "factorial" factorial
-    "opennlp-single" opennlp-single-sentence-direct-test-fn
-    "opennlp-multi" opennlp-multi-sentence-direct-test-fn
     "pcap-clj-map" (create-proc-fn sample-pcap-processing-definition-clj-map)
     "pcap-java-map" (create-proc-fn sample-pcap-processing-definition-java-map)
     "pcap-json" (create-proc-fn sample-pcap-processing-definition-json)
@@ -120,11 +118,6 @@
                     "no-op" 1
                     "busy-sleep" [100000 100000 100000 100000]
                     "factorial" 300N
-                    "opennlp-single" "This is a simple sentence."
-                    "opennlp-multi" (str
-                                      "This is a simple sentence. "
-                                      "The first example sentence is followed by another example sentence. "
-                                      "The second sentence is followed by another example sentence.")
                     "pcap" pcap-byte-array-test-data
                     "self-adaptive" 1
                     "nil" nil))]
@@ -138,9 +131,6 @@
               "busy-sleep" (create-busy-sleep-proc-fns (count in-data))
               "factorial" [(fn [i _] (factorial i))]
               "factorial-inc" (create-factorial-proc-fns pipeline-length)
-              "opennlp-single-inc" (utils/combine-proc-fns-vec
-                                     @fn-mapping
-                                     opennlp-single-sentence-inc-test-fns)
               "pcap-clj-map" (let [pcap-fn (create-proc-fn sample-pcap-processing-definition-clj-map)]
                                [(fn [i _] (pcap-fn i))])
               "pcap-clj-map-inc" (combine-proc-fns-vec
