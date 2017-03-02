@@ -98,14 +98,23 @@
     rules))
 
 (defn- create-let-body-vec-clj-map-out
-  [rules output]
+  [rules output nesting-level]
   (reduce
     (fn [v rule]
-      (conj
-        v
-        `(assoc
-           ~(name (first rule))
-           ~(first rule))))
+      (cond
+        (list? (second rule)) (conj v
+                                    `(assoc
+                                      ~(name (first rule))
+                                      ~(if (> 1 nesting-level)
+                                         (first rule)
+                                         (symbol (str "__" nesting-level "_" (first rule))))))
+        (vector? (second rule)) (do
+                                  ;(println "Java Map Body: Got a Vector..." (first rule) (second rule))
+                                  (conj v
+                                        `(assoc
+                                           ~(name (first rule))
+                                           ~(reverse (into '() (create-let-body-vec-clj-map-out (second rule) nil (inc nesting-level)))))))
+        :default (println "Clj Map Body: unknown element for rule:" (str rule))))
     (if (nil? output)
       '[-> {}]
       '[-> output])
@@ -162,7 +171,7 @@
                      'output)
         let-body-vec (condp (fn [^String v ^String s] (.startsWith s v)) output-type
                        "java-map" (create-let-body-vec-java-map-out rules output-sym 0)
-                       "clj-map" (create-let-body-vec-clj-map-out rules output-sym)
+                       "clj-map" (create-let-body-vec-clj-map-out rules output-sym 0)
                        "csv-str" (create-let-body-vec-csv-str-out rules output-sym)
                        "json-str" (create-let-body-vec-json-str-out rules output-sym)
                        (do
