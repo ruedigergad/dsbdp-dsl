@@ -16,6 +16,6 @@
 
 (defn -generateProcessingFn [dsl-expression]
   (if (string? dsl-expression)
-    (create-proc-fn (binding [*read-eval* false] (read-string dsl-expression)))
+    (create-proc-fn (binding [*read-eval* true] (read-string dsl-expression)))
     (create-proc-fn dsl-expression)))
 
