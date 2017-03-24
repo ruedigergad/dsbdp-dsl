@@ -111,6 +111,21 @@
 
 
 ;;;
+;;; Tests for referencing already extracted fields.
+;;;
+(deftest simple-combination-of-extracted-fields-test
+  (let [expected {"udpSrc" 2048, "udpDst" 4096, "combined" "2048 -> 4096"}
+        dsl-expression {:output-type :java-map
+                        :rules [['udpSrc '(int16 50)]
+                                ['udpDst '(int16 52)]
+                                ['combined '(str udpSrc " -> " udpDst)]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn pcap-byte-array-test-data)]
+    (is (= expected result))))
+
+
+
+;;;
 ;;; Tests for incremental data processing.
 ;;;
 (deftest incremental-byte-array-to-java-map-test

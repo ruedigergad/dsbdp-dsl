@@ -10,7 +10,8 @@
   ^{:author "Ruediger Gad",
     :doc "DSL for processing data"}
   dsbdp.data-processing-dsl
-  (:require [dsbdp.byte-array-conversion :refer :all]))
+  (:require [dsbdp.byte-array-conversion :refer :all]
+            [clojure.pprint :refer :all]))
 
 (def ^:dynamic *incremental-indicator-suffix* "#inc")
 
@@ -37,8 +38,9 @@
                     (conj v (ns-resolve 'dsbdp.byte-array-conversion s) 'input)
                   :default
                     (do
-                      (println "Could not resolve symbol:" s)
-                      v)))
+                      (println "Warning: Could not resolve symbol:" s)
+                      (println "Assuming" s "is intended as \"self-reference\".")
+                      (conj v s))))
             (list? data-proc-def-element)
               (conj v (into '() (reverse (create-proc-sub-fn data-proc-def-element input))))
             :default (conj v data-proc-def-element)))
@@ -181,6 +183,8 @@
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (create-let-expression input-sym rules let-body-vec)
 ;        _ (println "Created data processing function body:" fn-body)
+;        _ (pprint fn-body)
+;        _ (println "")
         data-processing-fn (if (not (nil? output-sym))
                              (eval `(fn [~input-sym ~output-sym] ~fn-body))
                              (eval `(fn [~input-sym] ~fn-body)))]
