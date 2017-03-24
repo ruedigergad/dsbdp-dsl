@@ -1,5 +1,5 @@
-;(defproject dsbdp "0.4.0-SNAPSHOT"
-(defproject dsbdp "0.3.1"
+(defproject dsbdp "0.4.0-SNAPSHOT"
+;(defproject dsbdp "0.3.1"
   :description "Dynamic Stream and Batch Data Processing (dsbdp)"
   :url "https://github.com/ruedigergad/dsbdp"
   :license {:name "Eclipse Public License"
