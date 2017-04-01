@@ -10,7 +10,9 @@
 
 ### Continuous Integration
 
-[![Build Status](https://travis-ci.org/ruedigergad/dsbdp.svg?branch=master)](https://travis-ci.org/ruedigergad/dsbdp)
+[![Build Status TravisCI](https://travis-ci.org/ruedigergad/dsbdp.svg?branch=master)](https://travis-ci.org/ruedigergad/dsbdp)
+
+[![Build Status CircleCI](https://circleci.com/gh/ruedigergad/dsbdp.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/ruedigergad/dsbdp.svg?style=shield&circle-token=:circle-token)
 
 ### Test Code Coverage
 
