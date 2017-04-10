@@ -17,6 +17,28 @@ package dsbdp;
  */
 public class ByteArrayHelper {
 
+    public static long getInt64(byte[] array, int index) {
+        return array[index+7] & 0xFFL |
+            (array[index+6] & 0xFFL) << 8 |
+            (array[index+5] & 0xFFL) << 16 |
+            (array[index+4] & 0xFFL) << 24 |
+            (array[index+3] & 0xFFL) << 32 |
+            (array[index+2] & 0xFFL) << 40 |
+            (array[index+1] & 0xFFL) << 48 |
+            (array[index] & 0xFFL) << 56;
+    }
+
+    public static long getInt64BigEndian(byte[] array, int index) {
+        return array[index] & 0xFFL |
+            (array[index+1] & 0xFFL) << 8 |
+            (array[index+2] & 0xFFL) << 16 |
+            (array[index+3] & 0xFFL) << 24 |
+            (array[index+4] & 0xFFL) << 32 |
+            (array[index+5] & 0xFFL) << 40 |
+            (array[index+6] & 0xFFL) << 48 |
+            (array[index+7] & 0xFFL) << 56;
+    }
+
     public static int getInt32(byte[] array, int index) {
         return array[index+3] & 0xFF |
             (array[index+2] & 0xFF) << 8 |

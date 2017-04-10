@@ -50,6 +50,16 @@
   [ba idx]
   (ByteArrayHelper/getInt32BigEndian ba idx))
 
+(defn int64
+  "Get the Int64 value of the four bytes starting at index idx in the byte-array ba."
+  [ba idx]
+  (ByteArrayHelper/getInt64 ba idx))
+
+(defn int64be
+  "Get the big endian Int32 value of the four bytes starting at index idx in the byte-array ba."
+  [ba idx]
+  (ByteArrayHelper/getInt64BigEndian ba idx))
+
 (defn timestamp
   "Get the (pcap) timestamp long value starting at index idx in the byte-array ba."
   [ba idx]
