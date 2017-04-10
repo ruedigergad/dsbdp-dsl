@@ -1,5 +1,5 @@
-(defproject dsbdp "0.4.0-SNAPSHOT"
-;(defproject dsbdp "0.3.1"
+;(defproject dsbdp "0.4.0-SNAPSHOT"
+(defproject dsbdp "0.3.1"
   :description "Dynamic Stream and Batch Data Processing (dsbdp)"
   :url "https://github.com/ruedigergad/dsbdp"
   :license {:name "Eclipse Public License"
@@ -7,7 +7,8 @@
   :dependencies [[org.clojure/clojure "1.8.0"]
                  [org.clojure/core.async "0.2.374"]
                  [clj-assorted-utils "1.17.1"]
-                 [org.clojure/tools.cli "0.3.3"]]
+                 [org.clojure/tools.cli "0.3.3"]
+                 [commons-net "3.6"]]
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["src-java"]
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]

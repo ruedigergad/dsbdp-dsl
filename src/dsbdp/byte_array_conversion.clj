@@ -13,7 +13,8 @@
   (:import
     (dsbdp ByteArrayHelper)
     (java.text SimpleDateFormat)
-    (java.util Date)))
+    (java.util Date)
+    (org.apache.commons.net.ntp TimeStamp)))
 
 (defn int4l
   "Get the lower 4 bits (nibble) of the byte at the given index idx in the provided byte-array ba."
@@ -90,7 +91,7 @@
         (long (/ ts 1000000))))))
 
 (defn timestamp-str
-  "Get the (pcap) timestamp String represenation starting at index idx in the byte-array ba."
+  "Get the (pcap) timestamp String representation starting at index idx in the byte-array ba."
   [ba idx]
   (timestamp-to-str (timestamp ba idx)))
 
@@ -104,4 +105,14 @@
    Starts at index idx and converts the number of len bytes."
   [ba idx len]
   (ByteArrayHelper/byteArrayToString ba idx len))
+
+(defn ntp-timestamp-str
+  "Get the NTP timestamp String representation starting at index idx in the byte-array ba."
+  [ba idx]
+  (-> (TimeStamp. (int64 ba idx)) (.toDateString)))
+
+(defn ntp-timestamp-str-be
+  "Get the NTP big endian timestamp String representation starting at index idx in the byte-array ba."
+  [ba idx]
+  (-> (TimeStamp. (int64be ba idx)) (.toDateString)))
 
