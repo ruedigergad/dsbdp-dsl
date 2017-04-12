@@ -48,12 +48,6 @@
 
 (declare create-let-expression)
 
-(defn- create-cond-expression
-  [input rules body-creation-fn output nesting-level]
-  (
-    )
-  )
-
 (defn- create-bindings-vector
   [input rules body-creation-fn output nesting-level]
   (reduce
@@ -162,7 +156,9 @@
                                                   `(assoc
                                                      ~(name (first rule))
                                                      ~(reverse (into '() (create-let-body-vec-clj-map-out (second rule) nil (inc nesting-level)))))))
-        :default (println "Clj Map Body: unknown element for rule:" (str rule))))
+        :default (do (println "Clj Map Body: unknown element for rule:" (str rule))
+                     (throw (RuntimeException. "Clj Map Body: unknown element for rule"))
+                     )))
     (if (nil? output)
       '[-> {}]
       '[-> output])
