@@ -88,3 +88,18 @@
         expected #"2015-01-27_1\d:47:39"]
     (is (re-matches expected (timestamp-str-be ba 0)))))
 
+(deftest int-to-byte-test-1
+  (is (= 0 (int-to-byte 0))))
+
+(deftest int-to-byte-test-2
+  (is (= 1 (int-to-byte 1))))
+
+(deftest int-to-byte-test-3
+  (is (= 127 (int-to-byte 127))))
+
+(deftest int-to-byte-test-4
+  (is (= -128 (int-to-byte 128))))
+
+(deftest int-to-byte-test-5
+  (is (= -1 (int-to-byte 255))))
+

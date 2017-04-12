@@ -116,3 +116,10 @@
   [ba idx]
   (-> (TimeStamp. (int64be ba idx)) (.toDateString)))
 
+(defn int-to-byte
+  [x]
+  (if
+    (> x 127)
+    (+ -128 (- x 128))
+    x))
+
