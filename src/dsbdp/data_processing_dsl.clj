@@ -131,7 +131,7 @@
     rules))
 
 (defn- create-let-body-vec-csv-str-out
-  [rules output]
+  [rules output nesting-level]
   (reduce
     (fn [v rule]
       (let [tmp-v (if (some #{:string} rule)
@@ -146,7 +146,7 @@
     rules))
 
 (defn- create-let-body-vec-json-str-out
-  [rules output]
+  [rules output nesting-level]
   (reduce
     (fn [v rule]
       (let [tmp-k (conj v `(.append "\"") `(.append ~(name (first rule))) `(.append "\":"))
@@ -182,8 +182,8 @@
         let-body-vec (condp (fn [^String v ^String s] (.startsWith s v)) output-type
                        "java-map" (create-let-body-vec-java-map-out rules output-sym 0)
                        "clj-map" (create-let-body-vec-clj-map-out rules output-sym 0)
-                       "csv-str" (create-let-body-vec-csv-str-out rules output-sym)
-                       "json-str" (create-let-body-vec-json-str-out rules output-sym)
+                       "csv-str" (create-let-body-vec-csv-str-out rules output-sym 0)
+                       "json-str" (create-let-body-vec-json-str-out rules output-sym 0)
                        (do
                          (println "Unknown output type:" output-type)
                          (println "Defaulting to :java-map as output type.")
