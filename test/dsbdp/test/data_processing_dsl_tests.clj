@@ -466,15 +466,35 @@
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['data [['proto-id '(int8 39)]
                                                 ['src '(ipv4-addr-str 42)]
-                                                ['data '(nested
-                                                          '(= 17 __2_proto-id) [['src '(int16 50)]
-                                                                                ['dst '(int16 52)]]
-                                                          '(= 6 __2_proto-id) [['src '(int16 50)]
-                                                                               ['dst '(int16 52)]
-                                                                               ['flags '(int8 63)]
-                                                                               ['seq-no '(int32 54)]
-                                                                               ['ack-no '(int32 58)]]
-                                                          :default '(str "Unsupported protocol: " __2_proto-id))]]]]]]}
+                                                ['data ['(= 17 __2_proto-id) [['src '(int16 50)]
+                                                                              ['dst '(int16 52)]]
+                                                        '(= 6 __2_proto-id) [['src '(int16 50)]
+                                                                             ['dst '(int16 52)]
+                                                                             ['flags '(int8 63)]
+                                                                             ['seq-no '(int32 54)]
+                                                                             ['ack-no '(int32 58)]]
+                                                        :default '(str "Unsupported protocol: " __2_proto-id)]]]]]]]}
+;
+; (let [len (int32be ba 8)
+;       data (let [dst ...
+;                  data (let [proto-id ..
+;                             data (cond
+;                                    (= 17 proto-id) (let [....])
+;                                    (= 6 proto-id) (let [....])
+;                                    :default (str ...))]
+;                         (->
+;                           {}
+;                           (assoc "proto-id" proto-id)
+;                           (assoc "data" data)))]
+;              (->
+;                {}
+;                (assoc "dst" dst)
+;                (assoc "data" data)))]
+;   (->
+;     {}
+;     (assoc "len" len)
+;     (assoc "data" data)))
+;
         data-processing-fn (create-proc-fn dsl-expression)
         result-udp (data-processing-fn pcap-byte-array-test-data) 
         result-tcp (data-processing-fn pcap-tcp-byte-array-test-data)]

@@ -183,8 +183,8 @@
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (create-let-expression input-sym rules let-body-vec)
 ;        _ (println "Created data processing function body:" fn-body)
-;        _ (pprint fn-body)
-;        _ (println "")
+        _ (pprint fn-body)
+        _ (println "")
         data-processing-fn (if (not (nil? output-sym))
                              (eval `(fn [~input-sym ~output-sym] ~fn-body))
                              (eval `(fn [~input-sym] ~fn-body)))]
