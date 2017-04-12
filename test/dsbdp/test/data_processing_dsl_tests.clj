@@ -338,7 +338,6 @@
 ;;;
 ;;; Tests for nested output data structures.
 ;;;
-
 (deftest byte-array-packet-to-nested-java-map-test
   (let [expected {"len" 58,
                   "data" {"dst" "FF:FE:FD:F2:F1:F0",
@@ -401,4 +400,42 @@
 ;        result (data-processing-fn pcap-byte-array-test-data)]
 ;    (is (map? result))
 ;    (is (= expected result))))
+
+(deftest nested-udp-byte-array-packet-test-1
+  (let [expected {"len" 58,
+                  "data" {"dst" "FF:FE:FD:F2:F1:F0",
+                          "data" {"proto-id" 17
+                                  "src" "1.2.3.4",
+                                  "data" {"src" 2048
+                                          "dst" 4096}}}}
+        dsl-expression {:output-type :clj-map
+                        :rules [['len '(int32be 8)]
+                                ['data [['dst '(eth-mac-addr-str 16)]
+                                        ['data [['proto-id '(int8 39)]
+                                                ['src '(ipv4-addr-str 42)]
+                                                ['data [['src '(int16 50)]
+                                                        ['dst '(int16 52)]]]]]]]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn pcap-byte-array-test-data)]
+    (is (map? result))
+    (is (= expected result))))
+
+(deftest nested-tcp-byte-array-packet-test-1
+  (let [expected {"len" 58,
+                  "data" {"dst" "FF:FE:FD:F2:F1:F0",
+                          "data" {"proto-id" 6
+                                  "src" "127.0.0.1",
+                                  "data" {"src" 55522
+                                          "dst" 61481}}}}
+        dsl-expression {:output-type :clj-map
+                        :rules [['len '(int32be 8)]
+                                ['data [['dst '(eth-mac-addr-str 16)]
+                                        ['data [['proto-id '(int8 39)]
+                                                ['src '(ipv4-addr-str 42)]
+                                                ['data [['src '(int16 50)]
+                                                        ['dst '(int16 52)]]]]]]]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn pcap-tcp-byte-array-test-data)]
+    (is (map? result))
+    (is (= expected result))))
 
