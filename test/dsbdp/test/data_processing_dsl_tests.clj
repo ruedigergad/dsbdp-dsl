@@ -445,3 +445,41 @@
     (is (map? result))
     (is (= expected result))))
 
+(deftest nested-udp-and-tcp-byte-array-packet-test-1
+  (let [expected-udp {"len" 58,
+                      "data" {"dst" "FF:FE:FD:F2:F1:F0",
+                              "data" {"proto-id" 17
+                                      "src" "1.2.3.4",
+                                      "data" {"src" 2048
+                                              "dst" 4096}}}}
+        expected-tcp {"len" 58,
+                      "data" {"dst" "FF:FE:FD:F2:F1:F0",
+                              "data" {"proto-id" 6
+                                      "src" "127.0.0.1",
+                                      "data" {"src" 55522
+                                              "dst" 61481
+                                              "flags" 0x18
+                                              "seq-no" 4109031044
+                                              "ack-no" 3662655102}}}}
+        dsl-expression {:output-type :clj-map
+                        :rules [['len '(int32be 8)]
+                                ['data [['dst '(eth-mac-addr-str 16)]
+                                        ['data [['proto-id '(int8 39)]
+                                                ['src '(ipv4-addr-str 42)]
+                                                ['data '(nested
+                                                          '(= 17 __2_proto-id) [['src '(int16 50)]
+                                                                                ['dst '(int16 52)]]
+                                                          '(= 6 __2_proto-id) [['src '(int16 50)]
+                                                                               ['dst '(int16 52)]
+                                                                               ['flags '(int8 63)]
+                                                                               ['seq-no '(int32 54)]
+                                                                               ['ack-no '(int32 58)]]
+                                                          :default (str "Unsupported protocol: " __2_proto-id))]]]]]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result-udp (data-processing-fn pcap-byte-array-test-data) 
+        result-tcp (data-processing-fn pcap-tcp-byte-array-test-data)]
+    (is (map? result-udp))
+    (is (= expected-udp result-udp))  
+    (is (map? result-tcp))
+    (is (= expected-tcp result-tcp))))
+
