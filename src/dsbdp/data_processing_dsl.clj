@@ -91,12 +91,14 @@
                                       ~(if (> 1 nesting-level)
                                          (first rule)
                                          (symbol (str "__" nesting-level "_" (first rule))))))
-        (vector? (second rule)) (do
-                                  ;(println "Java Map Body: Got a Vector..." (first rule) (second rule))
-                                  (conj v
-                                        `(.put
-                                           ~(name (first rule))
-                                           ~(reverse (into '() (create-let-body-vec-java-map-out (second rule) nil (inc nesting-level)))))))
+        (and
+          (vector? (second rule))
+          (every? vector? (second rule))) (do
+                                            ;(println "Java Map Body: Got a Vector..." (first rule) (second rule))
+                                            (conj v
+                                                  `(.put
+                                                     ~(name (first rule))
+                                                     ~(reverse (into '() (create-let-body-vec-java-map-out (second rule) nil (inc nesting-level)))))))
         :default (println "Java Map Body: unknown element for rule:" (str rule))))
     (if (nil? output)
       '[doto (java.util.HashMap.)]
@@ -114,12 +116,14 @@
                                       ~(if (> 1 nesting-level)
                                          (first rule)
                                          (symbol (str "__" nesting-level "_" (first rule))))))
-        (vector? (second rule)) (do
-                                  ;(println "Java Map Body: Got a Vector..." (first rule) (second rule))
-                                  (conj v
-                                        `(assoc
-                                           ~(name (first rule))
-                                           ~(reverse (into '() (create-let-body-vec-clj-map-out (second rule) nil (inc nesting-level)))))))
+        (and
+          (vector? (second rule))
+          (every? vector? (second rule))) (do
+                                            ;(println "Java Map Body: Got a Vector..." (first rule) (second rule))
+                                            (conj v
+                                                  `(assoc
+                                                     ~(name (first rule))
+                                                     ~(reverse (into '() (create-let-body-vec-clj-map-out (second rule) nil (inc nesting-level)))))))
         :default (println "Clj Map Body: unknown element for rule:" (str rule))))
     (if (nil? output)
       '[-> {}]
