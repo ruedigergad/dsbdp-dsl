@@ -46,6 +46,14 @@
             :default (conj v data-proc-def-element)))
         [] data-processing-definition))))
 
+(declare create-let-expression)
+
+(defn- create-cond-expression
+  [input rules body-creation-fn output nesting-level]
+  (
+    )
+  )
+
 (defn- create-bindings-vector
   [input rules body-creation-fn output nesting-level]
   (reduce
@@ -72,6 +80,34 @@
                                                     body-creation-fn
                                                     output
                                                     (inc nesting-level))))
+          (and
+            (vector? rule-expression)
+            (every? list? (butlast (take-nth 2 rule-expression)))
+            (every?
+              vector?
+                (butlast
+                  (take-nth
+                    2
+                    (rest rule-expression))))) (do
+                                                 (println "FOOOOOOOOOOOOOOOO")
+                                                 (pprint rule-expression)
+                                                 (println "")
+                                                 (let [x (reduce
+                                                           (fn [vect v]
+                                                             (cond
+                                                               (or (list? v)
+                                                                   (keyword? v)) (conj vect v)
+                                                               (vector? v) (conj vect
+                                                                                 (create-let-expression input v body-creation-fn output (inc nesting-level)))
+                                                               :default (do
+                                                                          (println "Unknown rule expression part:" v)
+                                                                          vect)))
+                                                           ['clojure.core/cond]
+                                                           rule-expression)]
+                                                   (println "BAAAAARRRRRRRRRRRR")
+                                                   (pprint x)
+                                                   (println "BLAH")
+                                                   (conj v rule-name (into '() (reverse x)))))
           :default (println "Binding: unknown element for rule:" (str rule)))))
     []
     rules))
