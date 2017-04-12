@@ -50,23 +50,27 @@
   [input rules nesting-level]
   (reduce
     (fn [v rule]
-      (cond
-        (list? (second rule)) (conj v
+      (let [rule-name (first rule)
+            rule-expression (second rule)]
+        (cond
+          (list? rule-expression) (conj v
                                     (if (> 1 nesting-level)
                                       (first rule)
-                                      (symbol (str "__" nesting-level "_" (first rule))))
-                                    (create-proc-sub-fn (second rule) input))
-        (vector? (second rule)) (do
-                                  ;(println "Binding: Got a VECTOR..." (first rule) (second rule))
-                                  (into
-                                    (conj v
-                                          (first rule)
-                                          nil)
-                                    (create-bindings-vector
-                                      input
-                                      (second rule)
-                                      (inc nesting-level))))
-        :default (println "Binding: unknown element for rule:" (str rule))))
+                                      (symbol (str "__" nesting-level "_" rule-name)))
+                                    (create-proc-sub-fn rule-expression input))
+          (and
+            (vector? rule-expression)
+            (every? vector? rule-expression)) (do
+                                                ;(println "Binding: Got a VECTOR..." (first rule) (second rule))
+                                                (into
+                                                  (conj v
+                                                        rule-name
+                                                        nil)
+                                                  (create-bindings-vector
+                                                    input
+                                                    rule-expression
+                                                    (inc nesting-level))))
+          :default (println "Binding: unknown element for rule:" (str rule)))))
     []
     rules))
 
