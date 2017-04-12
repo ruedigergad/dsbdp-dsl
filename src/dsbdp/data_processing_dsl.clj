@@ -181,15 +181,6 @@
         rules (:rules dsl-expression)
         output-sym (if (.endsWith output-type *incremental-indicator-suffix*)
                      'output)
-;        let-body-vec (condp (fn [^String v ^String s] (.startsWith s v)) output-type
-;                       "java-map" (create-let-body-vec-java-map-out rules output-sym 0)
-;                       "clj-map" (create-let-body-vec-clj-map-out rules output-sym 0)
-;                       "csv-str" (create-let-body-vec-csv-str-out rules output-sym 0)
-;                       "json-str" (create-let-body-vec-json-str-out rules output-sym 0)
-;                       (do
-;                         (println "Unknown output type:" output-type)
-;                         (println "Defaulting to :java-map as output type.")
-;                         (create-let-body-vec-java-map-out rules output-sym 0)))
         let-body-creation-fn (condp (fn [^String v ^String s] (.startsWith s v)) output-type
                                "java-map" create-let-body-vec-java-map-out
                                "clj-map" create-let-body-vec-clj-map-out
