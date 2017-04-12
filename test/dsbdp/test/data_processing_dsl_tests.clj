@@ -474,7 +474,7 @@
                                                                                ['flags '(int8 63)]
                                                                                ['seq-no '(int32 54)]
                                                                                ['ack-no '(int32 58)]]
-                                                          :default (str "Unsupported protocol: " __2_proto-id))]]]]]]}
+                                                          :default '(str "Unsupported protocol: " __2_proto-id))]]]]]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result-udp (data-processing-fn pcap-byte-array-test-data) 
         result-tcp (data-processing-fn pcap-tcp-byte-array-test-data)]
