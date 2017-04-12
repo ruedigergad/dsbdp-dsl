@@ -426,14 +426,20 @@
                           "data" {"proto-id" 6
                                   "src" "127.0.0.1",
                                   "data" {"src" 55522
-                                          "dst" 61481}}}}
+                                          "dst" 61481
+                                          "flags" 0x18
+                                          "seq-no" 4109031044
+                                          "ack-no" 3662655102}}}}
         dsl-expression {:output-type :clj-map
                         :rules [['len '(int32be 8)]
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['data [['proto-id '(int8 39)]
                                                 ['src '(ipv4-addr-str 42)]
                                                 ['data [['src '(int16 50)]
-                                                        ['dst '(int16 52)]]]]]]]]}
+                                                        ['dst '(int16 52)]
+                                                        ['flags '(int8 63)]
+                                                        ['seq-no '(int32 54)]
+                                                        ['ack-no '(int32 58)]]]]]]]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn pcap-tcp-byte-array-test-data)]
     (is (map? result))
