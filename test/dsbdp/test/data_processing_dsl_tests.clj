@@ -474,27 +474,6 @@
                                                                              ['seq-no '(int32 54)]
                                                                              ['ack-no '(int32 58)]]
                                                         :default '(str "Unsupported protocol: " __2_proto-id)]]]]]]]}
-;
-; (let [len (int32be ba 8)
-;       data (let [dst ...
-;                  data (let [proto-id ..
-;                             data (cond
-;                                    (= 17 proto-id) (let [....])
-;                                    (= 6 proto-id) (let [....])
-;                                    :default (str ...))]
-;                         (->
-;                           {}
-;                           (assoc "proto-id" proto-id)
-;                           (assoc "data" data)))]
-;              (->
-;                {}
-;                (assoc "dst" dst)
-;                (assoc "data" data)))]
-;   (->
-;     {}
-;     (assoc "len" len)
-;     (assoc "data" data)))
-;
         data-processing-fn (create-proc-fn dsl-expression)
         result-udp (data-processing-fn pcap-byte-array-test-data) 
         result-tcp (data-processing-fn pcap-tcp-byte-array-test-data)]
