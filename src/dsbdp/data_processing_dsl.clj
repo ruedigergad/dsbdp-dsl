@@ -46,6 +46,25 @@
             :default (conj v data-proc-def-element)))
         [] data-processing-definition))))
 
+(defn cond-rule-expr?
+  [rule-expression]
+  (and
+    (vector? rule-expression)
+    (every? list? (butlast (take-nth 2 rule-expression)))
+    (every?
+      vector?
+        (butlast
+          (take-nth
+            2
+            (rest rule-expression))))))
+
+(defn prefix-rule-name
+  [rule-name nesting-level]
+  (if
+    (> 1 nesting-level)
+    rule-name
+    (symbol (str "__" nesting-level "_" rule-name))))
+
 (declare create-let-expression)
 
 (defn- create-bindings-vector
@@ -56,9 +75,7 @@
             rule-expression (second rule)]
         (cond
           (list? rule-expression) (conj v
-                                    (if (> 1 nesting-level)
-                                      (first rule)
-                                      (symbol (str "__" nesting-level "_" rule-name)))
+                                    (prefix-rule-name rule-name nesting-level)
                                     (create-proc-sub-fn rule-expression input))
           (and
             (vector? rule-expression)
@@ -74,34 +91,32 @@
                                                     body-creation-fn
                                                     output
                                                     (inc nesting-level))))
-          (and
-            (vector? rule-expression)
-            (every? list? (butlast (take-nth 2 rule-expression)))
-            (every?
-              vector?
-                (butlast
-                  (take-nth
-                    2
-                    (rest rule-expression))))) (do
-                                                 (println "FOOOOOOOOOOOOOOOO")
-                                                 (pprint rule-expression)
-                                                 (println "")
-                                                 (let [x (reduce
-                                                           (fn [vect v]
-                                                             (cond
-                                                               (or (list? v)
-                                                                   (keyword? v)) (conj vect v)
-                                                               (vector? v) (conj vect
-                                                                                 (create-let-expression input v body-creation-fn output (inc nesting-level)))
-                                                               :default (do
-                                                                          (println "Unknown rule expression part:" v)
-                                                                          vect)))
-                                                           ['clojure.core/cond]
-                                                           rule-expression)]
-                                                   (println "BAAAAARRRRRRRRRRRR")
-                                                   (pprint x)
-                                                   (println "BLAH")
-                                                   (conj v rule-name (into '() (reverse x)))))
+          (cond-rule-expr? rule-expression) (do
+                                              (println "FOOOOOOOOOOOOOOOO")
+                                              (pprint rule-expression)
+                                              (println "")
+                                              (let [cond-expr (reduce
+                                                                (fn [vect v]
+                                                                  (cond
+                                                                    (or (list? v)
+                                                                        (keyword? v)) (conj vect v)
+                                                                    (vector? v) (conj vect
+                                                                                      (create-let-expression
+                                                                                        input
+                                                                                        v
+                                                                                        body-creation-fn
+                                                                                        output
+                                                                                        (inc nesting-level)))
+                                                                    :default (do
+                                                                               (println "Unknown rule expression part:" v)
+                                                                               vect)))
+                                                                ['clojure.core/cond]
+                                                                rule-expression)]
+                                                (println "BAAAAARRRRRRRRRRRR")
+                                                (pprint cond-expr)
+                                                (println "BLAH")
+                                                (pprint (into '() (reverse cond-expr)))
+                                                (conj v (prefix-rule-name rule-name nesting-level) (into '() (reverse cond-expr)))))
           :default (println "Binding: unknown element for rule:" (str rule)))))
     []
     rules))
@@ -156,8 +171,9 @@
                                                   `(assoc
                                                      ~(name (first rule))
                                                      ~(reverse (into '() (create-let-body-vec-clj-map-out (second rule) nil (inc nesting-level)))))))
+;        (cond-rule-expr? (second rule)) 
         :default (do (println "Clj Map Body: unknown element for rule:" (str rule))
-                     (throw (RuntimeException. "Clj Map Body: unknown element for rule"))
+                     ;(throw (RuntimeException. "Clj Map Body: unknown element for rule"))
                      )))
     (if (nil? output)
       '[-> {}]
