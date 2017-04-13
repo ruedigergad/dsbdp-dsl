@@ -127,9 +127,7 @@
         (list? (second rule)) (conj v
                                     `(.put
                                       ~(name (first rule))
-                                      ~(if (> 1 nesting-level)
-                                         (first rule)
-                                         (symbol (str "__" nesting-level "_" (first rule))))))
+                                      ~(prefix-rule-name (first rule) nesting-level)))
         (and
           (vector? (second rule))
           (every? vector? (second rule))) (do
@@ -138,6 +136,9 @@
                                                   `(.put
                                                      ~(name (first rule))
                                                      ~(reverse (into '() (create-let-body-vec-java-map-out (second rule) nil (inc nesting-level)))))))
+        (cond-rule-expr? (second rule)) (conj v
+                                              `(.put ~(name (first rule))
+                                                     ~(prefix-rule-name (first rule) nesting-level)))
         :default (println "Java Map Body: unknown element for rule:" (str rule))))
     (if (nil? output)
       '[doto (java.util.HashMap.)]
