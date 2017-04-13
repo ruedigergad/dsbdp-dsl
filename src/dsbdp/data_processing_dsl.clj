@@ -91,32 +91,24 @@
                                                     body-creation-fn
                                                     output
                                                     (inc nesting-level))))
-          (cond-rule-expr? rule-expression) (do
-                                              (println "FOOOOOOOOOOOOOOOO")
-                                              (pprint rule-expression)
-                                              (println "")
-                                              (let [cond-expr (reduce
-                                                                (fn [vect v]
-                                                                  (cond
-                                                                    (or (list? v)
-                                                                        (keyword? v)) (conj vect v)
-                                                                    (vector? v) (conj vect
-                                                                                      (create-let-expression
-                                                                                        input
-                                                                                        v
-                                                                                        body-creation-fn
-                                                                                        output
-                                                                                        (inc nesting-level)))
-                                                                    :default (do
-                                                                               (println "Unknown rule expression part:" v)
-                                                                               vect)))
-                                                                ['clojure.core/cond]
-                                                                rule-expression)]
-                                                (println "BAAAAARRRRRRRRRRRR")
-                                                (pprint cond-expr)
-                                                (println "BLAH")
-                                                (pprint (into '() (reverse cond-expr)))
-                                                (conj v (prefix-rule-name rule-name nesting-level) (into '() (reverse cond-expr)))))
+          (cond-rule-expr? rule-expression) (let [cond-expr (reduce
+                                                              (fn [vect v]
+                                                                (cond
+                                                                  (or (list? v)
+                                                                      (keyword? v)) (conj vect v)
+                                                                  (vector? v) (conj vect
+                                                                                    (create-let-expression
+                                                                                      input
+                                                                                      v
+                                                                                      body-creation-fn
+                                                                                      output
+                                                                                      (inc nesting-level)))
+                                                                  :default (do
+                                                                             (println "Unknown rule expression part:" v)
+                                                                             vect)))
+                                                              ['clojure.core/cond]
+                                                              rule-expression)]
+                                              (conj v (prefix-rule-name rule-name nesting-level) (into '() (reverse cond-expr))))
           :default (println "Binding: unknown element for rule:" (str rule)))))
     []
     rules))
@@ -160,9 +152,7 @@
         (list? (second rule)) (conj v
                                     `(assoc
                                       ~(name (first rule))
-                                      ~(if (> 1 nesting-level)
-                                         (first rule)
-                                         (symbol (str "__" nesting-level "_" (first rule))))))
+                                      ~(prefix-rule-name (first rule) nesting-level)))
         (and
           (vector? (second rule))
           (every? vector? (second rule))) (do
@@ -171,7 +161,9 @@
                                                   `(assoc
                                                      ~(name (first rule))
                                                      ~(reverse (into '() (create-let-body-vec-clj-map-out (second rule) nil (inc nesting-level)))))))
-;        (cond-rule-expr? (second rule)) 
+        (cond-rule-expr? (second rule)) (conj v
+                                              `(assoc ~(name (first rule))
+                                                      ~(prefix-rule-name (first rule) nesting-level)))
         :default (do (println "Clj Map Body: unknown element for rule:" (str rule))
                      ;(throw (RuntimeException. "Clj Map Body: unknown element for rule"))
                      )))
@@ -241,8 +233,8 @@
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (create-let-expression input-sym rules let-body-creation-fn output-sym 0)
 ;        _ (println "Created data processing function body:" fn-body)
-        _ (pprint fn-body)
-        _ (println "")
+;        _ (pprint fn-body)
+;        _ (println "")
         data-processing-fn (if (not (nil? output-sym))
                              (eval `(fn [~input-sym ~output-sym] ~fn-body))
                              (eval `(fn [~input-sym] ~fn-body)))]
