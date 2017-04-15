@@ -10,12 +10,18 @@
   ^{:author "Ruediger Gad",
     :doc "Java Interop for using the DSL from within Java."} 
   dsbdp.DslHelper
-  (:require [dsbdp.data-processing-dsl :refer :all]) 
+  (:import (java.io StringWriter))
+  (:require [dsbdp.data-processing-dsl :refer :all]
+            [clojure.pprint :refer :all])
   (:gen-class
-   :methods [^:static [generateProcessingFn [Object] clojure.lang.IFn]]))
+   :methods [^:static [generateProcessingFn [Object] clojure.lang.IFn]
+             ^:static [prettyPrint [Object] String]]))
 
 (defn -generateProcessingFn [dsl-expression]
   (if (string? dsl-expression)
     (create-proc-fn (binding [*read-eval* true] (read-string dsl-expression)))
     (create-proc-fn dsl-expression)))
+
+(defn -prettyPrint [obj]
+  (with-out-str (pprint obj)))
 
