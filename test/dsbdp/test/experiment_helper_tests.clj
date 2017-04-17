@@ -98,7 +98,7 @@
         end-time (System/nanoTime)
         time-delta (- end-time start-time)]
     (is (> time-delta 1000000))
-    (is (< time-delta 1200000))
+    (is (< time-delta 2500000))
     ))
 
 (deftest busy-sleep-proc-fns-test-1
