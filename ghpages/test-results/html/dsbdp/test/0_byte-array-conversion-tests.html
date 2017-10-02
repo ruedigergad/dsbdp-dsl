@@ -6,7 +6,117 @@
 <script type="text/javascript" language="JavaScript">
         var TestCases = new Array();
         var cur;
-        </script><script type="text/javascript" language="JavaScript">
+        
+    cur = TestCases['dsbdp.test.byte-array-conversion-tests'] = new Array();
+    
+        cur['awt.toolkit'] = 'sun.awt.X11.XToolkit';
+    
+        cur['clojure.compile.path'] = '/home/rc/repositories/private/clojure/dsbdp/target/classes';
+    
+        cur['clojure.debug'] = 'false';
+    
+        cur['dsbdp.version'] = '0.4.0';
+    
+        cur['file.encoding'] = 'UTF-8';
+    
+        cur['file.encoding.pkg'] = 'sun.io';
+    
+        cur['file.separator'] = '/';
+    
+        cur['java.awt.graphicsenv'] = 'sun.awt.X11GraphicsEnvironment';
+    
+        cur['java.awt.printerjob'] = 'sun.print.PSPrinterJob';
+    
+        cur['java.class.path'] = '/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar';
+    
+        cur['java.class.version'] = '52.0';
+    
+        cur['java.endorsed.dirs'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed';
+    
+        cur['java.ext.dirs'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext';
+    
+        cur['java.home'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre';
+    
+        cur['java.io.tmpdir'] = '/tmp';
+    
+        cur['java.library.path'] = '/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib';
+    
+        cur['java.runtime.name'] = 'OpenJDK Runtime Environment';
+    
+        cur['java.runtime.version'] = '1.8.0_131-b12';
+    
+        cur['java.specification.name'] = 'Java Platform API Specification';
+    
+        cur['java.specification.vendor'] = 'Oracle Corporation';
+    
+        cur['java.specification.version'] = '1.8';
+    
+        cur['java.vendor'] = 'Oracle Corporation';
+    
+        cur['java.vendor.url'] = 'http://java.oracle.com/';
+    
+        cur['java.vendor.url.bug'] = 'http://bugreport.sun.com/bugreport/';
+    
+        cur['java.version'] = '1.8.0_131';
+    
+        cur['java.vm.info'] = 'mixed mode';
+    
+        cur['java.vm.name'] = 'OpenJDK 64-Bit Server VM';
+    
+        cur['java.vm.specification.name'] = 'Java Virtual Machine Specification';
+    
+        cur['java.vm.specification.vendor'] = 'Oracle Corporation';
+    
+        cur['java.vm.specification.version'] = '1.8';
+    
+        cur['java.vm.vendor'] = 'Oracle Corporation';
+    
+        cur['java.vm.version'] = '25.131-b12';
+    
+        cur['line.separator'] = ' ';
+    
+        cur['os.arch'] = 'amd64';
+    
+        cur['os.name'] = 'Linux';
+    
+        cur['os.version'] = '4.11.5-200.fc25.x86_64+debug';
+    
+        cur['path.separator'] = ':';
+    
+        cur['sun.arch.data.model'] = '64';
+    
+        cur['sun.boot.class.path'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes';
+    
+        cur['sun.boot.library.path'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64';
+    
+        cur['sun.cpu.endian'] = 'little';
+    
+        cur['sun.cpu.isalist'] = '';
+    
+        cur['sun.io.unicode.encoding'] = 'UnicodeLittle';
+    
+        cur['sun.java.command'] = 'clojure.main -i /tmp/form-init5299198040654132120.clj';
+    
+        cur['sun.java.launcher'] = 'SUN_STANDARD';
+    
+        cur['sun.jnu.encoding'] = 'UTF-8';
+    
+        cur['sun.management.compiler'] = 'HotSpot 64-Bit Tiered Compilers';
+    
+        cur['sun.os.patch.level'] = 'unknown';
+    
+        cur['user.country'] = 'US';
+    
+        cur['user.dir'] = '/home/rc/repositories/private/clojure/dsbdp';
+    
+        cur['user.home'] = '/home/rc';
+    
+        cur['user.language'] = 'en';
+    
+        cur['user.name'] = 'rc';
+    
+        cur['user.timezone'] = 'Europe/Berlin';
+    </script><script type="text/javascript" language="JavaScript">
         function displayProperties (name) {
           var win = window.open('','JUnitSystemProperties','scrollbars=1,resizable=1');
           var doc = win.document;
@@ -50,7 +160,7 @@
 <th width="80%">Name</th><th>Tests</th><th>Errors</th><th>Failures</th><th>Skipped</th><th nowrap>Time(s)</th><th nowrap>Time Stamp</th><th>Host</th>
 </tr>
 <tr valign="top" class="Pass">
-<td><a title="Display all tests" href="0_byte-array-conversion-tests.html">byte-array-conversion-tests</a></td><td><a title="Display all tests" href="0_byte-array-conversion-tests.html">15</a></td><td>0</td><td>0</td><td></td><td>0.017</td><td>2016-03-15_22:10:53+0100</td><td></td>
+<td><a title="Display all tests" href="0_byte-array-conversion-tests.html">byte-array-conversion-tests</a></td><td><a title="Display all tests" href="0_byte-array-conversion-tests.html">20</a></td><td>0</td><td>0</td><td></td><td>0.049</td><td>2017-10-02_20:52:49+0200</td><td></td>
 </tr>
 </table>
 <h2>Tests</h2>
@@ -62,7 +172,7 @@
 <td><a name="int32-conversion-test"></a>int32-conversion-test</td><td>Success</td><td></td><td>0.002</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="int16-conversion-test"></a>int16-conversion-test</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="int16-conversion-test"></a>int16-conversion-test</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
 <td><a name="int4l-conversion-test"></a>int4l-conversion-test</td><td>Success</td><td></td><td>0.000</td>
@@ -71,43 +181,68 @@
 <td><a name="timestamp-be-conversion-test"></a>timestamp-be-conversion-test</td><td>Success</td><td></td><td>0.000</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="int32be-conversion-test"></a>int32be-conversion-test</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="int32be-conversion-test"></a>int32be-conversion-test</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="eth-mac-addr-str-conversion-test-1"></a>eth-mac-addr-str-conversion-test-1</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="eth-mac-addr-str-conversion-test-1"></a>eth-mac-addr-str-conversion-test-1</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="timestamp-str-conversion-test"></a>timestamp-str-conversion-test</td><td>Success</td><td></td><td>0.001</td>
+<td><a name="timestamp-str-conversion-test"></a>timestamp-str-conversion-test</td><td>Success</td><td></td><td>0.002</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="timestamp-str-be-conversion-test"></a>timestamp-str-be-conversion-test</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="timestamp-str-be-conversion-test"></a>timestamp-str-be-conversion-test</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
 <td><a name="int8-conversion-test"></a>int8-conversion-test</td><td>Success</td><td></td><td>0.000</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="timestamp-conversion-test"></a>timestamp-conversion-test</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="timestamp-conversion-test"></a>timestamp-conversion-test</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="eth-mac-addr-str-conversion-test-2"></a>eth-mac-addr-str-conversion-test-2</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="eth-mac-addr-str-conversion-test-2"></a>eth-mac-addr-str-conversion-test-2</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="int4h-conversion-test"></a>int4h-conversion-test</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="int-to-byte-test-1"></a>int-to-byte-test-1</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="ipv4-addr-str-conversion-test-1"></a>ipv4-addr-str-conversion-test-1</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="int4h-conversion-test"></a>int4h-conversion-test</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="int16be-conversion-test"></a>int16be-conversion-test</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="ipv4-addr-str-conversion-test-1"></a>ipv4-addr-str-conversion-test-1</td><td>Success</td><td></td><td>0.001</td>
 </tr>
 <tr valign="top" class="TableRowColor">
-<td><a name="ipv4-addr-str-conversion-test-2"></a>ipv4-addr-str-conversion-test-2</td><td>Success</td><td></td><td>0.000</td>
+<td><a name="int-to-byte-test-5"></a>int-to-byte-test-5</td><td>Success</td><td></td><td>0.001</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="int16be-conversion-test"></a>int16be-conversion-test</td><td>Success</td><td></td><td>0.002</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="int-to-byte-test-4"></a>int-to-byte-test-4</td><td>Success</td><td></td><td>0.001</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="ipv4-addr-str-conversion-test-2"></a>ipv4-addr-str-conversion-test-2</td><td>Success</td><td></td><td>0.007</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="int-to-byte-test-3"></a>int-to-byte-test-3</td><td>Success</td><td></td><td>0.000</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="int-to-byte-test-2"></a>int-to-byte-test-2</td><td>Success</td><td></td><td>0.000</td>
 </tr>
 </table>
 <div class="Properties">
 <a href="javascript:displayProperties('dsbdp.test.byte-array-conversion-tests');">
                     Properties &raquo;
                 </a>
+</div>
+<div class="Properties">
+<a href="./0_byte-array-conversion-tests-out.html">
+                        System.out &raquo;
+                    </a>
+</div>
+<div class="Properties">
+<a href="./0_byte-array-conversion-tests-err.html">
+                        System.err &raquo;
+                    </a>
 </div>
 </body>
 </html>

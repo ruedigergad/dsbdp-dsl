@@ -1,355 +1,2753 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <testsuites>
-  <testsuite errors="0" failures="0" id="0" name="byte-array-conversion-tests" package="dsbdp.test" tests="15" time="0.0173" timestamp="2016-03-15_22:10:53+0100">
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int32-conversion-test" time="0.0020">
+  <testsuite errors="0" failures="0" id="0" name="byte-array-conversion-tests" package="dsbdp.test" tests="20" time="0.0491" timestamp="2017-10-02_20:52:49+0200">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int32-conversion-test" time="0.0024">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int16-conversion-test" time="0.0003">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int16-conversion-test" time="0.0006">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int4l-conversion-test" time="0.0002">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int4l-conversion-test" time="0.0005">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="timestamp-be-conversion-test" time="0.0003">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="timestamp-be-conversion-test" time="0.0005">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int32be-conversion-test" time="0.0002">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int32be-conversion-test" time="0.0006">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="eth-mac-addr-str-conversion-test-1" time="0.0003">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="eth-mac-addr-str-conversion-test-1" time="0.0006">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="timestamp-str-conversion-test" time="0.0009">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="timestamp-str-conversion-test" time="0.0016">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="timestamp-str-be-conversion-test" time="0.0003">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="timestamp-str-be-conversion-test" time="0.0008">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int8-conversion-test" time="0.0002">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int8-conversion-test" time="0.0005">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="timestamp-conversion-test" time="0.0002">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="timestamp-conversion-test" time="0.0007">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="eth-mac-addr-str-conversion-test-2" time="0.0003">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="eth-mac-addr-str-conversion-test-2" time="0.0008">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int4h-conversion-test" time="0.0002">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int-to-byte-test-1" time="0.0006">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="ipv4-addr-str-conversion-test-1" time="0.0003">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int4h-conversion-test" time="0.0007">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int16be-conversion-test" time="0.0002">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="ipv4-addr-str-conversion-test-1" time="0.0012">
     </testcase>
 
-        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="ipv4-addr-str-conversion-test-2" time="0.0002">
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int-to-byte-test-5" time="0.0006">
     </testcase>
+
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int16be-conversion-test" time="0.0023">
+    </testcase>
+
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int-to-byte-test-4" time="0.0006">
+    </testcase>
+
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="ipv4-addr-str-conversion-test-2" time="0.0067">
+    </testcase>
+
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int-to-byte-test-3" time="0.0005">
+    </testcase>
+
+        <testcase classname="dsbdp.test.byte-array-conversion-tests" name="int-to-byte-test-2" time="0.0005">
+    </testcase>
+
+        <system-err>
+    </system-err>
+
+        <system-out>
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="1" name="counter-tests" package="dsbdp.test" tests="2" time="0.0031" timestamp="2016-03-15_22:10:53+0100">
-        <testcase classname="dsbdp.test.counter-tests" name="simple-counter-increment-test" time="0.0007">
+  <testsuite errors="0" failures="0" id="1" name="counter-tests" package="dsbdp.test" tests="2" time="0.0063" timestamp="2017-10-02_20:52:49+0200">
+        <testcase classname="dsbdp.test.counter-tests" name="simple-counter-reset-test" time="0.0021">
     </testcase>
 
-        <testcase classname="dsbdp.test.counter-tests" name="simple-counter-reset-test" time="0.0013">
+        <testcase classname="dsbdp.test.counter-tests" name="simple-counter-increment-test" time="0.0024">
     </testcase>
+
+        <system-err>
+    </system-err>
+
+        <system-out>
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="2" name="data-processing-dsl-tests" package="dsbdp.test" tests="23" time="0.1118" timestamp="2016-03-15_22:10:53+0100">
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="incremental-byte-array-to-json-str-test" time="0.0117">
+  <testsuite errors="0" failures="0" id="2" name="data-processing-dsl-java-interop-tests" package="dsbdp.test" tests="6" time="0.0607" timestamp="2017-10-02_20:52:49+0200">
+        <testcase classname="dsbdp.test.data-processing-dsl-java-interop-tests" name="byte-array-to-clj-map-test" time="0.0099">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0026">
+        <testcase classname="dsbdp.test.data-processing-dsl-java-interop-tests" name="byte-array-to-csv-str-test" time="0.0039">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="combine-proc-fns-nth-test" time="0.0026">
+        <testcase classname="dsbdp.test.data-processing-dsl-java-interop-tests" name="byte-array-to-java-map-test" time="0.0044">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-clj-map-test" time="0.0014">
+        <testcase classname="dsbdp.test.data-processing-dsl-java-interop-tests" name="byte-array-to-json-str-test" time="0.0047">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-csv-str-test" time="0.0033">
+        <testcase classname="dsbdp.test.data-processing-dsl-java-interop-tests" name="simple-documenation-example-test-2-from-string" time="0.0175">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="output-type-defaults-to-java-map-test" time="0.0025">
+        <testcase classname="dsbdp.test.data-processing-dsl-java-interop-tests" name="simple-documenation-example-test-1" time="0.0159">
+    </testcase>
+
+        <system-err>
+    </system-err>
+
+        <system-out>
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" id="3" name="data-processing-dsl-tests" package="dsbdp.test" tests="30" time="0.1218" timestamp="2017-10-02_20:52:50+0200">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-packet-to-nested-java-map-test" time="0.0038">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="incremental-byte-array-to-json-str-test" time="0.0042">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0033">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="nested-tcp-byte-array-packet-test-1" time="0.0028">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="combine-proc-fns-nth-test" time="0.0028">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-clj-map-test" time="0.0021">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-csv-str-test" time="0.0017">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="simple-combination-of-extracted-fields-test" time="0.0060">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="nested-udp-and-tcp-byte-array-packet-clj-map-test-1" time="0.0068">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-packet-to-nested-clj-map-test" time="0.0047">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="output-type-defaults-to-java-map-test" time="0.0032">
     </testcase>
 
         <testcase classname="dsbdp.test.data-processing-dsl-tests" name="incremental-byte-array-to-clj-map-test" time="0.0019">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-java-map-test" time="0.0027">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-java-map-test" time="0.0015">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="dsl-expression-to-combined-function-vector-test-1" time="0.0092">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="nested-udp-byte-array-packet-test-1" time="0.0022">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-java-map-with-additional-operation-test" time="0.0026">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="dsl-expression-to-combined-function-vector-test-1" time="0.0081">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="combine-proc-fns-1st-test" time="0.0015">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-java-map-with-additional-operation-test" time="0.0030">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="clojure-map-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0026">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="combine-proc-fns-1st-test" time="0.0018">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-json-str-test" time="0.0081">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="clojure-map-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0028">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="incremental-byte-array-to-csv-str-test" time="0.0026">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="nested-udp-and-tcp-byte-array-packet-java-map-test-1" time="0.0068">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="clojure-vector-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0021">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-json-str-test" time="0.0025">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="clojure-list-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0021">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="incremental-byte-array-to-csv-str-test" time="0.0022">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="simple-documenation-example-test-1" time="0.0251">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="clojure-vector-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0017">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-json-str-qm-test" time="0.0069">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="clojure-list-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0016">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-java-map-with-additional-operation-and-float-type-test" time="0.0031">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="simple-documenation-example-test-1" time="0.0138">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="java-map-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0020">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-json-str-qm-test" time="0.0054">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="java-list-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0020">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-java-map-with-additional-operation-and-float-type-test" time="0.0028">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="incremental-byte-array-to-java-map-test" time="0.0024">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="java-map-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0021">
     </testcase>
 
-        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-csv-str-qm-test" time="0.0037">
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="java-list-to-java-map-with-additional-operation-and-two-data-values-test" time="0.0018">
     </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="incremental-byte-array-to-java-map-test" time="0.0019">
+    </testcase>
+
+        <testcase classname="dsbdp.test.data-processing-dsl-tests" name="byte-array-to-csv-str-qm-test" time="0.0017">
+    </testcase>
+
+        <system-err>
+    </system-err>
+
+        <system-out>
+Warning: Could not resolve symbol:32udpSrc
+Assuming32udpSrc32is intended as &quot;self-reference&quot;.
+Warning: Could not resolve symbol:32udpDst
+Assuming32udpDst32is intended as &quot;self-reference&quot;.
+Unknown output type:32this-is-no-supported-output-type
+Defaulting to :java-map as output type.
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="3" name="experiment-helper-tests" package="dsbdp.test" tests="8" time="0.1554" timestamp="2016-03-15_22:10:53+0100">
-        <testcase classname="dsbdp.test.experiment-helper-tests" name="busy-sleep-proc-fns-test-1" time="0.0619">
+  <testsuite errors="1" failures="0" id="4" name="experiment-helper-tests" package="dsbdp.test" tests="8" time="0.1829" timestamp="2017-10-02_20:52:50+0200">
+        <testcase classname="dsbdp.test.experiment-helper-tests" name="create-hashmap-inc-put-proc-fns-test" time="0.1026">
+          <error message="Uncaught exception, not in assertion.">expected: nil
+  actual: clojure.lang.Compiler$CompilerException: clojure.lang.ArityException: Wrong number of args (4) passed to: core/apply-junit-output-hook/fn--253/fn--254, compiling:(/tmp/form-init5299198040654132120.clj:1:6512)
+ at clojure.lang.Compiler.analyzeSeq (Compiler.java:6875)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6856)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1009)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6863)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1009)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6856)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler$BodyExpr$Parser.parse (Compiler.java:6001)
+    clojure.lang.Compiler$FnMethod.parse (Compiler.java:5380)
+    clojure.lang.Compiler$FnExpr.parse (Compiler.java:3972)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6866)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler$BodyExpr$Parser.parse (Compiler.java:6001)
+    clojure.lang.Compiler$FnMethod.parse (Compiler.java:5380)
+    clojure.lang.Compiler$FnExpr.parse (Compiler.java:3972)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6866)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.eval (Compiler.java:6924)
+    clojure.lang.Compiler.eval (Compiler.java:6890)
+    clojure.core$eval.invokeStatic (core.clj:3105)
+    clojure.core$eval.invoke (core.clj:3101)
+    clojure.core$map$fn__4785.invoke (core.clj:2644)
+    clojure.lang.LazySeq.sval (LazySeq.java:40)
+    clojure.lang.LazySeq.seq (LazySeq.java:49)
+    clojure.lang.RT.seq (RT.java:521)
+    clojure.lang.LazilyPersistentVector.create (LazilyPersistentVector.java:44)
+    clojure.core$vec.invokeStatic (core.clj:377)
+    clojure.core$vec.invoke (core.clj:367)
+    dsbdp.processing_fn_utils$create_proc_fn_vec_from_template.invokeStatic (processing_fn_utils.clj:30)
+    dsbdp.processing_fn_utils$create_proc_fn_vec_from_template.invoke (processing_fn_utils.clj:17)
+    dsbdp.experiment_helper$create_hashmap_inc_put_proc_fns.invokeStatic (experiment_helper.clj:90)
+    dsbdp.experiment_helper$create_hashmap_inc_put_proc_fns.invoke (experiment_helper.clj:85)
+    dsbdp.test.experiment_helper_tests$fn__1096.invokeStatic (experiment_helper_tests.clj:36)
+    dsbdp.test.experiment_helper_tests/fn (experiment_helper_tests.clj:35)
+    clojure.test$test_var$fn__7983.invoke (test.clj:716)
+    clojure.test$test_var.invokeStatic (test.clj:716)
+    clojure.test$test_var.invoke (test.clj:707)
+    clojure.test$test_vars$fn__8005$fn__8010.invoke (test.clj:734)
+    clojure.test$default_fixture.invokeStatic (test.clj:686)
+    clojure.test$default_fixture.invoke (test.clj:682)
+    clojure.test$test_vars$fn__8005.invoke (test.clj:734)
+    clojure.test$default_fixture.invokeStatic (test.clj:686)
+    clojure.test$default_fixture.invoke (test.clj:682)
+    clojure.test$test_vars.invokeStatic (test.clj:730)
+    clojure.test$test_all_vars.invokeStatic (test.clj:736)
+    clojure.test$test_ns.invokeStatic (test.clj:757)
+    clojure.test$test_ns.invoke (test.clj:742)
+    clojure.lang.AFn.applyToHelper (AFn.java:154)
+    clojure.lang.AFn.applyTo (AFn.java:144)
+    clojure.core$apply.invokeStatic (core.clj:646)
+    clojure.core$apply.invoke (core.clj:641)
+    test2junit.core$apply_junit_output_hook$fn__253$fn__264$fn__275$fn__276.invoke (core.clj:53)
+    test2junit.core$apply_junit_output_hook$fn__253$fn__264$fn__275.invoke (core.clj:52)
+    test2junit.core$apply_junit_output_hook$fn__253$fn__264.invoke (core.clj:51)
+    test2junit.core$apply_junit_output_hook$fn__253.doInvoke (core.clj:51)
+    clojure.lang.RestFn.applyTo (RestFn.java:139)
+    clojure.core$apply.invokeStatic (core.clj:648)
+    clojure.core$apply.invoke (core.clj:641)
+    robert.hooke$compose_hooks$fn__31.doInvoke (hooke.clj:40)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.core$apply.invokeStatic (core.clj:646)
+    clojure.core$apply.invoke (core.clj:641)
+    robert.hooke$run_hooks.invokeStatic (hooke.clj:46)
+    robert.hooke$run_hooks.invoke (hooke.clj:45)
+    robert.hooke$prepare_for_hooks$fn__36$fn__37.doInvoke (hooke.clj:54)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)
+    clojure.lang.RestFn.invoke (RestFn.java:408)
+    user$eval377$fn__428.invoke (form-init5299198040654132120.clj:1)
+    clojure.lang.AFn.applyToHelper (AFn.java:156)
+    clojure.lang.AFn.applyTo (AFn.java:144)
+    clojure.core$apply.invokeStatic (core.clj:648)
+    clojure.core$apply.invoke (core.clj:641)
+    leiningen.core.injected$compose_hooks$fn__311.doInvoke (form-init5299198040654132120.clj:1)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.core$apply.invokeStatic (core.clj:646)
+    clojure.core$apply.invoke (core.clj:641)
+    leiningen.core.injected$run_hooks.invokeStatic (form-init5299198040654132120.clj:1)
+    leiningen.core.injected$run_hooks.invoke (form-init5299198040654132120.clj:1)
+    leiningen.core.injected$prepare_for_hooks$fn__316$fn__317.doInvoke (form-init5299198040654132120.clj:1)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)
+    clojure.lang.RestFn.invoke (RestFn.java:408)
+    clojure.core$map$fn__4785.invoke (core.clj:2646)
+    clojure.lang.LazySeq.sval (LazySeq.java:40)
+    clojure.lang.LazySeq.seq (LazySeq.java:49)
+    clojure.lang.Cons.next (Cons.java:39)
+    clojure.lang.RT.next (RT.java:688)
+    clojure.core$next__4341.invokeStatic (core.clj:64)
+    clojure.core$reduce1.invokeStatic (core.clj:925)
+    clojure.core$reduce1.invokeStatic (core.clj:915)
+    clojure.core$merge_with.invokeStatic (core.clj:2950)
+    clojure.core$merge_with.doInvoke (core.clj:2942)
+    clojure.lang.RestFn.applyTo (RestFn.java:139)
+    clojure.core$apply.invokeStatic (core.clj:648)
+    clojure.test$run_tests.invokeStatic (test.clj:767)
+    clojure.test$run_tests.doInvoke (test.clj:767)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.core$apply.invokeStatic (core.clj:646)
+    clojure.core$apply.invoke (core.clj:641)
+    user$eval377$fn__440$fn__471.invoke (form-init5299198040654132120.clj:1)
+    user$eval377$fn__440$fn__441.invoke (form-init5299198040654132120.clj:1)
+    user$eval377$fn__440.invoke (form-init5299198040654132120.clj:1)
+    user$eval377.invokeStatic (form-init5299198040654132120.clj:1)
+    user$eval377.invoke (form-init5299198040654132120.clj:1)
+    clojure.lang.Compiler.eval (Compiler.java:6927)
+    clojure.lang.Compiler.eval (Compiler.java:6917)
+    clojure.lang.Compiler.load (Compiler.java:7379)
+    clojure.lang.Compiler.loadFile (Compiler.java:7317)
+    clojure.main$load_script.invokeStatic (main.clj:275)
+    clojure.main$init_opt.invokeStatic (main.clj:277)
+    clojure.main$init_opt.invoke (main.clj:277)
+    clojure.main$initialize.invokeStatic (main.clj:308)
+    clojure.main$null_opt.invokeStatic (main.clj:342)
+    clojure.main$null_opt.invoke (main.clj:339)
+    clojure.main$main.invokeStatic (main.clj:421)
+    clojure.main$main.doInvoke (main.clj:384)
+    clojure.lang.RestFn.invoke (RestFn.java:421)
+    clojure.lang.Var.invoke (Var.java:383)
+    clojure.lang.AFn.applyToHelper (AFn.java:156)
+    clojure.lang.Var.applyTo (Var.java:700)
+    clojure.main.main (main.java:37)
+Caused by: clojure.lang.ArityException: Wrong number of args (4) passed to: core/apply-junit-output-hook/fn--253/fn--254
+ at clojure.lang.AFn.throwArity (AFn.java:429)
+    clojure.lang.AFn.invoke (AFn.java:44)
+    test2junit.core.proxy$java.io.StringWriter$ff19274a.write (:-1)
+    java.io.PrintWriter.write (PrintWriter.java:456)
+    java.io.PrintWriter.write (PrintWriter.java:473)
+    java.io.PrintWriter.append (PrintWriter.java:1004)
+    java.io.PrintWriter.append (PrintWriter.java:56)
+    java.util.Formatter$FixedString.print (Formatter.java:2595)
+    java.util.Formatter.format (Formatter.java:2508)
+    java.io.PrintWriter.format (PrintWriter.java:905)
+    clojure.lang.Compiler$InstanceMethodExpr.&lt;init&gt; (Compiler.java:1507)
+    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1013)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6856)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1009)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6863)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1009)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6856)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler$BodyExpr$Parser.parse (Compiler.java:6001)
+    clojure.lang.Compiler$FnMethod.parse (Compiler.java:5380)
+    clojure.lang.Compiler$FnExpr.parse (Compiler.java:3972)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6866)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.analyze (Compiler.java:6625)
+    clojure.lang.Compiler$BodyExpr$Parser.parse (Compiler.java:6001)
+    clojure.lang.Compiler$FnMethod.parse (Compiler.java:5380)
+    clojure.lang.Compiler$FnExpr.parse (Compiler.java:3972)
+    clojure.lang.Compiler.analyzeSeq (Compiler.java:6866)
+    clojure.lang.Compiler.analyze (Compiler.java:6669)
+    clojure.lang.Compiler.eval (Compiler.java:6924)
+    clojure.lang.Compiler.eval (Compiler.java:6890)
+    clojure.core$eval.invokeStatic (core.clj:3105)
+    clojure.core$eval.invoke (core.clj:3101)
+    clojure.core$map$fn__4785.invoke (core.clj:2644)
+    clojure.lang.LazySeq.sval (LazySeq.java:40)
+    clojure.lang.LazySeq.seq (LazySeq.java:49)
+    clojure.lang.RT.seq (RT.java:521)
+    clojure.lang.LazilyPersistentVector.create (LazilyPersistentVector.java:44)
+    clojure.core$vec.invokeStatic (core.clj:377)
+    clojure.core$vec.invoke (core.clj:367)
+    dsbdp.processing_fn_utils$create_proc_fn_vec_from_template.invokeStatic (processing_fn_utils.clj:30)
+    dsbdp.processing_fn_utils$create_proc_fn_vec_from_template.invoke (processing_fn_utils.clj:17)
+    dsbdp.experiment_helper$create_hashmap_inc_put_proc_fns.invokeStatic (experiment_helper.clj:90)
+    dsbdp.experiment_helper$create_hashmap_inc_put_proc_fns.invoke (experiment_helper.clj:85)
+    dsbdp.test.experiment_helper_tests$fn__1096.invokeStatic (experiment_helper_tests.clj:36)
+    dsbdp.test.experiment_helper_tests/fn (experiment_helper_tests.clj:35)
+    clojure.test$test_var$fn__7983.invoke (test.clj:716)
+    clojure.test$test_var.invokeStatic (test.clj:716)
+    clojure.test$test_var.invoke (test.clj:707)
+    clojure.test$test_vars$fn__8005$fn__8010.invoke (test.clj:734)
+    clojure.test$default_fixture.invokeStatic (test.clj:686)
+    clojure.test$default_fixture.invoke (test.clj:682)
+    clojure.test$test_vars$fn__8005.invoke (test.clj:734)
+    clojure.test$default_fixture.invokeStatic (test.clj:686)
+    clojure.test$default_fixture.invoke (test.clj:682)
+    clojure.test$test_vars.invokeStatic (test.clj:730)
+    clojure.test$test_all_vars.invokeStatic (test.clj:736)
+    clojure.test$test_ns.invokeStatic (test.clj:757)
+    clojure.test$test_ns.invoke (test.clj:742)
+    clojure.lang.AFn.applyToHelper (AFn.java:154)
+    clojure.lang.AFn.applyTo (AFn.java:144)
+    clojure.core$apply.invokeStatic (core.clj:646)
+    clojure.core$apply.invoke (core.clj:641)
+    test2junit.core$apply_junit_output_hook$fn__253$fn__264$fn__275$fn__276.invoke (core.clj:53)
+    test2junit.core$apply_junit_output_hook$fn__253$fn__264$fn__275.invoke (core.clj:52)
+    test2junit.core$apply_junit_output_hook$fn__253$fn__264.invoke (core.clj:51)
+    test2junit.core$apply_junit_output_hook$fn__253.doInvoke (core.clj:51)
+    clojure.lang.RestFn.applyTo (RestFn.java:139)
+    clojure.core$apply.invokeStatic (core.clj:648)
+    clojure.core$apply.invoke (core.clj:641)
+    robert.hooke$compose_hooks$fn__31.doInvoke (hooke.clj:40)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.core$apply.invokeStatic (core.clj:646)
+    clojure.core$apply.invoke (core.clj:641)
+    robert.hooke$run_hooks.invokeStatic (hooke.clj:46)
+    robert.hooke$run_hooks.invoke (hooke.clj:45)
+    robert.hooke$prepare_for_hooks$fn__36$fn__37.doInvoke (hooke.clj:54)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)
+    clojure.lang.RestFn.invoke (RestFn.java:408)
+    user$eval377$fn__428.invoke (form-init5299198040654132120.clj:1)
+    clojure.lang.AFn.applyToHelper (AFn.java:156)
+    clojure.lang.AFn.applyTo (AFn.java:144)
+    clojure.core$apply.invokeStatic (core.clj:648)
+    clojure.core$apply.invoke (core.clj:641)
+    leiningen.core.injected$compose_hooks$fn__311.doInvoke (form-init5299198040654132120.clj:1)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.core$apply.invokeStatic (core.clj:646)
+    clojure.core$apply.invoke (core.clj:641)
+    leiningen.core.injected$run_hooks.invokeStatic (form-init5299198040654132120.clj:1)
+    leiningen.core.injected$run_hooks.invoke (form-init5299198040654132120.clj:1)
+    leiningen.core.injected$prepare_for_hooks$fn__316$fn__317.doInvoke (form-init5299198040654132120.clj:1)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)
+    clojure.lang.RestFn.invoke (RestFn.java:408)
+    clojure.core$map$fn__4785.invoke (core.clj:2646)
+    clojure.lang.LazySeq.sval (LazySeq.java:40)
+    clojure.lang.LazySeq.seq (LazySeq.java:49)
+    clojure.lang.Cons.next (Cons.java:39)
+    clojure.lang.RT.next (RT.java:688)
+    clojure.core$next__4341.invokeStatic (core.clj:64)
+    clojure.core$reduce1.invokeStatic (core.clj:925)
+    clojure.core$reduce1.invokeStatic (core.clj:915)
+    clojure.core$merge_with.invokeStatic (core.clj:2950)
+    clojure.core$merge_with.doInvoke (core.clj:2942)
+    clojure.lang.RestFn.applyTo (RestFn.java:139)
+    clojure.core$apply.invokeStatic (core.clj:648)
+    clojure.test$run_tests.invokeStatic (test.clj:767)
+    clojure.test$run_tests.doInvoke (test.clj:767)
+    clojure.lang.RestFn.applyTo (RestFn.java:137)
+    clojure.core$apply.invokeStatic (core.clj:646)
+    clojure.core$apply.invoke (core.clj:641)
+    user$eval377$fn__440$fn__471.invoke (form-init5299198040654132120.clj:1)
+    user$eval377$fn__440$fn__441.invoke (form-init5299198040654132120.clj:1)
+    user$eval377$fn__440.invoke (form-init5299198040654132120.clj:1)
+    user$eval377.invokeStatic (form-init5299198040654132120.clj:1)
+    user$eval377.invoke (form-init5299198040654132120.clj:1)
+    clojure.lang.Compiler.eval (Compiler.java:6927)
+    clojure.lang.Compiler.eval (Compiler.java:6917)
+    clojure.lang.Compiler.load (Compiler.java:7379)
+    clojure.lang.Compiler.loadFile (Compiler.java:7317)
+    clojure.main$load_script.invokeStatic (main.clj:275)
+    clojure.main$init_opt.invokeStatic (main.clj:277)
+    clojure.main$init_opt.invoke (main.clj:277)
+    clojure.main$initialize.invokeStatic (main.clj:308)
+    clojure.main$null_opt.invokeStatic (main.clj:342)
+    clojure.main$null_opt.invoke (main.clj:339)
+    clojure.main$main.invokeStatic (main.clj:421)
+    clojure.main$main.doInvoke (main.clj:384)
+    clojure.lang.RestFn.invoke (RestFn.java:421)
+    clojure.lang.Var.invoke (Var.java:383)
+    clojure.lang.AFn.applyToHelper (AFn.java:156)
+    clojure.lang.Var.applyTo (Var.java:700)
+    clojure.main.main (main.java:37)
+
+      at: test.clj:716</error>
+
+        </testcase>
+
+        <testcase classname="dsbdp.test.experiment-helper-tests" name="create-factorial-proc-fns-test" time="0.0165">
     </testcase>
 
-        <testcase classname="dsbdp.test.experiment-helper-tests" name="create-inc-proc-fns-test" time="0.0172">
+        <testcase classname="dsbdp.test.experiment-helper-tests" name="busy-sleep-test-2" time="0.0017">
     </testcase>
 
-        <testcase classname="dsbdp.test.experiment-helper-tests" name="factorial-test" time="0.0013">
+        <testcase classname="dsbdp.test.experiment-helper-tests" name="busy-sleep-test-1" time="0.0008">
     </testcase>
 
-        <testcase classname="dsbdp.test.experiment-helper-tests" name="create-no-op-proc-fns-test" time="0.0141">
+        <testcase classname="dsbdp.test.experiment-helper-tests" name="create-no-op-proc-fns-test" time="0.0168">
     </testcase>
 
-        <testcase classname="dsbdp.test.experiment-helper-tests" name="busy-sleep-test-1" time="0.0006">
+        <testcase classname="dsbdp.test.experiment-helper-tests" name="factorial-test" time="0.0019">
     </testcase>
 
-        <testcase classname="dsbdp.test.experiment-helper-tests" name="busy-sleep-test-2" time="0.0015">
+        <testcase classname="dsbdp.test.experiment-helper-tests" name="create-inc-proc-fns-test" time="0.0141">
     </testcase>
 
-        <testcase classname="dsbdp.test.experiment-helper-tests" name="create-factorial-proc-fns-test" time="0.0172">
+        <testcase classname="dsbdp.test.experiment-helper-tests" name="busy-sleep-proc-fns-test-1" time="0.0250">
     </testcase>
 
-        <testcase classname="dsbdp.test.experiment-helper-tests" name="create-hashmap-inc-put-proc-fns-test" time="0.0391">
-    </testcase>
+        <system-err>
+    </system-err>
+
+        <system-out>
+proc-fns-full:32[(fn [i _] (doto (java.util.HashMap.) (.put (str 0) (inc i)))) (fn [_ o-meta] (.put o-meta (str 1) (inc (.get o-meta (str (dec 1)))))) (fn [_ o-meta] (.put o-meta (str 2) (inc (.get o-meta (str (dec 2)))))) (fn [_ o-meta] (.put o-meta (str 3) (inc (.get o-meta (str (dec 3))))))]
+proc-fns-short:32[(fn [i _] (doto (java.util.HashMap.) (.put (str 0) (inc i)))) (fn [_ o-meta] (.put o-meta (str 1) (inc (.get o-meta (str (dec 1)))))) (fn [_ o-meta] (.put o-meta (str 2) (inc (.get o-meta (str (dec 2)))))) (fn [_ o-meta] (.put o-meta (str 3) (inc (.get o-meta (str (dec 3))))))]
+proc-fns-pretty:
+32[(fn [i _] (doto (java.util.HashMap.) (.put (str 0) (inc i))))
+ (fn
+  [_ o-meta]
+  (.put o-meta (str 1) (inc (.get o-meta (str (dec 1))))))
+ (fn
+  [_ o-meta]
+  (.put o-meta (str 2) (inc (.get o-meta (str (dec 2))))))
+ (fn
+  [_ o-meta]
+  (.put o-meta (str 3) (inc (.get o-meta (str (dec 3))))))]
+
+proc-fns-full:32[(fn [i _] (dsbdp.experiment-helper/factorial i)) (fn [i _] (dsbdp.experiment-helper/factorial i)) (fn [i _] (dsbdp.experiment-helper/factorial i)) (fn [i _] (dsbdp.experiment-helper/factorial i))]
+proc-fns-short:32[(fn [i _] (factorial i)) (fn [i _] (factorial i)) (fn [i _] (factorial i)) (fn [i _] (factorial i))]
+proc-fns-pretty:
+32[(fn [i _] (factorial i))
+ (fn [i _] (factorial i))
+ (fn [i _] (factorial i))
+ (fn [i _] (factorial i))]
+
+proc-fns-full:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-short:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-pretty:
+32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+
+proc-fns-full:32[(fn [i _] (inc i)) (fn [_ o] (inc o)) (fn [_ o] (inc o)) (fn [_ o] (inc o))]
+proc-fns-short:32[(fn [i _] (inc i)) (fn [_ o] (inc o)) (fn [_ o] (inc o)) (fn [_ o] (inc o))]
+proc-fns-pretty:
+32[(fn [i _] (inc i))
+ (fn [_ o] (inc o))
+ (fn [_ o] (inc o))
+ (fn [_ o] (inc o))]
+
+proc-fns-full:32[(fn [i _] (dsbdp.ExperimentHelper/busySleep (i 0)) 0) (fn [i _] (dsbdp.ExperimentHelper/busySleep (i 1)) 0) (fn [i _] (dsbdp.ExperimentHelper/busySleep (i 2)) 0) (fn [i _] (dsbdp.ExperimentHelper/busySleep (i 3)) 0)]
+proc-fns-short:32[(fn [i _] (busySleep (i 0)) 0) (fn [i _] (busySleep (i 1)) 0) (fn [i _] (busySleep (i 2)) 0) (fn [i _] (busySleep (i 3)) 0)]
+proc-fns-pretty:
+32[(fn [i _] (busySleep (i 0)) 0)
+ (fn [i _] (busySleep (i 1)) 0)
+ (fn [i _] (busySleep (i 2)) 0)
+ (fn [i _] (busySleep (i 3)) 0)]
+
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="4" name="local-data-processing-pipeline-tests" package="dsbdp.test" tests="19" time="0.4817" timestamp="2016-03-15_22:10:53+0100">
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-set-proc-fns-vec-test" time="0.0094">
+  <testsuite errors="0" failures="0" id="5" name="latency-measurement-tests" package="dsbdp.test" tests="2" time="0.0061" timestamp="2017-10-02_20:52:50+0200">
+        <testcase classname="dsbdp.test.latency-measurement-tests" name="simple-latency-probe-test" time="0.0010">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="local-transfer-container-set-out-test" time="0.0006">
+        <testcase classname="dsbdp.test.latency-measurement-tests" name="simpla-latency-probe-collector-test" time="0.0030">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="get-pipeline-counts-test" time="0.0028">
+        <system-err>
+    </system-err>
+
+        <system-out>
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" id="6" name="local-data-processing-pipeline-tests" package="dsbdp.test" tests="19" time="0.4907" timestamp="2017-10-02_20:52:50+0200">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-set-proc-fns-vec-test" time="0.0109">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-increase-length-by-n-test" time="0.0041">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="local-transfer-container-set-out-test" time="0.0007">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-decrease-length-by-n-test" time="0.0041">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="get-pipeline-counts-test" time="0.0046">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-output-test" time="0.0025">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-increase-length-by-n-test" time="0.0073">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="create-local-processing-element-no-id-test" time="0.0015">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-decrease-length-by-n-test" time="0.0046">
+    </testcase>
+
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-output-test" time="0.0029">
+    </testcase>
+
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="create-local-processing-element-no-id-test" time="0.0013">
     </testcase>
 
         <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="create-local-processing-element-test" time="0.0012">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-documentation-example-test-1" time="0.0028">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-documentation-example-test-1" time="0.0031">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="create-local-processing-element-id-test" time="0.0012">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="create-local-processing-element-id-test" time="0.0015">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-decrease-length-by-1-test" time="0.0032">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-decrease-length-by-1-test" time="0.0050">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-chaining-test" time="0.0017">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-chaining-test" time="0.0031">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-increase-length-by-1-test" time="0.0036">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-pipeline-increase-length-by-1-test" time="0.0068">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-change-proc-fn-test" time="0.3244">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-change-proc-fn-test" time="0.3130">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-in-args-test" time="0.0012">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-in-args-test" time="0.0046">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-three-staged-local-pipeline-send-test" time="0.0018">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-three-staged-local-pipeline-send-test" time="0.0033">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-pipeline-send-test" time="0.0014">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-pipeline-send-test" time="0.0021">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-counter-drop-test" time="0.1078">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="simple-local-processing-element-counter-drop-test" time="0.1038">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="local-transfer-container-constructor-test" time="0.0005">
+        <testcase classname="dsbdp.test.local-data-processing-pipeline-tests" name="local-transfer-container-constructor-test" time="0.0009">
     </testcase>
+
+        <system-err>
+    </system-err>
+
+        <system-out>
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="5" name="local-dpp-self-adaptivity-tests" package="dsbdp.test" tests="29" time="0.1762" timestamp="2016-03-15_22:10:54+0100">
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="detect-repeated-drop-test-2" time="0.0067">
+  <testsuite errors="0" failures="0" id="7" name="local-dpp-self-adaptivity-tests" package="dsbdp.test" tests="29" time="0.1934" timestamp="2017-10-02_20:52:50+0200">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="detect-repeated-drop-test-2" time="0.0084">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-1" time="0.0023">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-1" time="0.0040">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-1" time="0.0002">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-1" time="0.0005">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="moving-average-calculator-test-2" time="0.0013">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="moving-average-calculator-test-2" time="0.0019">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-5" time="0.0010">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-5" time="0.0015">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-drop-indices-test-1" time="0.0002">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-drop-indices-test-1" time="0.0004">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="self-adaptivity-controller-test-1" time="0.0518">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="self-adaptivity-controller-test-1" time="0.0670">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-non-drop-indices-test-1" time="0.0002">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-non-drop-indices-test-1" time="0.0003">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="simple-repetition-detection-test-1" time="0.0014">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="simple-repetition-detection-test-1" time="0.0017">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-2" time="0.0011">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-2" time="0.0012">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="simple-repetition-detection-test-2" time="0.0024">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="simple-repetition-detection-test-2" time="0.0031">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="moving-average-calculator-test-3" time="0.0003">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="moving-average-calculator-test-3" time="0.0006">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-4" time="0.0002">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-4" time="0.0004">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-2" time="0.0002">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-2" time="0.0005">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-5" time="0.0009">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-5" time="0.0015">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="stat-delta-test-2" time="0.0024">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="stat-delta-test-2" time="0.0014">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="moving-average-calculator-test-1" time="0.0013">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="moving-average-calculator-test-1" time="0.0015">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="stat-delta-test-1" time="0.0009">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="stat-delta-test-1" time="0.0011">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="detect-repeated-drop-test-1" time="0.0011">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="detect-repeated-drop-test-1" time="0.0014">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-3" time="0.0002">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-3" time="0.0004">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-drop-indices-test-2" time="0.0001">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-drop-indices-test-2" time="0.0002">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-6" time="0.0011">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-6" time="0.0019">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-drop-indices-test-3" time="0.0001">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-drop-indices-test-3" time="0.0004">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-4" time="0.0002">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-three-staged-pipeline-test-4" time="0.0005">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="self-adaptivity-controller-test-2" time="0.0521">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="self-adaptivity-controller-test-2" time="0.0405">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-non-drop-indices-test-2" time="0.0001">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-non-drop-indices-test-2" time="0.0002">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-non-drop-indices-test-3" time="0.0001">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="get-non-drop-indices-test-3" time="0.0002">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="self-adaptivity-controller-test-3" time="0.0385">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="self-adaptivity-controller-test-3" time="0.0387">
     </testcase>
 
-        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-3" time="0.0002">
+        <testcase classname="dsbdp.test.local-dpp-self-adaptivity-tests" name="update-fns-mapping-for-four-staged-pipeline-test-3" time="0.0004">
     </testcase>
+
+        <system-err>
+    </system-err>
+
+        <system-out>
+proc-fns-full:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-short:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-pretty:
+32[(fn [_ _] 0)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)]
+
+Mapping changed from32[5 5 5]32to32[5 6 4]
+Mapping changed from32[5 6 4]32to32[6 5 4]
+proc-fns-full:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-short:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-pretty:
+32[(fn [_ _] 0)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)]
+
+Mapping changed from32[5 5 5]32to32[5 6 4]
+Mapping changed from32[5 6 4]32to32[6 5 4]
+proc-fns-full:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-short:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-pretty:
+32[(fn [_ _] 0)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)
+ (fn [_ _] 1)]
+
+Mapping changed from32[5 5 5]32to32[5 6 4]
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="6" name="processing-fn-utils-tests" package="dsbdp.test" tests="14" time="0.1132" timestamp="2016-03-15_22:10:54+0100">
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="simple-create-proc-fn-vec-from-template-test" time="0.0120">
+  <testsuite errors="0" failures="0" id="8" name="parallel-processing-tests" package="dsbdp.test" tests="2" time="0.0195" timestamp="2017-10-02_20:52:50+0200">
+        <testcase classname="dsbdp.test.parallel-processing-tests" name="simple-reducers-map-processor-test" time="0.0105">
     </testcase>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="create-proc-fn-vec-from-template-with-ret-val-test" time="0.0132">
+        <testcase classname="dsbdp.test.parallel-processing-tests" name="simple-pmap-processor-test" time="0.0078">
     </testcase>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-8-to-4-test" time="0.0007">
-    </testcase>
+        <system-err>
+    </system-err>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-12-to-4-skewed-test-2" time="0.0002">
-    </testcase>
+        <system-out>
+    </system-out>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-12-to-4-skewed-test-1" time="0.0002">
-    </testcase>
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="simple-combine-proc-fns-nth-test" time="0.0244">
-    </testcase>
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="create-proc-fn-vec-from-template-with-index-test" time="0.0097">
-    </testcase>
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="simple-combine-proc-fns-vec-test" time="0.0239">
-    </testcase>
+              <property name="java.vm.info" value="mixed mode">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-4-to-4-test" time="0.0002">
-    </testcase>
+              <property name="clojure.debug" value="false">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-15-to-4-skewed-fill-end-test" time="0.0002">
-    </testcase>
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-6-to-4-skewed-test" time="0.0002">
-    </testcase>
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="simple-combine-proc-fns-1st-test" time="0.0246">
-    </testcase>
+              <property name="path.separator" value=":">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-15-to-4-skewed-test" time="0.0002">
-    </testcase>
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
 
-        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-6-to-4-uniform-test" time="0.0002">
-    </testcase>
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
 
   </testsuite>
-  <testsuite errors="0" failures="0" id="7" name="processing-loop-tests" package="dsbdp.test" tests="2" time="0.1058" timestamp="2016-03-15_22:10:54+0100">
-        <testcase classname="dsbdp.test.processing-loop-tests" name="simple-processing-loop-test" time="0.0012">
+  <testsuite errors="0" failures="0" id="9" name="processing-fn-utils-tests" package="dsbdp.test" tests="14" time="0.1189" timestamp="2017-10-02_20:52:51+0200">
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="simple-create-proc-fn-vec-from-template-test" time="0.0135">
     </testcase>
 
-        <testcase classname="dsbdp.test.processing-loop-tests" name="simple-processing-loop-interrupt-test" time="0.1037">
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="create-proc-fn-vec-from-template-with-ret-val-test" time="0.0139">
     </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-8-to-4-test" time="0.0008">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-12-to-4-skewed-test-2" time="0.0003">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-12-to-4-skewed-test-1" time="0.0003">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="simple-combine-proc-fns-nth-test" time="0.0243">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="create-proc-fn-vec-from-template-with-index-test" time="0.0105">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="simple-combine-proc-fns-vec-test" time="0.0234">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-4-to-4-test" time="0.0004">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-15-to-4-skewed-fill-end-test" time="0.0003">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-6-to-4-skewed-test" time="0.0004">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="simple-combine-proc-fns-1st-test" time="0.0250">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-15-to-4-skewed-test" time="0.0005">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-fn-utils-tests" name="calculate-distribution-mapping-6-to-4-uniform-test" time="0.0004">
+    </testcase>
+
+        <system-err>
+    </system-err>
+
+        <system-out>
+proc-fns-full:32[(fn [_ _] 1) (fn [_ _] n) (fn [_ _] n) (fn [_ _] n)]
+proc-fns-short:32[(fn [_ _] &quot;1&quot;) (fn [_ _] &quot;n&quot;) (fn [_ _] &quot;n&quot;) (fn [_ _] &quot;n&quot;)]
+proc-fns-pretty:
+32[(fn [_ _] &quot;1&quot;) (fn [_ _] &quot;n&quot;) (fn [_ _] &quot;n&quot;) (fn [_ _] &quot;n&quot;)]
+
+proc-fns-full:32[(fn [i _] (inc i)) (fn [_ o] (inc o)) (fn [_ o] (inc o)) (fn [_ o] (inc o))]
+proc-fns-short:32[(fn [i _] (inc i)) (fn [_ o] (inc o)) (fn [_ o] (inc o)) (fn [_ o] (inc o))]
+proc-fns-pretty:
+32[(fn [i _] (inc i))
+ (fn [_ o] (inc o))
+ (fn [_ o] (inc o))
+ (fn [_ o] (inc o))]
+
+proc-fns-full:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-short:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-pretty:
+32[(fn [i _] (+ i 0 1))
+ (fn [_ o] (+ o 1 1))
+ (fn [_ o] (+ o 2 1))
+ (fn [_ o] (+ o 3 1))
+ (fn [_ o] (+ o 4 1))
+ (fn [_ o] (+ o 5 1))]
+
+proc-fns-full:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 2) (fn [_ _] 3)]
+proc-fns-short:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 2) (fn [_ _] 3)]
+proc-fns-pretty:
+32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 2) (fn [_ _] 3)]
+
+proc-fns-full:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-short:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-pretty:
+32[(fn [i _] (+ i 0 1))
+ (fn [_ o] (+ o 1 1))
+ (fn [_ o] (+ o 2 1))
+ (fn [_ o] (+ o 3 1))
+ (fn [_ o] (+ o 4 1))
+ (fn [_ o] (+ o 5 1))]
+
+proc-fns-full:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-short:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-pretty:
+32[(fn [i _] (+ i 0 1))
+ (fn [_ o] (+ o 1 1))
+ (fn [_ o] (+ o 2 1))
+ (fn [_ o] (+ o 3 1))
+ (fn [_ o] (+ o 4 1))
+ (fn [_ o] (+ o 5 1))]
+
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
+
+  </testsuite>
+  <testsuite errors="0" failures="0" id="10" name="processing-loop-tests" package="dsbdp.test" tests="2" time="0.1096" timestamp="2017-10-02_20:52:51+0200">
+        <testcase classname="dsbdp.test.processing-loop-tests" name="simple-processing-loop-interrupt-test" time="0.1027">
+    </testcase>
+
+        <testcase classname="dsbdp.test.processing-loop-tests" name="simple-processing-loop-test" time="0.0042">
+    </testcase>
+
+        <system-err>
+    </system-err>
+
+        <system-out>
+    </system-out>
+
+        <properties>
+              <property name="sun.os.patch.level" value="unknown">
+        </property>
+
+              <property name="sun.boot.class.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes">
+        </property>
+
+              <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers">
+        </property>
+
+              <property name="java.vm.info" value="mixed mode">
+        </property>
+
+              <property name="clojure.debug" value="false">
+        </property>
+
+              <property name="sun.boot.library.path" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64">
+        </property>
+
+              <property name="java.awt.graphicsenv" value="sun.awt.X11GraphicsEnvironment">
+        </property>
+
+              <property name="path.separator" value=":">
+        </property>
+
+              <property name="user.dir" value="/home/rc/repositories/private/clojure/dsbdp">
+        </property>
+
+              <property name="java.vm.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.country" value="US">
+        </property>
+
+              <property name="java.vendor.url" value="http://java.oracle.com/">
+        </property>
+
+              <property name="java.specification.name" value="Java Platform API Specification">
+        </property>
+
+              <property name="line.separator" value=" ">
+        </property>
+
+              <property name="file.encoding.pkg" value="sun.io">
+        </property>
+
+              <property name="sun.cpu.endian" value="little">
+        </property>
+
+              <property name="java.vm.version" value="25.131-b12">
+        </property>
+
+              <property name="sun.java.launcher" value="SUN_STANDARD">
+        </property>
+
+              <property name="java.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="java.specification.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="awt.toolkit" value="sun.awt.X11.XToolkit">
+        </property>
+
+              <property name="clojure.compile.path" value="/home/rc/repositories/private/clojure/dsbdp/target/classes">
+        </property>
+
+              <property name="java.vm.specification.version" value="1.8">
+        </property>
+
+              <property name="java.io.tmpdir" value="/tmp">
+        </property>
+
+              <property name="java.home" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre">
+        </property>
+
+              <property name="java.class.path" value="/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar">
+        </property>
+
+              <property name="java.runtime.version" value="1.8.0_131-b12">
+        </property>
+
+              <property name="java.vm.vendor" value="Oracle Corporation">
+        </property>
+
+              <property name="user.language" value="en">
+        </property>
+
+              <property name="java.vm.name" value="OpenJDK 64-Bit Server VM">
+        </property>
+
+              <property name="java.version" value="1.8.0_131">
+        </property>
+
+              <property name="os.arch" value="amd64">
+        </property>
+
+              <property name="user.home" value="/home/rc">
+        </property>
+
+              <property name="java.specification.version" value="1.8">
+        </property>
+
+              <property name="java.ext.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext">
+        </property>
+
+              <property name="sun.jnu.encoding" value="UTF-8">
+        </property>
+
+              <property name="java.runtime.name" value="OpenJDK Runtime Environment">
+        </property>
+
+              <property name="sun.io.unicode.encoding" value="UnicodeLittle">
+        </property>
+
+              <property name="sun.arch.data.model" value="64">
+        </property>
+
+              <property name="java.class.version" value="52.0">
+        </property>
+
+              <property name="sun.cpu.isalist" value="">
+        </property>
+
+              <property name="file.encoding" value="UTF-8">
+        </property>
+
+              <property name="user.timezone" value="Europe/Berlin">
+        </property>
+
+              <property name="os.name" value="Linux">
+        </property>
+
+              <property name="os.version" value="4.11.5-200.fc25.x86_64+debug">
+        </property>
+
+              <property name="file.separator" value="/">
+        </property>
+
+              <property name="java.vm.specification.name" value="Java Virtual Machine Specification">
+        </property>
+
+              <property name="java.awt.printerjob" value="sun.print.PSPrinterJob">
+        </property>
+
+              <property name="java.endorsed.dirs" value="/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed">
+        </property>
+
+              <property name="java.library.path" value="/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib">
+        </property>
+
+              <property name="java.vendor.url.bug" value="http://bugreport.sun.com/bugreport/">
+        </property>
+
+              <property name="dsbdp.version" value="0.4.0">
+        </property>
+
+              <property name="sun.java.command" value="clojure.main -i /tmp/form-init5299198040654132120.clj">
+        </property>
+
+              <property name="user.name" value="rc">
+        </property>
+
+        </properties>
 
   </testsuite>
 </testsuites>

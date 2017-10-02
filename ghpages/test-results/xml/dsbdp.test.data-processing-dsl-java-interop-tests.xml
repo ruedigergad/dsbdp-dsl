@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dsbdp.test.processing-loop-tests" errors="0" failures="0" tests="2" time="0.1096" timestamp="2017-10-02_20:52:51+0200">
-    <testcase name="simple-processing-loop-interrupt-test" classname="dsbdp.test.processing-loop-tests" time="0.1027">
+<testsuite name="dsbdp.test.data-processing-dsl-java-interop-tests" errors="0" failures="0" tests="6" time="0.0607" timestamp="2017-10-02_20:52:49+0200">
+    <testcase name="byte-array-to-clj-map-test" classname="dsbdp.test.data-processing-dsl-java-interop-tests" time="0.0099">
     </testcase>
-    <testcase name="simple-processing-loop-test" classname="dsbdp.test.processing-loop-tests" time="0.0042">
+    <testcase name="byte-array-to-csv-str-test" classname="dsbdp.test.data-processing-dsl-java-interop-tests" time="0.0039">
+    </testcase>
+    <testcase name="byte-array-to-java-map-test" classname="dsbdp.test.data-processing-dsl-java-interop-tests" time="0.0044">
+    </testcase>
+    <testcase name="byte-array-to-json-str-test" classname="dsbdp.test.data-processing-dsl-java-interop-tests" time="0.0047">
+    </testcase>
+    <testcase name="simple-documenation-example-test-2-from-string" classname="dsbdp.test.data-processing-dsl-java-interop-tests" time="0.0175">
+    </testcase>
+    <testcase name="simple-documenation-example-test-1" classname="dsbdp.test.data-processing-dsl-java-interop-tests" time="0.0159">
     </testcase>
     <system-err>
     </system-err>

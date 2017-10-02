@@ -1,0 +1,58 @@
+<html xmlns:string="xalan://java.lang.String" xmlns:lxslt="http://xml.apache.org/xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Standard Output from processing-fn-utils-tests</title>
+</head>
+<body>
+<pre>
+proc-fns-full:32[(fn [_ _] 1) (fn [_ _] n) (fn [_ _] n) (fn [_ _] n)]
+proc-fns-short:32[(fn [_ _] "1") (fn [_ _] "n") (fn [_ _] "n") (fn [_ _] "n")]
+proc-fns-pretty:
+32[(fn [_ _] "1") (fn [_ _] "n") (fn [_ _] "n") (fn [_ _] "n")]
+
+proc-fns-full:32[(fn [i _] (inc i)) (fn [_ o] (inc o)) (fn [_ o] (inc o)) (fn [_ o] (inc o))]
+proc-fns-short:32[(fn [i _] (inc i)) (fn [_ o] (inc o)) (fn [_ o] (inc o)) (fn [_ o] (inc o))]
+proc-fns-pretty:
+32[(fn [i _] (inc i))
+ (fn [_ o] (inc o))
+ (fn [_ o] (inc o))
+ (fn [_ o] (inc o))]
+
+proc-fns-full:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-short:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-pretty:
+32[(fn [i _] (+ i 0 1))
+ (fn [_ o] (+ o 1 1))
+ (fn [_ o] (+ o 2 1))
+ (fn [_ o] (+ o 3 1))
+ (fn [_ o] (+ o 4 1))
+ (fn [_ o] (+ o 5 1))]
+
+proc-fns-full:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 2) (fn [_ _] 3)]
+proc-fns-short:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 2) (fn [_ _] 3)]
+proc-fns-pretty:
+32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 2) (fn [_ _] 3)]
+
+proc-fns-full:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-short:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-pretty:
+32[(fn [i _] (+ i 0 1))
+ (fn [_ o] (+ o 1 1))
+ (fn [_ o] (+ o 2 1))
+ (fn [_ o] (+ o 3 1))
+ (fn [_ o] (+ o 4 1))
+ (fn [_ o] (+ o 5 1))]
+
+proc-fns-full:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-short:32[(fn [i _] (+ i 0 1)) (fn [_ o] (+ o 1 1)) (fn [_ o] (+ o 2 1)) (fn [_ o] (+ o 3 1)) (fn [_ o] (+ o 4 1)) (fn [_ o] (+ o 5 1))]
+proc-fns-pretty:
+32[(fn [i _] (+ i 0 1))
+ (fn [_ o] (+ o 1 1))
+ (fn [_ o] (+ o 2 1))
+ (fn [_ o] (+ o 3 1))
+ (fn [_ o] (+ o 4 1))
+ (fn [_ o] (+ o 5 1))]
+
+    </pre>
+</body>
+</html>

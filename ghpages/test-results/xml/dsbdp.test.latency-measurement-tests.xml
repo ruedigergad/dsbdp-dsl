@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dsbdp.test.processing-loop-tests" errors="0" failures="0" tests="2" time="0.1096" timestamp="2017-10-02_20:52:51+0200">
-    <testcase name="simple-processing-loop-interrupt-test" classname="dsbdp.test.processing-loop-tests" time="0.1027">
+<testsuite name="dsbdp.test.latency-measurement-tests" errors="0" failures="0" tests="2" time="0.0061" timestamp="2017-10-02_20:52:50+0200">
+    <testcase name="simple-latency-probe-test" classname="dsbdp.test.latency-measurement-tests" time="0.0010">
     </testcase>
-    <testcase name="simple-processing-loop-test" classname="dsbdp.test.processing-loop-tests" time="0.0042">
+    <testcase name="simpla-latency-probe-collector-test" classname="dsbdp.test.latency-measurement-tests" time="0.0030">
     </testcase>
     <system-err>
     </system-err>

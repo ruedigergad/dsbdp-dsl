@@ -1,0 +1,53 @@
+<html xmlns:string="xalan://java.lang.String" xmlns:lxslt="http://xml.apache.org/xslt">
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Standard Output from experiment-helper-tests</title>
+</head>
+<body>
+<pre>
+proc-fns-full:32[(fn [i _] (doto (java.util.HashMap.) (.put (str 0) (inc i)))) (fn [_ o-meta] (.put o-meta (str 1) (inc (.get o-meta (str (dec 1)))))) (fn [_ o-meta] (.put o-meta (str 2) (inc (.get o-meta (str (dec 2)))))) (fn [_ o-meta] (.put o-meta (str 3) (inc (.get o-meta (str (dec 3))))))]
+proc-fns-short:32[(fn [i _] (doto (java.util.HashMap.) (.put (str 0) (inc i)))) (fn [_ o-meta] (.put o-meta (str 1) (inc (.get o-meta (str (dec 1)))))) (fn [_ o-meta] (.put o-meta (str 2) (inc (.get o-meta (str (dec 2)))))) (fn [_ o-meta] (.put o-meta (str 3) (inc (.get o-meta (str (dec 3))))))]
+proc-fns-pretty:
+32[(fn [i _] (doto (java.util.HashMap.) (.put (str 0) (inc i))))
+ (fn
+  [_ o-meta]
+  (.put o-meta (str 1) (inc (.get o-meta (str (dec 1))))))
+ (fn
+  [_ o-meta]
+  (.put o-meta (str 2) (inc (.get o-meta (str (dec 2))))))
+ (fn
+  [_ o-meta]
+  (.put o-meta (str 3) (inc (.get o-meta (str (dec 3))))))]
+
+proc-fns-full:32[(fn [i _] (dsbdp.experiment-helper/factorial i)) (fn [i _] (dsbdp.experiment-helper/factorial i)) (fn [i _] (dsbdp.experiment-helper/factorial i)) (fn [i _] (dsbdp.experiment-helper/factorial i))]
+proc-fns-short:32[(fn [i _] (factorial i)) (fn [i _] (factorial i)) (fn [i _] (factorial i)) (fn [i _] (factorial i))]
+proc-fns-pretty:
+32[(fn [i _] (factorial i))
+ (fn [i _] (factorial i))
+ (fn [i _] (factorial i))
+ (fn [i _] (factorial i))]
+
+proc-fns-full:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-short:32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+proc-fns-pretty:
+32[(fn [_ _] 0) (fn [_ _] 1) (fn [_ _] 1) (fn [_ _] 1)]
+
+proc-fns-full:32[(fn [i _] (inc i)) (fn [_ o] (inc o)) (fn [_ o] (inc o)) (fn [_ o] (inc o))]
+proc-fns-short:32[(fn [i _] (inc i)) (fn [_ o] (inc o)) (fn [_ o] (inc o)) (fn [_ o] (inc o))]
+proc-fns-pretty:
+32[(fn [i _] (inc i))
+ (fn [_ o] (inc o))
+ (fn [_ o] (inc o))
+ (fn [_ o] (inc o))]
+
+proc-fns-full:32[(fn [i _] (dsbdp.ExperimentHelper/busySleep (i 0)) 0) (fn [i _] (dsbdp.ExperimentHelper/busySleep (i 1)) 0) (fn [i _] (dsbdp.ExperimentHelper/busySleep (i 2)) 0) (fn [i _] (dsbdp.ExperimentHelper/busySleep (i 3)) 0)]
+proc-fns-short:32[(fn [i _] (busySleep (i 0)) 0) (fn [i _] (busySleep (i 1)) 0) (fn [i _] (busySleep (i 2)) 0) (fn [i _] (busySleep (i 3)) 0)]
+proc-fns-pretty:
+32[(fn [i _] (busySleep (i 0)) 0)
+ (fn [i _] (busySleep (i 1)) 0)
+ (fn [i _] (busySleep (i 2)) 0)
+ (fn [i _] (busySleep (i 3)) 0)]
+
+    </pre>
+</body>
+</html>
