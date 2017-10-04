@@ -264,6 +264,21 @@
 
 
 ;;;
+;;; Tests for returning identity.
+;;;
+(deftest input-to-str-test
+  (let [expected {"data-str" "[1 8 1 1 1 4 1 1]"}
+        input-data [1 8 1 1 1 4 1 1]
+        dsl-expression {:output-type :clj-map
+                        :rules [['data-str '(str (identity))]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn input-data)]
+    (is (instance? Map result))
+    (is (= expected result))))
+
+
+
+;;;
 ;;; Tests for generating vectors of functions that can be used in the data processing pipeline.
 ;;;
 (deftest combine-proc-fns-1st-test
