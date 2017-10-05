@@ -192,13 +192,34 @@
   [rules output nesting-level]
   (reduce
     (fn [v rule]
-      (let [tmp-k (conj v `(.append "\"") `(.append ~(name (first rule))) `(.append "\":"))
-            tmp-v (if (some #{:string} rule)
-                    (conj tmp-k `(.append "\"") `(.append ~(first rule)) `(.append "\""))
-                    (conj tmp-k `(.append ~(first rule))))]
+      (let [tmp-k (conj v `(.append "\"")
+                          `(.append ~(name (first rule)))
+                          `(.append "\":"))
+            tmp-k2 (if (some #{:string} rule)
+                     (conj tmp-k `(.append "\""))
+                     tmp-k)
+            tmp-v (cond
+                    (list? (second rule)) (conj
+                                            tmp-k2
+                                            `(.append ~(prefix-rule-name (first rule) nesting-level)))
+                    (and
+                      (vector? (second rule))
+                      (every? vector? (second rule))) (do
+                                                        (conj tmp-k2 (reverse
+                                                                       (into '()
+                                                                             (create-let-body-vec-json-str-out
+                                                                               (second rule)
+                                                                               output
+                                                                               (inc nesting-level))))))
+                    (cond-rule-expr? (second rule)) (conj tmp-k2 `(.append ~(prefix-rule-name (first rule) nesting-level)))
+                    :default (do (println "JSON String Body: unknown element for rule:" (str rule))
+                                 tmp-k2))
+            tmp-v2 (if (some #{:string} rule)
+                     (conj tmp-v `(.append "\""))
+                     tmp-v)]
         (if (not= rule (last rules))
-          (conj tmp-v `(.append ","))
-          (conj tmp-v `(.append "}")))))
+          (conj tmp-v2 `(.append ","))
+          (conj tmp-v2 `(.append "}")))))
     (if (nil? output)
       '[doto (java.lang.StringBuilder.) (.append "{")]
       '[doto ^java.lang.StringBuilder output (.deleteCharAt (- (.length ^java.lang.StringBuilder output) 1)) (.append ",")])
