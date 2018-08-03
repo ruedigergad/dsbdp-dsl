@@ -79,6 +79,10 @@
                                     (create-proc-sub-fn rule-expression input))
           (and
             (vector? rule-expression)
+            (every? vector? rule-expression)
+            (some #{:seq} rule)) (println "NESTED SEQUENCE!!")
+          (and
+            (vector? rule-expression)
             (every? vector? rule-expression)) (do
                                                 ;(println "Binding: Got a VECTOR..." (first rule) (second rule))
                                                 (into
