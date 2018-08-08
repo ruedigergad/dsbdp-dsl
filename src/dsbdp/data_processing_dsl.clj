@@ -66,6 +66,7 @@
     (symbol (str "__" nesting-level "_" rule-name))))
 
 (declare create-let-expression)
+(declare create-proc-fn)
 
 (defn- create-bindings-vector
   [input rules body-creation-fn output nesting-level]
@@ -74,27 +75,28 @@
       (let [rule-name (first rule)
             rule-expression (second rule)]
         (cond
+          (and
+            (list? rule-expression)
+            (every? vector? rule-expression)) (do
+                                                (println "NESTED SEQUENCE!!")
+                                                (into
+                                                  (conj v
+                                                        rule-name
+                                                        nil)
+                                                  ['abc 123]
+                                                  ))
           (list? rule-expression) (conj v
                                     (prefix-rule-name rule-name nesting-level)
                                     (create-proc-sub-fn rule-expression input))
           (and
             (vector? rule-expression)
-            (every? vector? rule-expression)
-            (some #{:seq} rule)) (println "NESTED SEQUENCE!!")
-          (and
-            (vector? rule-expression)
-            (every? vector? rule-expression)) (do
-                                                ;(println "Binding: Got a VECTOR..." (first rule) (second rule))
-                                                (into
-                                                  (conj v
-                                                        rule-name
-                                                        nil)
-                                                  (create-bindings-vector
-                                                    input
-                                                    rule-expression
-                                                    body-creation-fn
-                                                    output
-                                                    (inc nesting-level))))
+            (every? vector? rule-expression)) (let [nested-expr (create-let-expression
+                                                                  input
+                                                                  rule-expression
+                                                                  body-creation-fn
+                                                                  output
+                                                                  (inc nesting-level))]
+                                                (conj v (prefix-rule-name rule-name nesting-level) nested-expr))
           (cond-rule-expr? rule-expression) (let [cond-expr (reduce
                                                               (fn [vect v]
                                                                 (cond
@@ -128,18 +130,10 @@
   (reduce
     (fn [v rule]
       (cond
-        (list? (second rule)) (conj v
-                                    `(.put
-                                      ~(name (first rule))
-                                      ~(prefix-rule-name (first rule) nesting-level)))
-        (and
-          (vector? (second rule))
-          (every? vector? (second rule))) (do
-                                            ;(println "Java Map Body: Got a Vector..." (first rule) (second rule))
-                                            (conj v
-                                                  `(.put
-                                                     ~(name (first rule))
-                                                     ~(reverse (into '() (create-let-body-vec-java-map-out (second rule) nil (inc nesting-level)))))))
+        (sequential? (second rule)) (conj v
+                                          `(.put
+                                            ~(name (first rule))
+                                            ~(prefix-rule-name (first rule) nesting-level)))
         (cond-rule-expr? (second rule)) (conj v
                                               `(.put ~(name (first rule))
                                                      ~(prefix-rule-name (first rule) nesting-level)))
@@ -154,18 +148,10 @@
   (reduce
     (fn [v rule]
       (cond
-        (list? (second rule)) (conj v
-                                    `(assoc
-                                      ~(name (first rule))
-                                      ~(prefix-rule-name (first rule) nesting-level)))
-        (and
-          (vector? (second rule))
-          (every? vector? (second rule))) (do
-                                            ;(println "Java Map Body: Got a Vector..." (first rule) (second rule))
-                                            (conj v
-                                                  `(assoc
-                                                     ~(name (first rule))
-                                                     ~(reverse (into '() (create-let-body-vec-clj-map-out (second rule) nil (inc nesting-level)))))))
+        (sequential? (second rule)) (conj v
+                                          `(assoc
+                                            ~(name (first rule))
+                                            ~(prefix-rule-name (first rule) nesting-level)))
         (cond-rule-expr? (second rule)) (conj v
                                               `(assoc ~(name (first rule))
                                                       ~(prefix-rule-name (first rule) nesting-level)))
@@ -203,21 +189,13 @@
                      (conj tmp-k `(.append "\""))
                      tmp-k)
             tmp-v (cond
-                    (list? (second rule)) (conj
-                                            tmp-k2
-                                            `(.append ~(prefix-rule-name (first rule) nesting-level)))
-                    (and
-                      (vector? (second rule))
-                      (every? vector? (second rule))) (do
-                                                        (conj tmp-k2 (reverse
-                                                                       (into '()
-                                                                             (create-let-body-vec-json-str-out
-                                                                               (second rule)
-                                                                               output
-                                                                               (inc nesting-level))))))
+                    (sequential? (second rule)) (conj
+                                                  tmp-k2
+                                                  `(.append ~(prefix-rule-name (first rule) nesting-level)))
                     (cond-rule-expr? (second rule)) (conj tmp-k2 `(.append ~(prefix-rule-name (first rule) nesting-level)))
-                    :default (do (println "JSON String Body: unknown element for rule:" (str rule))
-                                 tmp-k2))
+                    :default (do
+                               (println "JSON String Body: unknown element for rule:" (str rule))
+                               tmp-k2))
             tmp-v2 (if (some #{:string} rule)
                      (conj tmp-v `(.append "\""))
                      tmp-v)]
@@ -259,8 +237,8 @@
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (create-let-expression input-sym rules let-body-creation-fn output-sym 0)
 ;        _ (println "Created data processing function body:" fn-body)
-;        _ (pprint fn-body)
-;        _ (println "")
+        _ (pprint fn-body)
+        _ (println "")
         data-processing-fn (if (not (nil? output-sym))
                              (eval `(fn [~input-sym ~output-sym] ~fn-body))
                              (eval `(fn [~input-sym] ~fn-body)))]
