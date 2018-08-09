@@ -141,22 +141,26 @@
     ~(reverse (into '() (out-format-fn rules output nesting-level)))))
 
 (defn- java-out-format-fn
-  [rules output nesting-level]
-  (reduce
-    (fn [v rule]
-      (cond
-        (sequential? (second rule)) (conj v
-                                          `(.put
-                                            ~(name (first rule))
-                                            ~(prefix-rule-name (first rule) nesting-level)))
-        (cond-rule-expr? (second rule)) (conj v
-                                              `(.put ~(name (first rule))
-                                                     ~(prefix-rule-name (first rule) nesting-level)))
-        :default (println "Java Map Body: unknown element for rule:" (str rule))))
-    (if (nil? output)
-      '[doto (java.util.HashMap.)]
-      '[doto ^java.util.Map output])
-    rules))
+  ([]
+    `(java.util.ArrayList.))
+  ([result-list new-result-value]
+    `(doto ~result-list (.add ~new-result-value)))
+  ([rules output nesting-level]
+    (reduce
+      (fn [v rule]
+        (cond
+          (sequential? (second rule)) (conj v
+                                            `(.put
+                                              ~(name (first rule))
+                                              ~(prefix-rule-name (first rule) nesting-level)))
+          (cond-rule-expr? (second rule)) (conj v
+                                                `(.put ~(name (first rule))
+                                                       ~(prefix-rule-name (first rule) nesting-level)))
+          :default (println "Java Map Body: unknown element for rule:" (str rule))))
+      (if (nil? output)
+        '[doto (java.util.HashMap.)]
+        '[doto ^java.util.Map output])
+      rules)))
 
 (defn- clj-out-format-fn
   ([]
