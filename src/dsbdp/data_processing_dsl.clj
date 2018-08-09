@@ -89,14 +89,14 @@
                                                       nested-expr-ret-tmp (last nested-expr-tmp)
                                                       nested-expr-ret [nested-expr-ret-tmp (prefix-rule-name '__offset-increment (inc nesting-level))]
                                                       nested-expr (into '() (reverse (assoc (vec nested-expr-tmp) (- (count nested-expr-tmp) 1) nested-expr-ret)))
-                                                      loop-expr `(loop [~'offset (~seq-params :initial-offset) ~'result-vec []]
+                                                      loop-expr `(loop [~'offset (~seq-params :initial-offset) ~'result ~(out-format-fn)]
                                                                   (let [~'tmp-result ~nested-expr
                                                                         ~'new-offset (+ ~'offset (second ~'tmp-result))
-                                                                        ~'new-result-vec (conj ~'result-vec (first ~'tmp-result))]
+                                                                        ~'new-result ~(out-format-fn 'result '(first tmp-result))]
 ;                                                                    (println "Nested seq step:" ~'new-offset "--" (count ~'input))
                                                                     (if (< ~'new-offset (count ~'input))
-                                                                      (recur ~'new-offset ~'new-result-vec)
-                                                                      ~'new-result-vec)))]
+                                                                      (recur ~'new-offset ~'new-result)
+                                                                      ~'new-result)))]
 												(conj v
 													  (prefix-rule-name rule-name nesting-level)
 													  loop-expr)))
@@ -159,24 +159,28 @@
     rules))
 
 (defn- clj-out-format-fn
-  [rules output nesting-level]
-  (reduce
-    (fn [v rule]
-      (cond
-        (sequential? (second rule)) (conj v
-                                          `(assoc
-                                            ~(name (first rule))
-                                            ~(prefix-rule-name (first rule) nesting-level)))
-        (cond-rule-expr? (second rule)) (conj v
-                                              `(assoc ~(name (first rule))
-                                                      ~(prefix-rule-name (first rule) nesting-level)))
-        :default (do (println "Clj Map Body: unknown element for rule:" (str rule))
-                     ;(throw (RuntimeException. "Clj Map Body: unknown element for rule"))
-                     )))
-    (if (nil? output)
-      '[-> {}]
-      '[-> output])
-    rules))
+  ([]
+    [])
+  ([result-vec new-result-value]
+    `(conj ~result-vec ~new-result-value))
+  ([rules output nesting-level]
+    (reduce
+      (fn [v rule]
+        (cond
+          (sequential? (second rule)) (conj v
+                                            `(assoc
+                                              ~(name (first rule))
+                                              ~(prefix-rule-name (first rule) nesting-level)))
+          (cond-rule-expr? (second rule)) (conj v
+                                                `(assoc ~(name (first rule))
+                                                        ~(prefix-rule-name (first rule) nesting-level)))
+          :default (do (println "Clj Map Body: unknown element for rule:" (str rule))
+                       ;(throw (RuntimeException. "Clj Map Body: unknown element for rule"))
+                       )))
+      (if (nil? output)
+        '[-> {}]
+        '[-> output])
+      rules)))
 
 (defn- csv-str-out-format-fn
   [rules output nesting-level]
