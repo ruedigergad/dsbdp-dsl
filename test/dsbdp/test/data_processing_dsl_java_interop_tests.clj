@@ -30,8 +30,8 @@
                                 ['myStr2 '(str (nth 3) (nth 4)) :string]]}
         data-proc-fn-csv-str (DslHelper/generateProcessingFn dsl-expression)
         data-proc-fn-json-str (DslHelper/generateProcessingFn (assoc dsl-expression :output-type :json-str))
-        data-proc-fn-clj-map (DslHelper/generateProcessingFn (assoc dsl-expression :output-type :clj-map))
-        data-proc-fn-java-map (DslHelper/generateProcessingFn (assoc dsl-expression :output-type :java-map))
+        data-proc-fn-clj-map (DslHelper/generateProcessingFn (assoc dsl-expression :output-type :clj))
+        data-proc-fn-java-map (DslHelper/generateProcessingFn (assoc dsl-expression :output-type :java))
         ]
     (is (= expected-csv-str (str (data-proc-fn-csv-str in-vector))))
     (is (= expected-json-str (str (data-proc-fn-json-str in-vector))))
@@ -54,8 +54,8 @@
                                 "         [myStr2 (str (nth 3) (nth 4)) :string]]}")
         data-proc-fn-csv-str (DslHelper/generateProcessingFn dsl-expression-str)
         data-proc-fn-json-str (DslHelper/generateProcessingFn (string/replace dsl-expression-str ":csv-str" ":json-str"))
-        data-proc-fn-clj-map (DslHelper/generateProcessingFn (string/replace dsl-expression-str ":csv-str" ":clj-map"))
-        data-proc-fn-java-map (DslHelper/generateProcessingFn (string/replace dsl-expression-str ":csv-str" ":java-map"))
+        data-proc-fn-clj-map (DslHelper/generateProcessingFn (string/replace dsl-expression-str ":csv-str" ":clj"))
+        data-proc-fn-java-map (DslHelper/generateProcessingFn (string/replace dsl-expression-str ":csv-str" ":java"))
         ]
     (is (= expected-csv-str (str (data-proc-fn-csv-str in-vector))))
     (is (= expected-json-str (str (data-proc-fn-json-str in-vector))))
@@ -73,7 +73,7 @@
 ;;;
 (deftest byte-array-to-java-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096}
-        dsl-expression-str (str "{:output-type :java-map "
+        dsl-expression-str (str "{:output-type :java "
                                 " :rules [[udpSrc (int16 50)] "
                                 "         [udpDst (int16 52)]]}")
         data-processing-fn (DslHelper/generateProcessingFn dsl-expression-str)
@@ -83,7 +83,7 @@
 
 (deftest byte-array-to-clj-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096}
-        dsl-expression-str (str "{:output-type :clj-map "
+        dsl-expression-str (str "{:output-type :clj "
                                 " :rules [[udpSrc (int16 50)] "
                                 "         [udpDst (int16 52)]]}")
         data-processing-fn (DslHelper/generateProcessingFn dsl-expression-str)
@@ -117,7 +117,7 @@
 ;(deftest clojure-vector-to-java-map-with-additional-operation-and-two-data-values-test
 ;  (let [expected {"quotient" 2}
 ;        input-data [1 8 1 1 1 4 1 1]
-;        dsl-expression {:output-type :java-map
+;        dsl-expression {:output-type :java
 ;                        :rules [['quotient '(/ (nth 1) (nth 5))]]}
 ;        data-processing-fn (create-proc-fn dsl-expression)
 ;        result (data-processing-fn input-data)]
@@ -127,7 +127,7 @@
 ;(deftest clojure-list-to-java-map-with-additional-operation-and-two-data-values-test
 ;  (let [expected {"quotient" 2}
 ;        input-data '(1 8 1 1 1 4 1 1)
-;        dsl-expression {:output-type :java-map
+;        dsl-expression {:output-type :java
 ;                        :rules [['quotient '(/ (nth 1) (nth 5))]]}
 ;        data-processing-fn (create-proc-fn dsl-expression)
 ;        result (data-processing-fn input-data)]
@@ -137,7 +137,7 @@
 ;(deftest java-list-to-java-map-with-additional-operation-and-two-data-values-test
 ;  (let [expected {"quotient" 2}
 ;        input-data (reduce (fn [l v] (.add ^List l v) l) (ArrayList.) [1 8 1 1 1 4 1 1])
-;        dsl-expression {:output-type :java-map
+;        dsl-expression {:output-type :java
 ;                        :rules [['quotient '(/ (nth 1) (nth 5))]]}
 ;        data-processing-fn (create-proc-fn dsl-expression)
 ;        result (data-processing-fn input-data)]
@@ -147,7 +147,7 @@
 ;(deftest clojure-map-to-java-map-with-additional-operation-and-two-data-values-test
 ;  (let [expected {"quotient" 2}
 ;        input-data {"x" 12, "y" 42, :z 6}
-;        dsl-expression {:output-type :java-map
+;        dsl-expression {:output-type :java
 ;                        :rules [['quotient '(/ (get "x") (get :z))]]}
 ;        data-processing-fn (create-proc-fn dsl-expression)
 ;        result (data-processing-fn input-data)]
@@ -157,7 +157,7 @@
 ;(deftest java-map-to-java-map-with-additional-operation-and-two-data-values-test
 ;  (let [expected {"quotient" 2}
 ;        input-data (doto (HashMap.) (.put "x" 12) (.put "y" 42) (.put :z 6))
-;        dsl-expression {:output-type :java-map
+;        dsl-expression {:output-type :java
 ;                        :rules [['quotient '(/ (get "x") (get :z))]]}
 ;        data-processing-fn (create-proc-fn dsl-expression)
 ;        result (data-processing-fn input-data)]

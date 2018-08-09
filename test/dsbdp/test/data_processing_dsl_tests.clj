@@ -31,8 +31,8 @@
                                 ['myStr2 '(str (nth 3) (nth 4)) :string]]}
         data-proc-fn-csv-str (create-proc-fn dsl-expression)
         data-proc-fn-json-str (create-proc-fn (assoc dsl-expression :output-type :json-str))
-        data-proc-fn-clj-map (create-proc-fn (assoc dsl-expression :output-type :clj-map))
-        data-proc-fn-java-map (create-proc-fn (assoc dsl-expression :output-type :java-map))
+        data-proc-fn-clj-map (create-proc-fn (assoc dsl-expression :output-type :clj))
+        data-proc-fn-java-map (create-proc-fn (assoc dsl-expression :output-type :java))
         ]
     (is (= expected-csv-str (str (data-proc-fn-csv-str in-vector))))
     (is (= expected-json-str (str (data-proc-fn-json-str in-vector))))
@@ -46,7 +46,7 @@
 ;;;
 (deftest byte-array-to-java-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096}
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
@@ -56,7 +56,7 @@
 
 (deftest byte-array-to-clj-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
@@ -117,7 +117,7 @@
 ;;;
 (deftest simple-combination-of-extracted-fields-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096, "combined" "2048 -> 4096"}
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]
                                 ['combined '(str udpSrc " -> " udpDst)]]}
@@ -132,7 +132,7 @@
 ;;;
 (deftest incremental-byte-array-to-java-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096, "foo" :bar}
-        dsl-expression {:output-type :java-map#inc
+        dsl-expression {:output-type :java#inc
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
@@ -144,7 +144,7 @@
 
 (deftest incremental-byte-array-to-clj-map-test
   (let [expected {"udpSrc" 2048, "udpDst" 4096, "foo" :bar}
-        dsl-expression {:output-type :clj-map#inc
+        dsl-expression {:output-type :clj#inc
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)
@@ -181,7 +181,7 @@
 ;;;
 (deftest byte-array-to-java-map-with-additional-operation-test
   (let [expected {"udpSrc" 1024, "udpDst" 2048}
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['udpSrc '(/ (int16 50) 2)]
                                 ['udpDst '(/ (int16 52) 2)]]}
         data-processing-fn (create-proc-fn dsl-expression)
@@ -191,7 +191,7 @@
 
 (deftest byte-array-to-java-map-with-additional-operation-and-float-type-test
   (let [expected {"udpSrc" (float 0.031250477), "udpDst" (float 0.06250095)}
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['udpSrc '(float (/ (int16 50) 65535))]
                                 ['udpDst '(float (/ (int16 52) 65535))]]}
         data-processing-fn (create-proc-fn dsl-expression)
@@ -201,7 +201,7 @@
 
 (deftest byte-array-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['quotient '(/ (int16 52) (int16 50))]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn pcap-byte-array-test-data)]
@@ -216,7 +216,7 @@
 (deftest clojure-vector-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
         input-data [1 8 1 1 1 4 1 1]
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn input-data)]
@@ -226,7 +226,7 @@
 (deftest clojure-list-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
         input-data '(1 8 1 1 1 4 1 1)
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn input-data)]
@@ -236,7 +236,7 @@
 (deftest java-list-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
         input-data (reduce (fn [l v] (.add ^List l v) l) (ArrayList.) [1 8 1 1 1 4 1 1])
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['quotient '(/ (nth 1) (nth 5))]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn input-data)]
@@ -246,7 +246,7 @@
 (deftest clojure-map-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
         input-data {"x" 12, "y" 42, :z 6}
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['quotient '(/ (get "x") (get :z))]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn input-data)]
@@ -256,7 +256,7 @@
 (deftest java-map-to-java-map-with-additional-operation-and-two-data-values-test
   (let [expected {"quotient" 2}
         input-data (doto (HashMap.) (.put "x" 12) (.put "y" 42) (.put :z 6))
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['quotient '(/ (get "x") (get :z))]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn input-data)]
@@ -271,7 +271,7 @@
 (deftest input-to-str-test
   (let [expected {"data-str" "[1 8 1 1 1 4 1 1]"}
         input-data [1 8 1 1 1 4 1 1]
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['data-str '(str (identity))]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn input-data)]
@@ -286,7 +286,7 @@
 (deftest combine-proc-fns-1st-test
   (let [input-ba (byte-array (map byte [0 1 2 3 4 5 6 7 8 9]))
         expected {"a" 0, "b" 1, "c" 2, "d" 3}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['a '(int8 0)]
                                 ['b '(int8 1)]
                                 ['c '(int8 2)]
@@ -303,7 +303,7 @@
 (deftest combine-proc-fns-nth-test
   (let [input-ba (byte-array (map byte [0 1 2 3 4 5 6 7 8 9]))
         expected {"e" 4, "f" 5, "g" 6}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['a '(int8 0)]
                                 ['b '(int8 1)]
                                 ['c '(int8 2)]
@@ -323,7 +323,7 @@
         expected-1 {"e" 4, "f" 5, "g" 6}
         expected-2 {"h" 7, "i" 8}
         expected-3 {"j" 9}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['a '(int8 0)]
                                 ['b '(int8 1)]
                                 ['c '(int8 2)]
@@ -363,7 +363,7 @@
                                   "dst" "252.253.254.255",
                                   "data" {"src" 2048
                                           "dst" 4096}}}}
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['len '(int32be 8)]
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['src '(eth-mac-addr-str 22)]
@@ -384,7 +384,7 @@
                                   "dst" "252.253.254.255",
                                   "data" {"src" 2048
                                           "dst" 4096}}}}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['len '(int32be 8)]
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['src '(eth-mac-addr-str 22)]
@@ -424,7 +424,7 @@
                                   "src" "1.2.3.4",
                                   "data" {"src" 2048
                                           "dst" 4096}}}}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['len '(int32be 8)]
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['data [['proto-id '(int8 39)]
@@ -446,7 +446,7 @@
                                           "flags" 0x18
                                           "seq-no" 4109031044
                                           "ack-no" 3662655102}}}}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['len '(int32be 8)]
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['data [['proto-id '(int8 39)]
@@ -477,7 +477,7 @@
                                               "flags" 0x18
                                               "seq-no" 4109031044
                                               "ack-no" 3662655102}}}}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['len '(int32be 8)]
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['data [['proto-id '(int8 39)]
@@ -514,7 +514,7 @@
                                               "flags" 0x18
                                               "seq-no" 4109031044
                                               "ack-no" 3662655102}}}}
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['len '(int32be 8)]
                                 ['data [['dst '(eth-mac-addr-str 16)]
                                         ['data [['proto-id '(int8 39)]
@@ -547,7 +547,7 @@
                   "packets" [{"capture-length" 98, "packet-length" 98, "__offset-increment" 114}
                              {"capture-length" 70, "packet-length" 70, "__offset-increment" 86}
                              {"capture-length" 74, "packet-length" 74, "__offset-increment" 90}] }
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['magic-number '(int32be 0)]
                                 ['snapshot-len '(int32be 16)]
                                 ['packets
@@ -576,7 +576,7 @@
                               "data" {"eth-dst" "E8:DE:27:59:0E:AD", "eth-src" "0E:AD:B4:74:9F:FA",
                                       "data" {"proto-id" 6, "ip-dst" "10.0.0.230", "ip-src" "199.204.44.194",
                                               "data" {"dst" 80, "src" 49526, "flags" 74, "ack-no" 0, "seq-no" 1034137073}}}}]}
-        dsl-expression {:output-type :clj-map
+        dsl-expression {:output-type :clj
                         :rules [['magic-number '(int32be 0)]
                                 ['snapshot-len '(int32be 16)]
                                 ['packets
@@ -612,7 +612,7 @@
                   "packets" [{"capture-length" 98, "packet-length" 98, "__offset-increment" 114}
                              {"capture-length" 70, "packet-length" 70, "__offset-increment" 86}
                              {"capture-length" 74, "packet-length" 74, "__offset-increment" 90}] }
-        dsl-expression {:output-type :java-map
+        dsl-expression {:output-type :java
                         :rules [['magic-number '(int32be 0)]
                                 ['snapshot-len '(int32be 16)]
                                 ['packets
