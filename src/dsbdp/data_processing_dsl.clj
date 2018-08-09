@@ -69,7 +69,7 @@
 (declare create-proc-fn)
 
 (defn- create-bindings-vector
-  [input rules body-creation-fn output nesting-level]
+  [input rules out-format-fn output nesting-level]
   (reduce
     (fn [v rule]
       (let [rule-name (first rule)
@@ -83,7 +83,7 @@
                                                       nested-expr-tmp (create-let-expression
                                                                         input
                                                                         (vec rule-expression)
-                                                                        body-creation-fn
+                                                                        out-format-fn
                                                                         output
                                                                         (inc nesting-level))
                                                       nested-expr-ret-tmp (last nested-expr-tmp)
@@ -108,7 +108,7 @@
             (every? vector? rule-expression)) (let [nested-expr (create-let-expression
                                                                   input
                                                                   rule-expression
-                                                                  body-creation-fn
+                                                                  out-format-fn
                                                                   output
                                                                   (inc nesting-level))]
                                                 (conj v (prefix-rule-name rule-name nesting-level) nested-expr))
@@ -121,7 +121,7 @@
                                                                                     (create-let-expression
                                                                                       input
                                                                                       v
-                                                                                      body-creation-fn
+                                                                                      out-format-fn
                                                                                       output
                                                                                       (inc nesting-level)))
                                                                   :default (do
@@ -135,10 +135,10 @@
     rules))
 
 (defn- create-let-expression
-  [input rules body-creation-fn output nesting-level]
+  [input rules out-format-fn output nesting-level]
   `(let
-    ~(create-bindings-vector input rules body-creation-fn output nesting-level)
-    ~(reverse (into '() (body-creation-fn rules output nesting-level)))))
+    ~(create-bindings-vector input rules out-format-fn output nesting-level)
+    ~(reverse (into '() (out-format-fn rules output nesting-level)))))
 
 (defn- create-let-body-vec-java-map-out
   [rules output nesting-level]
@@ -240,17 +240,17 @@
         rules (:rules dsl-expression)
         output-sym (if (.endsWith output-type *incremental-indicator-suffix*)
                      'output)
-        let-body-creation-fn (condp (fn [^String v ^String s] (.startsWith s v)) output-type
-                               "java-map" create-let-body-vec-java-map-out
-                               "clj-map" create-let-body-vec-clj-map-out
-                               "csv-str" create-let-body-vec-csv-str-out
-                               "json-str" create-let-body-vec-json-str-out
-                               (do
-                                 (println "Unknown output type:" output-type)
-                                 (println "Defaulting to :java-map as output type.")
-                                 create-let-body-vec-java-map-out))
+        output-format-fn (condp (fn [^String v ^String s] (.startsWith s v)) output-type
+                           "java-map" create-let-body-vec-java-map-out
+                           "clj-map" create-let-body-vec-clj-map-out
+                           "csv-str" create-let-body-vec-csv-str-out
+                           "json-str" create-let-body-vec-json-str-out
+                           (do
+                             (println "Unknown output type:" output-type)
+                             (println "Defaulting to :java-map as output type.")
+                             create-let-body-vec-java-map-out))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
-        fn-body (create-let-expression input-sym rules let-body-creation-fn output-sym 0)
+        fn-body (create-let-expression input-sym rules output-format-fn output-sym 0)
 ;        _ (println "Created data processing function body:" fn-body)
 ;        _ (pprint fn-body)
 ;        _ (println "")
