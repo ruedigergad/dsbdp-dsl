@@ -241,8 +241,14 @@
         output-sym (if (.endsWith output-type *incremental-indicator-suffix*)
                      'output)
         output-format-fn (condp (fn [^String v ^String s] (.startsWith s v)) output-type
-                           "java-map" java-out-format-fn
-                           "clj-map" clj-out-format-fn
+                           "java" java-out-format-fn
+                           "java-map" (do
+                                        (println "The format string 'java-map' is deprecated. Please use 'java' instead.")
+                                        java-out-format-fn)
+                           "clj" clj-out-format-fn
+                           "clj-map" (do
+                                       (println "The format string 'clj-map' is deprecated. Please use 'clj' instead.")
+                                       clj-out-format-fn)
                            "csv-str" csv-str-out-format-fn
                            "json-str" json-str-out-format-fn
                            (do
