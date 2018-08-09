@@ -140,7 +140,7 @@
     ~(create-bindings-vector input rules out-format-fn output nesting-level)
     ~(reverse (into '() (out-format-fn rules output nesting-level)))))
 
-(defn- create-let-body-vec-java-map-out
+(defn- java-out-format-fn
   [rules output nesting-level]
   (reduce
     (fn [v rule]
@@ -158,7 +158,7 @@
       '[doto ^java.util.Map output])
     rules))
 
-(defn- create-let-body-vec-clj-map-out
+(defn- clj-out-format-fn
   [rules output nesting-level]
   (reduce
     (fn [v rule]
@@ -178,7 +178,7 @@
       '[-> output])
     rules))
 
-(defn- create-let-body-vec-csv-str-out
+(defn- csv-str-out-format-fn
   [rules output nesting-level]
   (reduce
     (fn [v rule]
@@ -193,7 +193,7 @@
       '[doto ^java.lang.StringBuilder output])
     rules))
 
-(defn- create-let-body-vec-json-str-out
+(defn- json-str-out-format-fn
   [rules output nesting-level]
   (reduce
     (fn [v rule]
@@ -241,14 +241,14 @@
         output-sym (if (.endsWith output-type *incremental-indicator-suffix*)
                      'output)
         output-format-fn (condp (fn [^String v ^String s] (.startsWith s v)) output-type
-                           "java-map" create-let-body-vec-java-map-out
-                           "clj-map" create-let-body-vec-clj-map-out
-                           "csv-str" create-let-body-vec-csv-str-out
-                           "json-str" create-let-body-vec-json-str-out
+                           "java-map" java-out-format-fn
+                           "clj-map" clj-out-format-fn
+                           "csv-str" csv-str-out-format-fn
+                           "json-str" json-str-out-format-fn
                            (do
                              (println "Unknown output type:" output-type)
                              (println "Defaulting to :java-map as output type.")
-                             create-let-body-vec-java-map-out))
+                             java-out-format-fn))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (create-let-expression input-sym rules output-format-fn output-sym 0)
 ;        _ (println "Created data processing function body:" fn-body)
