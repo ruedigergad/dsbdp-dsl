@@ -78,16 +78,31 @@
           (and
             (list? rule-expression)
             (every? vector? rule-expression)) (do
-                                                (println "NESTED SEQUENCE!!")
-                                                (into
-                                                  (conj v
-                                                        rule-name
-                                                        nil)
-                                                  ['abc 123]
-                                                  ))
+;                                                (println "Creating looped processing for nested sequence...")
+                                                (let [seq-params (rule 2)
+                                                      nested-expr-tmp (create-let-expression
+                                                                        input
+                                                                        (vec rule-expression)
+                                                                        body-creation-fn
+                                                                        output
+                                                                        (inc nesting-level))
+                                                      nested-expr-ret-tmp (last nested-expr-tmp)
+                                                      nested-expr-ret [nested-expr-ret-tmp (prefix-rule-name '__offset-increment (inc nesting-level))]
+                                                      nested-expr (into '() (reverse (assoc (vec nested-expr-tmp) (- (count nested-expr-tmp) 1) nested-expr-ret)))
+                                                      loop-expr ['loop ['offset (seq-params :initial-offset) 'result-vec []]
+                                                                 `(clojure.core/let [~'tmp-result ~nested-expr
+                                                                                     ~'new-offset (+ ~'offset (second ~'tmp-result))
+                                                                                     ~'new-result-vec (conj ~'result-vec (first ~'tmp-result))]
+;                                                                    (println "Nested seq step:" ~'new-offset "--" (count ~'input))
+                                                                    (if (< ~'new-offset (count ~'input))
+                                                                      (recur ~'new-offset ~'new-result-vec)
+                                                                      ~'new-result-vec))]]
+												(conj v
+													  (prefix-rule-name rule-name nesting-level)
+													  (into '() (reverse loop-expr)))))
           (list? rule-expression) (conj v
-                                    (prefix-rule-name rule-name nesting-level)
-                                    (create-proc-sub-fn rule-expression input))
+										(prefix-rule-name rule-name nesting-level)
+										(create-proc-sub-fn rule-expression input))
           (and
             (vector? rule-expression)
             (every? vector? rule-expression)) (let [nested-expr (create-let-expression
@@ -237,8 +252,8 @@
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
         fn-body (create-let-expression input-sym rules let-body-creation-fn output-sym 0)
 ;        _ (println "Created data processing function body:" fn-body)
-        _ (pprint fn-body)
-        _ (println "")
+;        _ (pprint fn-body)
+;        _ (println "")
         data-processing-fn (if (not (nil? output-sym))
                              (eval `(fn [~input-sym ~output-sym] ~fn-body))
                              (eval `(fn [~input-sym] ~fn-body)))]

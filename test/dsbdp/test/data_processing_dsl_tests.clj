@@ -544,20 +544,17 @@
   (let [pcap-raw-data (Files/readAllBytes (Paths/get "test/data/pcap_three_packets_icmp_dns_http.pcap" (into-array [""])))
         expected {"magic-number" 0xa1b2c3d4
                   "snapshot-len" 262144
-                  "packets" {"capture-length" 98
-                             "packet-length" 98
-                             "next-pkt-offset" 114
-                             }
-                  }
+                  "packets" [{"capture-length" 98, "packet-length" 98, "__offset-increment" 114}
+                             {"capture-length" 70, "packet-length" 70, "__offset-increment" 86}
+                             {"capture-length" 74, "packet-length" 74, "__offset-increment" 90}] }
         dsl-expression {:output-type :clj-map
                         :rules [['magic-number '(int32be 0)]
                                 ['snapshot-len '(int32be 16)]
                                 ['packets
-                                 [['capture-length '(int32be 32)]
-                                  ['packet-length '(int32be 36)]
-                                  ['next-pkt-offset '(+ 16 __1_capture-length)]]
-                                 :seq
-                                 {:initial-offset 24 :offset-increment 'next-pkt-offset}]]}
+                                 '([capture-length (int32be (+ offset 8))]
+                                   [packet-length (int32be (+ offset 12))]
+                                   [__offset-increment (+ 16 __1_capture-length)])
+                                 {:initial-offset 24}]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn pcap-raw-data)]
     (is (map? result))
