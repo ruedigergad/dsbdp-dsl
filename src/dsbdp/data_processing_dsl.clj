@@ -89,17 +89,17 @@
                                                       nested-expr-ret-tmp (last nested-expr-tmp)
                                                       nested-expr-ret [nested-expr-ret-tmp (prefix-rule-name '__offset-increment (inc nesting-level))]
                                                       nested-expr (into '() (reverse (assoc (vec nested-expr-tmp) (- (count nested-expr-tmp) 1) nested-expr-ret)))
-                                                      loop-expr ['loop ['offset (seq-params :initial-offset) 'result-vec []]
-                                                                 `(clojure.core/let [~'tmp-result ~nested-expr
-                                                                                     ~'new-offset (+ ~'offset (second ~'tmp-result))
-                                                                                     ~'new-result-vec (conj ~'result-vec (first ~'tmp-result))]
+                                                      loop-expr `(loop [~'offset (~seq-params :initial-offset) ~'result-vec []]
+                                                                  (let [~'tmp-result ~nested-expr
+                                                                        ~'new-offset (+ ~'offset (second ~'tmp-result))
+                                                                        ~'new-result-vec (conj ~'result-vec (first ~'tmp-result))]
 ;                                                                    (println "Nested seq step:" ~'new-offset "--" (count ~'input))
                                                                     (if (< ~'new-offset (count ~'input))
                                                                       (recur ~'new-offset ~'new-result-vec)
-                                                                      ~'new-result-vec))]]
+                                                                      ~'new-result-vec)))]
 												(conj v
 													  (prefix-rule-name rule-name nesting-level)
-													  (into '() (reverse loop-expr)))))
+													  loop-expr)))
           (list? rule-expression) (conj v
 										(prefix-rule-name rule-name nesting-level)
 										(create-proc-sub-fn rule-expression input))
