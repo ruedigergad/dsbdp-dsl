@@ -1,6 +1,9 @@
-![dsbdp logo](https://github.com/ruedigergad/dsbdp/blob/master/dsbdp_logo_2.png)
+![dsbdp logo dsl](https://github.com/ruedigergad/dsbdp-dsl/blob/master/dsbdp_logo_dsl.png)
 
-# Dynamic Stream and Batch Data Processing (dsbdp)
+# Dynamic Stream and Batch Data Processing (dsbdp) - Domain Specific Language (DSL)
+
+Please note that, right now, this is a work-in-progress on extracting the DSL part from dsbdp.
+Thus, this readme is not fully updated yet.
 
 ## Status
 
