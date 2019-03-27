@@ -1,10 +1,11 @@
-;(defproject dsbdp-dsl "0.5.2-SNAPSHOT"
-(defproject dsbdp "0.5.1"
+(defproject dsbdp-dsl "0.5.2-SNAPSHOT"
+;(defproject dsbdp "0.5.1"
   :description "Dynamic Stream and Batch Data Processing (dsbdp) - Domain Specific Language (DSL)"
   :url "https://github.com/ruedigergad/dsbdp"
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
+                 [cli4clj "1.7.1"]
                  [clj-assorted-utils "1.18.3"]]
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["src-java"]
