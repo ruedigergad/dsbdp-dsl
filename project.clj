@@ -5,8 +5,7 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [clj-assorted-utils "1.18.2"]
-                 [commons-net "3.6"]]
+                 [clj-assorted-utils "1.18.2"]]
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["src-java"]
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]
