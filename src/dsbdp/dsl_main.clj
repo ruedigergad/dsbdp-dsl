@@ -30,14 +30,17 @@
                                             (.printStackTrace e)))
                                         (println "Error: DSL string is empty."))
                                       nil))
-        proc-fn (atom (fn [_] (println "This is a no-op processing function stub."
-                                       "Please specify a valid DSL string to set a meaningful processing function.")))
+        proc-fn (atom (fn [_] (println "This is a no-op processing function place-holder."
+                                       "Please use load-dsl or set-dsl to specify a valid DSL instance to set a meaningful processing function.")))
         _ (add-watch dsl-expression nil (fn [_ _ _ n]
                                           (if n
-                                            (do
+                                            (try
                                               (println "Setting processing function...")
                                               (reset! proc-fn (dsl/create-proc-fn n))
-                                              (println "Processing function set."))
+                                              (println "Processing function set.")
+                                              (catch Exception e
+                                                (println "Error setting the processing function from:" (str n))
+                                                (.printStackTrace e)))
                                             (println "Error: cannot set processing function from invalid DSL expression:" (str n)))))]
     (cli/start-cli
       {:cmds {:load-dsl {:fn (fn [dsl-file-name]
