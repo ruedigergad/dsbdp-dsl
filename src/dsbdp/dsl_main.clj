@@ -14,11 +14,13 @@
     (cli4clj [cli :as cli])
     (clj-assorted-utils [util :as utils])
     (clojure
-      [pprint :as pprint])
+      [pprint :as pprint]
+      [string :as string])
     (dsbdp
       [data-processing-dsl :as dsl]))
   (:import
-    (java.nio.file Files Paths))
+    (java.nio.file Files Paths)
+    (javax.xml.bind DatatypeConverter))
   (:gen-class))
 
 (defn -main [& args]
@@ -65,5 +67,15 @@
                                   (catch Exception e
                                     (println "Error processing binary file:" (str bin-file-name))
                                     (.printStackTrace e)))
-                                (println "Error file does not exits:" (str bin-file-name))))}}})))
+                                (println "Error file does not exits:" (str bin-file-name))))}
+        :proc-hex-str {:fn (fn [hex-string]
+                             (if (not (empty? (str hex-string)))
+                               (try
+                                 (-> hex-string str string/trim (DatatypeConverter/parseHexBinary) (@proc-fn) pprint/pprint)
+                                 (catch Exception e
+                                   (println "Error processing hex string:" (str hex-string))
+                                   (.printStackTrace e)))
+                               (println "Error: Cannot process empty string."))
+                             nil)
+                       :long-info "A hex string suitable for processing can be obtained from a file, e.g., as follows: xxd -p <FILE> | tr -d '\\n'"}}})))
 
