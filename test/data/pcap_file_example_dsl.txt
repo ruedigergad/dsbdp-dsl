@@ -1,6 +1,6 @@
 {:output-type :clj
- :rules [[magic-number '(int32be 0)]
-         [snapshot-len '(int32be 16)]
+ :rules [[magic-number (int32be 0)]
+         [snapshot-len (int32be 16)]
          [packets ([capture-length (int32be (+ offset 8))]
                    [packet-length (int32be (+ offset 12))]
                    [__offset-increment (+ 16 __1_capture-length)]

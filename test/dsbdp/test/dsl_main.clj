@@ -11,10 +11,20 @@
     :doc "Tests for the test CLI"}  
   dsbdp.test.dsl-main
   (:require
-    [cli4clj.cli-tests :refer :all]
-    [clj-assorted-utils.util :refer :all]
-    [clojure.test :refer :all]
-    [dsbdp.dsl-main :refer :all]))
+    [cli4clj.cli-tests :as cli-tests]
+    [clj-assorted-utils.util :as utils]
+    [clojure.test :as test]
+    [dsbdp.dsl-main :as dsl-main]))
 
 
+(test/deftest load-dsl-test
+  (let [test-cmd-input ["load-dsl test/data/pcap_file_example_dsl.txt"]
+        out-string (cli-tests/test-cli-stdout #(dsl-main/-main "") test-cmd-input)]
+    (test/is (=
+               (cli-tests/expected-string
+                 ["Loading DSL from: test/data/pcap_file_example_dsl.txt"
+                  "Setting DSL expression..."
+                  "Setting processing function..."
+                  "Processing function set."])
+               out-string))))
 

@@ -14,6 +14,7 @@
             [clojure.pprint :refer :all]))
 
 (def ^:dynamic *incremental-indicator-suffix* "#inc")
+(def ^:dynamic *verbose* false)
 
 (defn- create-proc-sub-fn
   "Create a sub part of a processing function.
@@ -38,8 +39,9 @@
                     (conj v (ns-resolve 'dsbdp.byte-array-conversion s) 'input)
                   :default
                     (do
-                      (println "Warning: Could not resolve symbol:" s)
-                      (println "Assuming" s "is intended as \"self-reference\".")
+                      (when *verbose*
+                        (println "Warning: Could not resolve symbol:" s)
+                        (println "Assuming" s "is intended as \"self-reference\"."))
                       (conj v s))))
             (list? data-proc-def-element)
               (conj v (into '() (reverse (create-proc-sub-fn data-proc-def-element input))))

@@ -16,7 +16,7 @@
   :test2junit-run-ant true  
   :html5-docs-docs-dir "ghpages/doc"
   :html5-docs-ns-includes #"^dsbdp.*"
-  :html5-docs-repository-url "https://github.com/ruedigergad/dsbdp/blob/master"
+  :html5-docs-repository-url "https://github.com/ruedigergad/dsbdp-dsl/blob/master"
   :aot :all
-;  :main dsbdp.main
+  :main dsbdp.dsl-main
   )
