@@ -37,7 +37,7 @@
                                         (println "Error: DSL string is empty."))
                                       nil))
         proc-fn (atom (fn [_] (println "This is a no-op processing function place-holder."
-                                       "Please use load-dsl or set-dsl to specify a valid DSL instance to set a meaningful processing function.")))
+                                       "Please use load-dsl to specify a valid DSL instance to set a meaningful processing function.")))
         _ (add-watch dsl-expression nil (fn [_ _ _ n]
                                           (if n
                                             (try
