@@ -77,5 +77,6 @@
                                    (.printStackTrace e)))
                                (println "Error: Cannot process empty string."))
                              nil)
-                       :long-info "A hex string suitable for processing can be obtained from a file, e.g., as follows: xxd -p <FILE> | tr -d '\\n'"}}})))
+                       :long-info "A hex string suitable for processing can be obtained from a file, e.g., as follows: xxd -p <FILE> | tr -d '\\n'"}
+        :show-dsl {:fn (fn [] (pprint/pprint @dsl-expression))}}})))
 

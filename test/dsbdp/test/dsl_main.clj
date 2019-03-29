@@ -61,6 +61,42 @@
    "      \"ack-no\" 0,"
    "      \"seq-no\" 1034137073}}}}]}"])
 
+(def expected-dsl
+  ["{:output-type :clj,"
+   " :rules"" [[magic-number (int32be 0)]"
+   "  [snapshot-len (int32be 16)]"
+   "  [packets""   ([capture-length (int32be (+ offset 8))]"
+   "    [packet-length (int32be (+ offset 12))]"
+   "    [__offset-increment (+ 16 __1_capture-length)]"
+   "    [data""     [[eth-dst (eth-mac-addr-str (+ offset 16))]"
+   "      [eth-src (eth-mac-addr-str (+ offset 20))]"
+   "      [data""       [[proto-id (int8 (+ offset 39))]"
+   "        [ip-dst (ipv4-addr-str (+ offset 42))]"
+   "        [ip-src (ipv4-addr-str (+ offset 46))]"
+   "        [data"
+   "         [(= __3_proto-id 1)"
+   "          [[type"
+   "            (condp"
+   "             ="
+   "             (int8 (+ offset 50))"
+   "             0"
+   "             \"Echo Reply\""
+   "             3"
+   "             \"Destination Unreachable\""
+   "             8"
+   "             \"Echo Request\")]]"
+   "          (= __3_proto-id 6)"
+   "          [[dst (int16 (+ offset 52))]"
+   "           [src (int16 (+ offset 50))]"
+   "           [flags (int8 (+ offset 8))]"
+   "           [ack-no (int32 (+ offset 58))]"
+   "           [seq-no (int32 (+ offset 54))]]"
+   "          (= __3_proto-id 17)"
+   "          [[dst (int16 (+ offset 52))]"
+   "           [src (int16 (+ offset 50))]]]]]]]])"
+   "   {:initial-offset 24}]]}"]
+  )
+
 (test/deftest load-dsl-test
   (let [test-cmd-input ["load-dsl test/data/pcap_file_example_dsl.txt"]
         out-string (cli-tests/test-cli-stdout #(dsl-main/-main "") test-cmd-input)]
@@ -97,5 +133,18 @@
                         "Setting processing function..."
                         "Processing function set."]
                        pcap-expected-output))
+               out-string))))
+
+(test/deftest show-dsl-test
+  (let [test-cmd-input ["load-dsl test/data/pcap_file_example_dsl.txt"
+                        "show-dsl"]
+        out-string (cli-tests/test-cli-stdout #(dsl-main/-main "") test-cmd-input)]
+    (test/is (=
+               (cli-tests/expected-string
+                 (into ["Loading DSL from: test/data/pcap_file_example_dsl.txt"
+                        "Setting DSL expression..."
+                        "Setting processing function..."
+                        "Processing function set."]
+                       expected-dsl))
                out-string))))
 
