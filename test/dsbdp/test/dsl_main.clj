@@ -94,8 +94,7 @@
    "          (= __3_proto-id 17)"
    "          [[dst (int16 (+ offset 52))]"
    "           [src (int16 (+ offset 50))]]]]]]]])"
-   "   {:initial-offset 24}]]}"]
-  )
+   "   {:initial-offset 24}]]}"])
 
 (test/deftest load-dsl-test
   (let [test-cmd-input ["load-dsl test/data/pcap_file_example_dsl.txt"]
