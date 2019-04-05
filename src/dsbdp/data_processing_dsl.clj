@@ -71,75 +71,80 @@
 (declare create-proc-fn)
 
 (defn- create-bindings-vector
-  [input rules out-format-fn output nesting-level]
+  [input rules out-format-fn output nesting-level dsl-expression]
   (reduce
     (fn [v rule]
       (let [rule-name (first rule)
             rule-expression (second rule)]
         (cond
-          (and
-            (list? rule-expression)
-            (every? vector? rule-expression)) (do
-;                                                (println "Creating looped processing for nested sequence...")
-                                                (let [seq-params (rule 2)
-                                                      nested-expr-tmp (create-let-expression
-                                                                        input
-                                                                        (vec rule-expression)
-                                                                        out-format-fn
-                                                                        output
-                                                                        (inc nesting-level))
-                                                      nested-expr-ret-tmp (last nested-expr-tmp)
-                                                      nested-expr-ret [nested-expr-ret-tmp (prefix-rule-name '__offset-increment (inc nesting-level))]
-                                                      nested-expr (into '() (reverse (assoc (vec nested-expr-tmp) (- (count nested-expr-tmp) 1) nested-expr-ret)))
-                                                      loop-expr `(loop [~'offset (~seq-params :initial-offset) ~'result ~(out-format-fn)]
-                                                                  (let [~'tmp-result ~nested-expr
-                                                                        ~'new-offset (+ ~'offset (second ~'tmp-result))
-                                                                        ~'new-result ~(out-format-fn 'result '(first tmp-result))]
-;                                                                    (println "Nested seq step:" ~'new-offset "--" (count ~'input))
-                                                                    (if (< ~'new-offset (count ~'input))
-                                                                      (recur ~'new-offset ~'new-result)
-                                                                      ~'new-result)))]
-												(conj v
-													  (prefix-rule-name rule-name nesting-level)
-													  loop-expr)))
-          (list? rule-expression) (conj v
-										(prefix-rule-name rule-name nesting-level)
-										(create-proc-sub-fn rule-expression input))
-          (and
-            (vector? rule-expression)
-            (every? vector? rule-expression)) (let [nested-expr (create-let-expression
-                                                                  input
-                                                                  rule-expression
-                                                                  out-format-fn
-                                                                  output
-                                                                  (inc nesting-level))]
-                                                (conj v (prefix-rule-name rule-name nesting-level) nested-expr))
-          (cond-rule-expr? rule-expression) (let [cond-expr (reduce
-                                                              (fn [vect v]
-                                                                (cond
-                                                                  (or (list? v)
-                                                                      (keyword? v)) (conj vect v)
-                                                                  (vector? v) (conj vect
-                                                                                    (create-let-expression
-                                                                                      input
-                                                                                      v
-                                                                                      out-format-fn
-                                                                                      output
-                                                                                      (inc nesting-level)))
-                                                                  :default (do
-                                                                             (println "Unknown rule expression part:" v)
-                                                                             vect)))
-                                                              ['clojure.core/cond]
-                                                              rule-expression)]
-                                              (conj v (prefix-rule-name rule-name nesting-level) (into '() (reverse cond-expr))))
+          (and (list? rule-expression) (every? vector? rule-expression)) 
+          (let [seq-params (rule 2)
+                nested-expr-tmp (create-let-expression
+                                  input
+                                  (vec rule-expression)
+                                  out-format-fn
+                                  output
+                                  (inc nesting-level)
+                                  dsl-expression)
+                nested-expr-ret-tmp (last nested-expr-tmp)
+                nested-expr-ret [nested-expr-ret-tmp (prefix-rule-name '__offset-increment (inc nesting-level))]
+                nested-expr (into '() (reverse (assoc (vec nested-expr-tmp) (- (count nested-expr-tmp) 1) nested-expr-ret)))
+                loop-expr `(loop [~'offset (~seq-params :initial-offset) ~'result ~(out-format-fn)]
+                            (let [~'tmp-result ~nested-expr
+                                  ~'new-offset (+ ~'offset (second ~'tmp-result))
+                                  ~'new-result ~(out-format-fn 'result '(first tmp-result))]
+                              (if (< ~'new-offset (count ~'input))
+                                (recur ~'new-offset ~'new-result)
+                                ~'new-result)))]
+            (conj v
+                  (prefix-rule-name rule-name nesting-level)
+                  loop-expr))
+
+          (list? rule-expression)
+          (cond-> v
+            true (conj
+                   (prefix-rule-name rule-name nesting-level)
+                   (create-proc-sub-fn rule-expression input)))
+
+          (and (vector? rule-expression) (every? vector? rule-expression))
+          (let [nested-expr (create-let-expression
+                              input
+                              rule-expression
+                              out-format-fn
+                              output
+                              (inc nesting-level)
+                              dsl-expression)]
+            (conj v (prefix-rule-name rule-name nesting-level) nested-expr))
+
+          (cond-rule-expr? rule-expression)
+          (let [cond-expr (reduce
+                            (fn [vect v]
+                              (cond
+                                (or (list? v)
+                                    (keyword? v)) (conj vect v)
+                                (vector? v) (conj vect
+                                                  (create-let-expression
+                                                    input
+                                                    v
+                                                    out-format-fn
+                                                    output
+                                                    (inc nesting-level)
+                                                    dsl-expression))
+                                :default (do
+                                           (println "Unknown rule expression part:" v)
+                                           vect)))
+                            ['clojure.core/cond]
+                            rule-expression)]
+            (conj v (prefix-rule-name rule-name nesting-level) (into '() (reverse cond-expr))))
+
           :default (println "Binding: unknown element for rule:" (str rule)))))
     []
     rules))
 
 (defn- create-let-expression
-  [input rules out-format-fn output nesting-level]
+  [input rules out-format-fn output nesting-level dsl-expression]
   `(let
-    ~(create-bindings-vector input rules out-format-fn output nesting-level)
+    ~(create-bindings-vector input rules out-format-fn output nesting-level dsl-expression)
     ~(reverse (into '() (out-format-fn rules output nesting-level)))))
 
 (defn- java-out-format-fn
@@ -266,7 +271,7 @@
                              (println "Defaulting to :java-map as output type.")
                              java-out-format-fn))
 ;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
-        fn-body (create-let-expression input-sym rules output-format-fn output-sym 0)
+        fn-body (create-let-expression input-sym rules output-format-fn output-sym 0 dsl-expression)
 ;        _ (println "Created data processing function body:" fn-body)
 ;        _ (pprint fn-body)
 ;        _ (println "")
