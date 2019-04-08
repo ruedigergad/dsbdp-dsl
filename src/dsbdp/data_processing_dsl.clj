@@ -48,7 +48,8 @@
             :default (conj v data-proc-def-element)))
         [] data-processing-definition))))
 
-(defn cond-rule-expr?
+(defn- cond-rule-expr?
+  "True if the supplied rule-rexpression is a \"cond rule expression\" that contains processing alternatives."
   [rule-expression]
   (and
     (vector? rule-expression)
@@ -61,6 +62,7 @@
             (rest rule-expression))))))
 
 (defn prefix-rule-name
+  "Prefix the rule name based on its nesting level to assure that at identifiers at each branch level are unique."
   [rule-name nesting-level]
   (if
     (> 1 nesting-level)
@@ -71,15 +73,15 @@
 (declare create-proc-fn)
 
 (defn- with-offsets?
+  "True if :with-offsets is set and the rule expression contains an offset expression."
   [rule-expression dsl-expression]
   (let [offset (second rule-expression)]
     (and
       (:with-offsets dsl-expression)
-(do (println "FOOOO" offset) true)
-      (or (number? offset) (list? offset))
-      )))
+      (or (number? offset) (list? offset)))))
 
 (defn- create-bindings-vector
+  "Create the bindings vector for the let expression created with create-let-expression."
   [input rules out-format-fn output nesting-level dsl-expression]
   (reduce
     (fn [v rule]
@@ -150,12 +152,14 @@
     rules))
 
 (defn- create-let-expression
+  "Create let expression based on the given DSL rules etc."
   [input rules out-format-fn output nesting-level dsl-expression]
   `(let
     ~(create-bindings-vector input rules out-format-fn output nesting-level dsl-expression)
     ~(reverse (into '() (out-format-fn rules output nesting-level dsl-expression)))))
 
 (defn- java-out-format-fn
+  "Output function for producing Java-style output."
   ([]
     `(java.util.ArrayList.))
   ([result-list new-result-value]
@@ -178,6 +182,7 @@
       rules)))
 
 (defn- clj-out-format-fn
+  "Output function for producing Clojure-style output."
   ([]
     [])
   ([result-vec new-result-value]
@@ -208,6 +213,7 @@
       rules)))
 
 (defn- csv-str-out-format-fn
+  "Output function for producing CSV-style output."
   [rules output nesting-level dsl-expression]
   (reduce
     (fn [v rule]
@@ -223,6 +229,7 @@
     rules))
 
 (defn- json-str-out-format-fn
+  "Output function for producing JSON-style output."
   [rules output nesting-level dsl-expression]
   (reduce
     (fn [v rule]
