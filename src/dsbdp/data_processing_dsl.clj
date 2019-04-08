@@ -74,10 +74,13 @@
 
 (defn- with-offsets?
   "True if :with-offsets is set and the rule expression contains an offset expression."
-  [rule-expression dsl-expression]
-  (let [offset (second rule-expression)]
+  [rule dsl-expression]
+  (let [rule-name (name (first rule))
+        rule-expression (second rule)
+        offset (second rule-expression)]
     (and
       (:with-offsets dsl-expression)
+      (not (.startsWith rule-name "__"))
       (or (number? offset) (list? offset)))))
 
 (defn- create-bindings-vector
@@ -114,7 +117,7 @@
           (list? rule-expression)
           (cond-> v
             true (conj (prefix-rule-name rule-name nesting-level) (create-proc-sub-fn rule-expression input))
-            (with-offsets? rule-expression dsl-expression) (conj (prefix-rule-name (str (name rule-name) "__offset") nesting-level) (second rule-expression)))
+            (with-offsets? rule dsl-expression) (conj (prefix-rule-name (str (name rule-name) "__offset") nesting-level) (second rule-expression)))
 
           (and (vector? rule-expression) (every? vector? rule-expression))
           (let [nested-expr (create-let-expression
@@ -196,9 +199,9 @@
             true (conj `(assoc
                           ~(name (first rule))
                           ~(prefix-rule-name (first rule) nesting-level)))
-            (with-offsets? (second rule) dsl-expression) (conj `(assoc
-                                                                 ~(str (name (first rule)) "__offset")
-                                                                 ~(prefix-rule-name (str (name (first rule)) "__offset") nesting-level))))
+            (with-offsets? rule dsl-expression) (conj `(assoc
+                                                        ~(str (name (first rule)) "__offset")
+                                                        ~(prefix-rule-name (str (name (first rule)) "__offset") nesting-level))))
 
           (cond-rule-expr? (second rule))
           (conj v `(assoc
