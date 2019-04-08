@@ -560,9 +560,9 @@
 ;;; Tests for byte array input with storing offsets.
 ;;;
 (deftest byte-array-to-clj-map-with-flat-stored-offset-test
-  (let [expected {"udpSrc" 2048, "udpSrc___offset" 50, "udpDst" 4096, "udpDst___offset" 52}
+  (let [expected {"udpSrc" 2048, "udpSrc__offset" 50, "udpDst" 4096, "udpDst__offset" 52}
         dsl-expression {:output-type :clj
-                        :offset :flat
+                        :with-offsets :flat
                         :rules [['udpSrc '(int16 50)]
                                 ['udpDst '(int16 52)]]}
         data-processing-fn (create-proc-fn dsl-expression)

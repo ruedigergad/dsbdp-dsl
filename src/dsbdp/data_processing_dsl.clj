@@ -64,11 +64,20 @@
   [rule-name nesting-level]
   (if
     (> 1 nesting-level)
-    rule-name
+    (symbol rule-name)
     (symbol (str "__" nesting-level "_" rule-name))))
 
 (declare create-let-expression)
 (declare create-proc-fn)
+
+(defn- with-offsets?
+  [rule-expression dsl-expression]
+  (let [offset (second rule-expression)]
+    (and
+      (:with-offsets dsl-expression)
+(do (println "FOOOO" offset) true)
+      (or (number? offset) (list? offset))
+      )))
 
 (defn- create-bindings-vector
   [input rules out-format-fn output nesting-level dsl-expression]
@@ -102,9 +111,8 @@
 
           (list? rule-expression)
           (cond-> v
-            true (conj
-                   (prefix-rule-name rule-name nesting-level)
-                   (create-proc-sub-fn rule-expression input)))
+            true (conj (prefix-rule-name rule-name nesting-level) (create-proc-sub-fn rule-expression input))
+            (with-offsets? rule-expression dsl-expression) (conj (prefix-rule-name (str (name rule-name) "__offset") nesting-level) (second rule-expression)))
 
           (and (vector? rule-expression) (every? vector? rule-expression))
           (let [nested-expr (create-let-expression
@@ -145,14 +153,14 @@
   [input rules out-format-fn output nesting-level dsl-expression]
   `(let
     ~(create-bindings-vector input rules out-format-fn output nesting-level dsl-expression)
-    ~(reverse (into '() (out-format-fn rules output nesting-level)))))
+    ~(reverse (into '() (out-format-fn rules output nesting-level dsl-expression)))))
 
 (defn- java-out-format-fn
   ([]
     `(java.util.ArrayList.))
   ([result-list new-result-value]
     `(doto ~result-list (.add ~new-result-value)))
-  ([rules output nesting-level]
+  ([rules output nesting-level dsl-expression]
     (reduce
       (fn [v rule]
         (cond
@@ -174,27 +182,33 @@
     [])
   ([result-vec new-result-value]
     `(conj ~result-vec ~new-result-value))
-  ([rules output nesting-level]
+  ([rules output nesting-level dsl-expression]
     (reduce
       (fn [v rule]
         (cond
-          (sequential? (second rule)) (conj v
-                                            `(assoc
-                                              ~(name (first rule))
-                                              ~(prefix-rule-name (first rule) nesting-level)))
-          (cond-rule-expr? (second rule)) (conj v
-                                                `(assoc ~(name (first rule))
-                                                        ~(prefix-rule-name (first rule) nesting-level)))
-          :default (do (println "Clj Map Body: unknown element for rule:" (str rule))
-                       ;(throw (RuntimeException. "Clj Map Body: unknown element for rule"))
-                       )))
+          (sequential? (second rule))
+          (cond-> v
+            true (conj `(assoc
+                          ~(name (first rule))
+                          ~(prefix-rule-name (first rule) nesting-level)))
+            (with-offsets? (second rule) dsl-expression) (conj `(assoc
+                                                                 ~(str (name (first rule)) "__offset")
+                                                                 ~(prefix-rule-name (str (name (first rule)) "__offset") nesting-level))))
+
+          (cond-rule-expr? (second rule))
+          (conj v `(assoc
+                     ~(name (first rule))
+                     ~(prefix-rule-name (first rule) nesting-level)))
+
+          :default
+          (do (println "Clj Map Body: unknown element for rule:" (str rule)))))
       (if (nil? output)
         '[-> {}]
         '[-> output])
       rules)))
 
 (defn- csv-str-out-format-fn
-  [rules output nesting-level]
+  [rules output nesting-level dsl-expression]
   (reduce
     (fn [v rule]
       (let [tmp-v (if (some #{:string} rule)
@@ -209,7 +223,7 @@
     rules))
 
 (defn- json-str-out-format-fn
-  [rules output nesting-level]
+  [rules output nesting-level dsl-expression]
   (reduce
     (fn [v rule]
       (let [tmp-k (conj v `(.append "\"")
