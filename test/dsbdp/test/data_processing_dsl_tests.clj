@@ -594,5 +594,35 @@
                                  {:initial-offset 24}]]}
         data-processing-fn (create-proc-fn dsl-expression)
         result (data-processing-fn pcap-raw-data)]
+    (is (map? result))
+    (is (vector? (.get result "packets")))
+    (is (= expected result))))
+
+(deftest byte-array-to-java-map-sequence-with-flat-stored-offset-test
+  (let [pcap-raw-data (Files/readAllBytes (Paths/get "test/data/pcap_three_packets_icmp_dns_http.pcap" (into-array [""])))
+        expected {"magic-number" 0xa1b2c3d4, "magic-number__offset" 0,
+                  "snapshot-len" 262144, "snapshot-len__offset" 16,
+                  "packets" [{"capture-length" 98, "capture-length__offset" 32,
+                              "packet-length" 98, "packet-length__offset" 36,
+                              "__offset-increment" 114}
+                             {"capture-length" 70, "capture-length__offset" 146,
+                              "packet-length" 70, "packet-length__offset" 150,
+                              "__offset-increment" 86}
+                             {"capture-length" 74, "capture-length__offset" 232,
+                              "packet-length" 74, "packet-length__offset" 236,
+                              "__offset-increment" 90}] }
+        dsl-expression {:output-type :java
+                        :with-offsets :flat
+                        :rules [['magic-number '(int32be 0)]
+                                ['snapshot-len '(int32be 16)]
+                                ['packets
+                                 '([capture-length (int32be (+ offset 8))]
+                                   [packet-length (int32be (+ offset 12))]
+                                   [__offset-increment (+ 16 __1_capture-length)])
+                                 {:initial-offset 24}]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn pcap-raw-data)]
+    (is (instance? java.util.HashMap result))
+    (is (instance? java.util.ArrayList (.get result "packets")))
     (is (= expected result))))
 

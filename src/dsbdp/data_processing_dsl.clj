@@ -171,13 +171,20 @@
     (reduce
       (fn [v rule]
         (cond
-          (sequential? (second rule)) (conj v
-                                            `(.put
-                                              ~(name (first rule))
-                                              ~(prefix-rule-name (first rule) nesting-level)))
-          (cond-rule-expr? (second rule)) (conj v
-                                                `(.put ~(name (first rule))
-                                                       ~(prefix-rule-name (first rule) nesting-level)))
+          (sequential? (second rule))
+          (cond-> v
+            true (conj `(.put
+                         ~(name (first rule))
+                         ~(prefix-rule-name (first rule) nesting-level)))
+            (with-offsets? rule dsl-expression) (conj `(.put
+                                                        ~(str (name (first rule)) "__offset")
+                                                        ~(prefix-rule-name (str (name (first rule)) "__offset") nesting-level))))
+
+          (cond-rule-expr? (second rule))
+          (conj v
+            `(.put ~(name (first rule))
+                   ~(prefix-rule-name (first rule) nesting-level)))
+
           :default (println "Java Map Body: unknown element for rule:" (str rule))))
       (if (nil? output)
         '[doto (java.util.HashMap.)]
