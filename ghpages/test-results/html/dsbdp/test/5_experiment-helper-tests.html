@@ -1,10 +1,152 @@
 <html xmlns:string="xalan://java.lang.String" xmlns:lxslt="http://xml.apache.org/xslt">
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Unit Test Results: All Errors</title>
-<link title="Style" type="text/css" rel="stylesheet" href="stylesheet.css">
+<title>Unit Test Results: dsbdp.test.experiment-helper-tests</title>
+<link title="Style" type="text/css" rel="stylesheet" href="../../stylesheet.css">
+<script language="JavaScript" type="text/javascript">
+        var TestCases = new Array();
+        var cur;
+        
+    cur = TestCases['dsbdp.test.experiment-helper-tests'] = new Array();
+    
+        cur['awt.toolkit'] = 'sun.awt.X11.XToolkit';
+    
+        cur['clojure.compile.path'] = '/home/rc/repositories/private/clojure/dsbdp/target/classes';
+    
+        cur['clojure.debug'] = 'false';
+    
+        cur['dsbdp.version'] = '0.4.0';
+    
+        cur['file.encoding'] = 'UTF-8';
+    
+        cur['file.encoding.pkg'] = 'sun.io';
+    
+        cur['file.separator'] = '/';
+    
+        cur['java.awt.graphicsenv'] = 'sun.awt.X11GraphicsEnvironment';
+    
+        cur['java.awt.printerjob'] = 'sun.print.PSPrinterJob';
+    
+        cur['java.class.path'] = '/home/rc/repositories/private/clojure/dsbdp/test:/home/rc/repositories/private/clojure/dsbdp/src:/home/rc/repositories/private/clojure/dsbdp/dev-resources:/home/rc/repositories/private/clojure/dsbdp/resources:/home/rc/repositories/private/clojure/dsbdp/target/classes:/home/rc/.m2/repository/org/clojure/clojure/1.8.0/clojure-1.8.0.jar:/home/rc/.m2/repository/org/clojure/core.memoize/0.5.8/core.memoize-0.5.8.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer/0.6.7/tools.analyzer-0.6.7.jar:/home/rc/.m2/repository/org/clojure/tools.cli/0.3.3/tools.cli-0.3.3.jar:/home/rc/.m2/repository/org/clojure/tools.reader/1.0.0-alpha1/tools.reader-1.0.0-alpha1.jar:/home/rc/.m2/repository/org/clojure/tools.analyzer.jvm/0.6.9/tools.analyzer.jvm-0.6.9.jar:/home/rc/.m2/repository/org/clojure/core.async/0.2.374/core.async-0.2.374.jar:/home/rc/.m2/repository/org/clojure/tools.nrepl/0.2.12/tools.nrepl-0.2.12.jar:/home/rc/.m2/repository/clojure-complete/clojure-complete/0.2.4/clojure-complete-0.2.4.jar:/home/rc/.m2/repository/robert/hooke/1.3.0/hooke-1.3.0.jar:/home/rc/.m2/repository/test2junit/test2junit/1.3.2/test2junit-1.3.2.jar:/home/rc/.m2/repository/org/ow2/asm/asm-all/4.2/asm-all-4.2.jar:/home/rc/.m2/repository/clj-assorted-utils/clj-assorted-utils/1.18.1/clj-assorted-utils-1.18.1.jar:/home/rc/.m2/repository/org/clojure/core.cache/0.6.4/core.cache-0.6.4.jar:/home/rc/.m2/repository/commons-net/commons-net/3.6/commons-net-3.6.jar:/home/rc/.m2/repository/org/clojure/data.priority-map/0.0.4/data.priority-map-0.0.4.jar';
+    
+        cur['java.class.version'] = '52.0';
+    
+        cur['java.endorsed.dirs'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/endorsed';
+    
+        cur['java.ext.dirs'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/ext:/usr/java/packages/lib/ext';
+    
+        cur['java.home'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre';
+    
+        cur['java.io.tmpdir'] = '/tmp';
+    
+        cur['java.library.path'] = '/usr/java/packages/lib/amd64:/usr/lib64:/lib64:/lib:/usr/lib';
+    
+        cur['java.runtime.name'] = 'OpenJDK Runtime Environment';
+    
+        cur['java.runtime.version'] = '1.8.0_131-b12';
+    
+        cur['java.specification.name'] = 'Java Platform API Specification';
+    
+        cur['java.specification.vendor'] = 'Oracle Corporation';
+    
+        cur['java.specification.version'] = '1.8';
+    
+        cur['java.vendor'] = 'Oracle Corporation';
+    
+        cur['java.vendor.url'] = 'http://java.oracle.com/';
+    
+        cur['java.vendor.url.bug'] = 'http://bugreport.sun.com/bugreport/';
+    
+        cur['java.version'] = '1.8.0_131';
+    
+        cur['java.vm.info'] = 'mixed mode';
+    
+        cur['java.vm.name'] = 'OpenJDK 64-Bit Server VM';
+    
+        cur['java.vm.specification.name'] = 'Java Virtual Machine Specification';
+    
+        cur['java.vm.specification.vendor'] = 'Oracle Corporation';
+    
+        cur['java.vm.specification.version'] = '1.8';
+    
+        cur['java.vm.vendor'] = 'Oracle Corporation';
+    
+        cur['java.vm.version'] = '25.131-b12';
+    
+        cur['line.separator'] = ' ';
+    
+        cur['os.arch'] = 'amd64';
+    
+        cur['os.name'] = 'Linux';
+    
+        cur['os.version'] = '4.11.5-200.fc25.x86_64+debug';
+    
+        cur['path.separator'] = ':';
+    
+        cur['sun.arch.data.model'] = '64';
+    
+        cur['sun.boot.class.path'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/resources.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/rt.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/sunrsasign.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jsse.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jce.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/charsets.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/jfr.jar:/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/classes';
+    
+        cur['sun.boot.library.path'] = '/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.131-1.b12.fc25.x86_64/jre/lib/amd64';
+    
+        cur['sun.cpu.endian'] = 'little';
+    
+        cur['sun.cpu.isalist'] = '';
+    
+        cur['sun.io.unicode.encoding'] = 'UnicodeLittle';
+    
+        cur['sun.java.command'] = 'clojure.main -i /tmp/form-init5299198040654132120.clj';
+    
+        cur['sun.java.launcher'] = 'SUN_STANDARD';
+    
+        cur['sun.jnu.encoding'] = 'UTF-8';
+    
+        cur['sun.management.compiler'] = 'HotSpot 64-Bit Tiered Compilers';
+    
+        cur['sun.os.patch.level'] = 'unknown';
+    
+        cur['user.country'] = 'US';
+    
+        cur['user.dir'] = '/home/rc/repositories/private/clojure/dsbdp';
+    
+        cur['user.home'] = '/home/rc';
+    
+        cur['user.language'] = 'en';
+    
+        cur['user.name'] = 'rc';
+    
+        cur['user.timezone'] = 'Europe/Berlin';
+    </script><script language="JavaScript" type="text/javascript">
+        function displayProperties (name) {
+          var win = window.open('','JUnitSystemProperties','scrollbars=1,resizable=1');
+          var doc = win.document;
+          doc.open();
+          doc.write("<html><head><title>Properties of " + name + "</title>");
+          doc.write("<style type=\"text/css\">");
+          doc.write("body {font:normal 68% verdana,arial,helvetica; color:#000000; }");
+          doc.write("table tr td, table tr th { font-size: 68%; }");
+          doc.write("table.properties { border-collapse:collapse; border-left:solid 1 #cccccc; border-top:solid 1 #cccccc; padding:5px; }");
+          doc.write("table.properties th { text-align:left; border-right:solid 1 #cccccc; border-bottom:solid 1 #cccccc; background-color:#eeeeee; }");
+          doc.write("table.properties td { font:normal; text-align:left; border-right:solid 1 #cccccc; border-bottom:solid 1 #cccccc; background-color:#fffffff; }");
+          doc.write("h3 { margin-bottom: 0.5em; font: bold 115% verdana,arial,helvetica }");
+          doc.write("</style>");
+          doc.write("</head><body>");
+          doc.write("<h3>Properties of " + name + "</h3>");
+          doc.write("<div align=\"right\"><a href=\"javascript:window.close();\">Close</a></div>");
+          doc.write("<table class='properties'>");
+          doc.write("<tr><th>Name</th><th>Value</th></tr>");
+          for (prop in TestCases[name]) {
+            doc.write("<tr><th>" + prop + "</th><td>" + TestCases[name][prop] + "</td></tr>");
+          }
+          doc.write("</table>");
+          doc.write("</body></html>");
+          doc.close();
+          win.focus();
+        }
+      
+      </script>
 </head>
-<body onload="open('allclasses-frame.html','classListFrame')">
+<body>
 <h1>Unit Test Results.</h1>
 <table width="100%">
 <tr>
@@ -12,17 +154,62 @@
 </tr>
 </table>
 <hr size="1">
-<h2>All Errors</h2>
+<h3>Class dsbdp.test.experiment-helper-tests</h3>
 <table width="95%" cellspacing="2" cellpadding="5" border="0" class="details">
 <tr valign="top">
-<th>Class</th><th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
+<th width="80%">Name</th><th>Tests</th><th>Errors</th><th>Failures</th><th>Skipped</th><th nowrap>Time(s)</th><th nowrap>Time Stamp</th><th>Host</th>
 </tr>
 <tr valign="top" class="Error">
-<td><a href="dsbdp/test/5_experiment-helper-tests.html">experiment-helper-tests</a></td><td><a name="create-hashmap-inc-put-proc-fns-test"></a><a href="dsbdp/test/5_experiment-helper-tests.html#create-hashmap-inc-put-proc-fns-test">create-hashmap-inc-put-proc-fns-test</a></td><td>Error</td><td>Uncaught exception, not in assertion.<br>
+<td><a href="5_experiment-helper-tests.html" title="Display all tests">experiment-helper-tests</a></td><td><a href="5_experiment-helper-tests.html" title="Display all tests">8</a></td><td><a href="5_experiment-helper-tests-errors.html" title="Display only errors">1</a></td><td>0</td><td></td><td>0.183</td><td>2017-10-02_20:52:50+0200</td><td></td>
+</tr>
+</table>
+<h2>Tests</h2>
+<table width="95%" cellspacing="2" cellpadding="5" border="0" class="details">
+<tr valign="top">
+<th>Name</th><th>Status</th><th width="80%">Type</th><th nowrap>Time(s)</th>
+</tr>
+<tr valign="top" class="Error">
+<td><a name="create-hashmap-inc-put-proc-fns-test"></a>create-hashmap-inc-put-proc-fns-test</td><td>Error</td><td>Uncaught exception, not in assertion.<br>
 <br>
 <code>expected: nil<br>  actual: clojure.lang.Compiler$CompilerException: clojure.lang.ArityException: Wrong number of args (4) passed to: core/apply-junit-output-hook/fn--253/fn--254, compiling:(/tmp/form-init5299198040654132120.clj:1:6512)<br> at clojure.lang.Compiler.analyzeSeq (Compiler.java:6875)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6856)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1009)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6863)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1009)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6856)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler$BodyExpr$Parser.parse (Compiler.java:6001)<br>    clojure.lang.Compiler$FnMethod.parse (Compiler.java:5380)<br>    clojure.lang.Compiler$FnExpr.parse (Compiler.java:3972)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6866)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler$BodyExpr$Parser.parse (Compiler.java:6001)<br>    clojure.lang.Compiler$FnMethod.parse (Compiler.java:5380)<br>    clojure.lang.Compiler$FnExpr.parse (Compiler.java:3972)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6866)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.eval (Compiler.java:6924)<br>    clojure.lang.Compiler.eval (Compiler.java:6890)<br>    clojure.core$eval.invokeStatic (core.clj:3105)<br>    clojure.core$eval.invoke (core.clj:3101)<br>    clojure.core$map$fn__4785.invoke (core.clj:2644)<br>    clojure.lang.LazySeq.sval (LazySeq.java:40)<br>    clojure.lang.LazySeq.seq (LazySeq.java:49)<br>    clojure.lang.RT.seq (RT.java:521)<br>    clojure.lang.LazilyPersistentVector.create (LazilyPersistentVector.java:44)<br>    clojure.core$vec.invokeStatic (core.clj:377)<br>    clojure.core$vec.invoke (core.clj:367)<br>    dsbdp.processing_fn_utils$create_proc_fn_vec_from_template.invokeStatic (processing_fn_utils.clj:30)<br>    dsbdp.processing_fn_utils$create_proc_fn_vec_from_template.invoke (processing_fn_utils.clj:17)<br>    dsbdp.experiment_helper$create_hashmap_inc_put_proc_fns.invokeStatic (experiment_helper.clj:90)<br>    dsbdp.experiment_helper$create_hashmap_inc_put_proc_fns.invoke (experiment_helper.clj:85)<br>    dsbdp.test.experiment_helper_tests$fn__1096.invokeStatic (experiment_helper_tests.clj:36)<br>    dsbdp.test.experiment_helper_tests/fn (experiment_helper_tests.clj:35)<br>    clojure.test$test_var$fn__7983.invoke (test.clj:716)<br>    clojure.test$test_var.invokeStatic (test.clj:716)<br>    clojure.test$test_var.invoke (test.clj:707)<br>    clojure.test$test_vars$fn__8005$fn__8010.invoke (test.clj:734)<br>    clojure.test$default_fixture.invokeStatic (test.clj:686)<br>    clojure.test$default_fixture.invoke (test.clj:682)<br>    clojure.test$test_vars$fn__8005.invoke (test.clj:734)<br>    clojure.test$default_fixture.invokeStatic (test.clj:686)<br>    clojure.test$default_fixture.invoke (test.clj:682)<br>    clojure.test$test_vars.invokeStatic (test.clj:730)<br>    clojure.test$test_all_vars.invokeStatic (test.clj:736)<br>    clojure.test$test_ns.invokeStatic (test.clj:757)<br>    clojure.test$test_ns.invoke (test.clj:742)<br>    clojure.lang.AFn.applyToHelper (AFn.java:154)<br>    clojure.lang.AFn.applyTo (AFn.java:144)<br>    clojure.core$apply.invokeStatic (core.clj:646)<br>    clojure.core$apply.invoke (core.clj:641)<br>    test2junit.core$apply_junit_output_hook$fn__253$fn__264$fn__275$fn__276.invoke (core.clj:53)<br>    test2junit.core$apply_junit_output_hook$fn__253$fn__264$fn__275.invoke (core.clj:52)<br>    test2junit.core$apply_junit_output_hook$fn__253$fn__264.invoke (core.clj:51)<br>    test2junit.core$apply_junit_output_hook$fn__253.doInvoke (core.clj:51)<br>    clojure.lang.RestFn.applyTo (RestFn.java:139)<br>    clojure.core$apply.invokeStatic (core.clj:648)<br>    clojure.core$apply.invoke (core.clj:641)<br>    robert.hooke$compose_hooks$fn__31.doInvoke (hooke.clj:40)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.core$apply.invokeStatic (core.clj:646)<br>    clojure.core$apply.invoke (core.clj:641)<br>    robert.hooke$run_hooks.invokeStatic (hooke.clj:46)<br>    robert.hooke$run_hooks.invoke (hooke.clj:45)<br>    robert.hooke$prepare_for_hooks$fn__36$fn__37.doInvoke (hooke.clj:54)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)<br>    clojure.lang.RestFn.invoke (RestFn.java:408)<br>    user$eval377$fn__428.invoke (form-init5299198040654132120.clj:1)<br>    clojure.lang.AFn.applyToHelper (AFn.java:156)<br>    clojure.lang.AFn.applyTo (AFn.java:144)<br>    clojure.core$apply.invokeStatic (core.clj:648)<br>    clojure.core$apply.invoke (core.clj:641)<br>    leiningen.core.injected$compose_hooks$fn__311.doInvoke (form-init5299198040654132120.clj:1)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.core$apply.invokeStatic (core.clj:646)<br>    clojure.core$apply.invoke (core.clj:641)<br>    leiningen.core.injected$run_hooks.invokeStatic (form-init5299198040654132120.clj:1)<br>    leiningen.core.injected$run_hooks.invoke (form-init5299198040654132120.clj:1)<br>    leiningen.core.injected$prepare_for_hooks$fn__316$fn__317.doInvoke (form-init5299198040654132120.clj:1)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)<br>    clojure.lang.RestFn.invoke (RestFn.java:408)<br>    clojure.core$map$fn__4785.invoke (core.clj:2646)<br>    clojure.lang.LazySeq.sval (LazySeq.java:40)<br>    clojure.lang.LazySeq.seq (LazySeq.java:49)<br>    clojure.lang.Cons.next (Cons.java:39)<br>    clojure.lang.RT.next (RT.java:688)<br>    clojure.core$next__4341.invokeStatic (core.clj:64)<br>    clojure.core$reduce1.invokeStatic (core.clj:925)<br>    clojure.core$reduce1.invokeStatic (core.clj:915)<br>    clojure.core$merge_with.invokeStatic (core.clj:2950)<br>    clojure.core$merge_with.doInvoke (core.clj:2942)<br>    clojure.lang.RestFn.applyTo (RestFn.java:139)<br>    clojure.core$apply.invokeStatic (core.clj:648)<br>    clojure.test$run_tests.invokeStatic (test.clj:767)<br>    clojure.test$run_tests.doInvoke (test.clj:767)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.core$apply.invokeStatic (core.clj:646)<br>    clojure.core$apply.invoke (core.clj:641)<br>    user$eval377$fn__440$fn__471.invoke (form-init5299198040654132120.clj:1)<br>    user$eval377$fn__440$fn__441.invoke (form-init5299198040654132120.clj:1)<br>    user$eval377$fn__440.invoke (form-init5299198040654132120.clj:1)<br>    user$eval377.invokeStatic (form-init5299198040654132120.clj:1)<br>    user$eval377.invoke (form-init5299198040654132120.clj:1)<br>    clojure.lang.Compiler.eval (Compiler.java:6927)<br>    clojure.lang.Compiler.eval (Compiler.java:6917)<br>    clojure.lang.Compiler.load (Compiler.java:7379)<br>    clojure.lang.Compiler.loadFile (Compiler.java:7317)<br>    clojure.main$load_script.invokeStatic (main.clj:275)<br>    clojure.main$init_opt.invokeStatic (main.clj:277)<br>    clojure.main$init_opt.invoke (main.clj:277)<br>    clojure.main$initialize.invokeStatic (main.clj:308)<br>    clojure.main$null_opt.invokeStatic (main.clj:342)<br>    clojure.main$null_opt.invoke (main.clj:339)<br>    clojure.main$main.invokeStatic (main.clj:421)<br>    clojure.main$main.doInvoke (main.clj:384)<br>    clojure.lang.RestFn.invoke (RestFn.java:421)<br>    clojure.lang.Var.invoke (Var.java:383)<br>    clojure.lang.AFn.applyToHelper (AFn.java:156)<br>    clojure.lang.Var.applyTo (Var.java:700)<br>    clojure.main.main (main.java:37)<br>Caused by: clojure.lang.ArityException: Wrong number of args (4) passed to: core/apply-junit-output-hook/fn--253/fn--254<br> at clojure.lang.AFn.throwArity (AFn.java:429)<br>    clojure.lang.AFn.invoke (AFn.java:44)<br>    test2junit.core.proxy$java.io.StringWriter$ff19274a.write (:-1)<br>    java.io.PrintWriter.write (PrintWriter.java:456)<br>    java.io.PrintWriter.write (PrintWriter.java:473)<br>    java.io.PrintWriter.append (PrintWriter.java:1004)<br>    java.io.PrintWriter.append (PrintWriter.java:56)<br>    java.util.Formatter$FixedString.print (Formatter.java:2595)<br>    java.util.Formatter.format (Formatter.java:2508)<br>    java.io.PrintWriter.format (PrintWriter.java:905)<br>    clojure.lang.Compiler$InstanceMethodExpr.&lt;init&gt; (Compiler.java:1507)<br>    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1013)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6856)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1009)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6863)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler$HostExpr$Parser.parse (Compiler.java:1009)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6868)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6856)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler$BodyExpr$Parser.parse (Compiler.java:6001)<br>    clojure.lang.Compiler$FnMethod.parse (Compiler.java:5380)<br>    clojure.lang.Compiler$FnExpr.parse (Compiler.java:3972)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6866)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.analyze (Compiler.java:6625)<br>    clojure.lang.Compiler$BodyExpr$Parser.parse (Compiler.java:6001)<br>    clojure.lang.Compiler$FnMethod.parse (Compiler.java:5380)<br>    clojure.lang.Compiler$FnExpr.parse (Compiler.java:3972)<br>    clojure.lang.Compiler.analyzeSeq (Compiler.java:6866)<br>    clojure.lang.Compiler.analyze (Compiler.java:6669)<br>    clojure.lang.Compiler.eval (Compiler.java:6924)<br>    clojure.lang.Compiler.eval (Compiler.java:6890)<br>    clojure.core$eval.invokeStatic (core.clj:3105)<br>    clojure.core$eval.invoke (core.clj:3101)<br>    clojure.core$map$fn__4785.invoke (core.clj:2644)<br>    clojure.lang.LazySeq.sval (LazySeq.java:40)<br>    clojure.lang.LazySeq.seq (LazySeq.java:49)<br>    clojure.lang.RT.seq (RT.java:521)<br>    clojure.lang.LazilyPersistentVector.create (LazilyPersistentVector.java:44)<br>    clojure.core$vec.invokeStatic (core.clj:377)<br>    clojure.core$vec.invoke (core.clj:367)<br>    dsbdp.processing_fn_utils$create_proc_fn_vec_from_template.invokeStatic (processing_fn_utils.clj:30)<br>    dsbdp.processing_fn_utils$create_proc_fn_vec_from_template.invoke (processing_fn_utils.clj:17)<br>    dsbdp.experiment_helper$create_hashmap_inc_put_proc_fns.invokeStatic (experiment_helper.clj:90)<br>    dsbdp.experiment_helper$create_hashmap_inc_put_proc_fns.invoke (experiment_helper.clj:85)<br>    dsbdp.test.experiment_helper_tests$fn__1096.invokeStatic (experiment_helper_tests.clj:36)<br>    dsbdp.test.experiment_helper_tests/fn (experiment_helper_tests.clj:35)<br>    clojure.test$test_var$fn__7983.invoke (test.clj:716)<br>    clojure.test$test_var.invokeStatic (test.clj:716)<br>    clojure.test$test_var.invoke (test.clj:707)<br>    clojure.test$test_vars$fn__8005$fn__8010.invoke (test.clj:734)<br>    clojure.test$default_fixture.invokeStatic (test.clj:686)<br>    clojure.test$default_fixture.invoke (test.clj:682)<br>    clojure.test$test_vars$fn__8005.invoke (test.clj:734)<br>    clojure.test$default_fixture.invokeStatic (test.clj:686)<br>    clojure.test$default_fixture.invoke (test.clj:682)<br>    clojure.test$test_vars.invokeStatic (test.clj:730)<br>    clojure.test$test_all_vars.invokeStatic (test.clj:736)<br>    clojure.test$test_ns.invokeStatic (test.clj:757)<br>    clojure.test$test_ns.invoke (test.clj:742)<br>    clojure.lang.AFn.applyToHelper (AFn.java:154)<br>    clojure.lang.AFn.applyTo (AFn.java:144)<br>    clojure.core$apply.invokeStatic (core.clj:646)<br>    clojure.core$apply.invoke (core.clj:641)<br>    test2junit.core$apply_junit_output_hook$fn__253$fn__264$fn__275$fn__276.invoke (core.clj:53)<br>    test2junit.core$apply_junit_output_hook$fn__253$fn__264$fn__275.invoke (core.clj:52)<br>    test2junit.core$apply_junit_output_hook$fn__253$fn__264.invoke (core.clj:51)<br>    test2junit.core$apply_junit_output_hook$fn__253.doInvoke (core.clj:51)<br>    clojure.lang.RestFn.applyTo (RestFn.java:139)<br>    clojure.core$apply.invokeStatic (core.clj:648)<br>    clojure.core$apply.invoke (core.clj:641)<br>    robert.hooke$compose_hooks$fn__31.doInvoke (hooke.clj:40)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.core$apply.invokeStatic (core.clj:646)<br>    clojure.core$apply.invoke (core.clj:641)<br>    robert.hooke$run_hooks.invokeStatic (hooke.clj:46)<br>    robert.hooke$run_hooks.invoke (hooke.clj:45)<br>    robert.hooke$prepare_for_hooks$fn__36$fn__37.doInvoke (hooke.clj:54)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)<br>    clojure.lang.RestFn.invoke (RestFn.java:408)<br>    user$eval377$fn__428.invoke (form-init5299198040654132120.clj:1)<br>    clojure.lang.AFn.applyToHelper (AFn.java:156)<br>    clojure.lang.AFn.applyTo (AFn.java:144)<br>    clojure.core$apply.invokeStatic (core.clj:648)<br>    clojure.core$apply.invoke (core.clj:641)<br>    leiningen.core.injected$compose_hooks$fn__311.doInvoke (form-init5299198040654132120.clj:1)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.core$apply.invokeStatic (core.clj:646)<br>    clojure.core$apply.invoke (core.clj:641)<br>    leiningen.core.injected$run_hooks.invokeStatic (form-init5299198040654132120.clj:1)<br>    leiningen.core.injected$run_hooks.invoke (form-init5299198040654132120.clj:1)<br>    leiningen.core.injected$prepare_for_hooks$fn__316$fn__317.doInvoke (form-init5299198040654132120.clj:1)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.lang.AFunction$1.doInvoke (AFunction.java:29)<br>    clojure.lang.RestFn.invoke (RestFn.java:408)<br>    clojure.core$map$fn__4785.invoke (core.clj:2646)<br>    clojure.lang.LazySeq.sval (LazySeq.java:40)<br>    clojure.lang.LazySeq.seq (LazySeq.java:49)<br>    clojure.lang.Cons.next (Cons.java:39)<br>    clojure.lang.RT.next (RT.java:688)<br>    clojure.core$next__4341.invokeStatic (core.clj:64)<br>    clojure.core$reduce1.invokeStatic (core.clj:925)<br>    clojure.core$reduce1.invokeStatic (core.clj:915)<br>    clojure.core$merge_with.invokeStatic (core.clj:2950)<br>    clojure.core$merge_with.doInvoke (core.clj:2942)<br>    clojure.lang.RestFn.applyTo (RestFn.java:139)<br>    clojure.core$apply.invokeStatic (core.clj:648)<br>    clojure.test$run_tests.invokeStatic (test.clj:767)<br>    clojure.test$run_tests.doInvoke (test.clj:767)<br>    clojure.lang.RestFn.applyTo (RestFn.java:137)<br>    clojure.core$apply.invokeStatic (core.clj:646)<br>    clojure.core$apply.invoke (core.clj:641)<br>    user$eval377$fn__440$fn__471.invoke (form-init5299198040654132120.clj:1)<br>    user$eval377$fn__440$fn__441.invoke (form-init5299198040654132120.clj:1)<br>    user$eval377$fn__440.invoke (form-init5299198040654132120.clj:1)<br>    user$eval377.invokeStatic (form-init5299198040654132120.clj:1)<br>    user$eval377.invoke (form-init5299198040654132120.clj:1)<br>    clojure.lang.Compiler.eval (Compiler.java:6927)<br>    clojure.lang.Compiler.eval (Compiler.java:6917)<br>    clojure.lang.Compiler.load (Compiler.java:7379)<br>    clojure.lang.Compiler.loadFile (Compiler.java:7317)<br>    clojure.main$load_script.invokeStatic (main.clj:275)<br>    clojure.main$init_opt.invokeStatic (main.clj:277)<br>    clojure.main$init_opt.invoke (main.clj:277)<br>    clojure.main$initialize.invokeStatic (main.clj:308)<br>    clojure.main$null_opt.invokeStatic (main.clj:342)<br>    clojure.main$null_opt.invoke (main.clj:339)<br>    clojure.main$main.invokeStatic (main.clj:421)<br>    clojure.main$main.doInvoke (main.clj:384)<br>    clojure.lang.RestFn.invoke (RestFn.java:421)<br>    clojure.lang.Var.invoke (Var.java:383)<br>    clojure.lang.AFn.applyToHelper (AFn.java:156)<br>    clojure.lang.Var.applyTo (Var.java:700)<br>    clojure.main.main (main.java:37)<br>
 <br>      at: test.clj:716</code></td><td>0.103</td>
 </tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="create-factorial-proc-fns-test"></a>create-factorial-proc-fns-test</td><td>Success</td><td></td><td>0.017</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="busy-sleep-test-2"></a>busy-sleep-test-2</td><td>Success</td><td></td><td>0.002</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="busy-sleep-test-1"></a>busy-sleep-test-1</td><td>Success</td><td></td><td>0.001</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="create-no-op-proc-fns-test"></a>create-no-op-proc-fns-test</td><td>Success</td><td></td><td>0.017</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="factorial-test"></a>factorial-test</td><td>Success</td><td></td><td>0.002</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="create-inc-proc-fns-test"></a>create-inc-proc-fns-test</td><td>Success</td><td></td><td>0.014</td>
+</tr>
+<tr valign="top" class="TableRowColor">
+<td><a name="busy-sleep-proc-fns-test-1"></a>busy-sleep-proc-fns-test-1</td><td>Success</td><td></td><td>0.025</td>
+</tr>
 </table>
+<div class="Properties">
+<a href="javascript:displayProperties('dsbdp.test.experiment-helper-tests');">
+                    Properties &raquo;
+                </a>
+</div>
+<div class="Properties">
+<a href="./5_experiment-helper-tests-out.html">
+                        System.out &raquo;
+                    </a>
+</div>
+<div class="Properties">
+<a href="./5_experiment-helper-tests-err.html">
+                        System.err &raquo;
+                    </a>
+</div>
 </body>
 </html>

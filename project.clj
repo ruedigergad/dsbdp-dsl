@@ -1,5 +1,5 @@
-(defproject dsbdp-dsl "0.5.2-SNAPSHOT"
-;(defproject dsbdp-dsl "0.5.1"
+;(defproject dsbdp-dsl "0.6.1-SNAPSHOT"
+(defproject dsbdp-dsl "0.6.0"
   :description "Dynamic Stream and Batch Data Processing (dsbdp) - Domain Specific Language (DSL)"
   :url "https://github.com/ruedigergad/dsbdp"
   :license {:name "Eclipse Public License"
@@ -14,7 +14,7 @@
   :java-source-paths ["src-java"]
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]
   :profiles {:repl  {:dependencies  [[jonase/eastwood "0.3.5" :exclusions  [org.clojure/clojure]]]}}
-  :plugins [[lein-cloverage "1.0.6"]]
+  :plugins [[lein-cloverage "1.1.1"] [lein-html5-docs "3.0.3"]]
   :test2junit-output-dir "ghpages/test-results"
   :test2junit-run-ant true  
   :html5-docs-docs-dir "ghpages/doc"

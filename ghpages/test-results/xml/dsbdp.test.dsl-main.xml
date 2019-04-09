@@ -1,44 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite name="dsbdp.test.byte-array-conversion-tests" errors="0" failures="0" tests="20" time="0.0377" timestamp="2019-04-09_21:24:13+0200">
-    <testcase name="int32-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0022">
+<testsuite name="dsbdp.test.dsl-main" errors="0" failures="0" tests="4" time="0.3769" timestamp="2019-04-09_21:24:14+0200">
+    <testcase name="process-binary-file" classname="dsbdp.test.dsl-main" time="0.1944">
     </testcase>
-    <testcase name="int16-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0007">
+    <testcase name="show-dsl-test" classname="dsbdp.test.dsl-main" time="0.0692">
     </testcase>
-    <testcase name="int4l-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0005">
+    <testcase name="process-hex-string" classname="dsbdp.test.dsl-main" time="0.0784">
     </testcase>
-    <testcase name="timestamp-be-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0005">
-    </testcase>
-    <testcase name="int32be-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0005">
-    </testcase>
-    <testcase name="eth-mac-addr-str-conversion-test-1" classname="dsbdp.test.byte-array-conversion-tests" time="0.0005">
-    </testcase>
-    <testcase name="timestamp-str-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0014">
-    </testcase>
-    <testcase name="timestamp-str-be-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0007">
-    </testcase>
-    <testcase name="int8-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0005">
-    </testcase>
-    <testcase name="timestamp-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0005">
-    </testcase>
-    <testcase name="eth-mac-addr-str-conversion-test-2" classname="dsbdp.test.byte-array-conversion-tests" time="0.0004">
-    </testcase>
-    <testcase name="int-to-byte-test-1" classname="dsbdp.test.byte-array-conversion-tests" time="0.0004">
-    </testcase>
-    <testcase name="int4h-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0004">
-    </testcase>
-    <testcase name="ipv4-addr-str-conversion-test-1" classname="dsbdp.test.byte-array-conversion-tests" time="0.0006">
-    </testcase>
-    <testcase name="int-to-byte-test-5" classname="dsbdp.test.byte-array-conversion-tests" time="0.0005">
-    </testcase>
-    <testcase name="int16be-conversion-test" classname="dsbdp.test.byte-array-conversion-tests" time="0.0014">
-    </testcase>
-    <testcase name="int-to-byte-test-4" classname="dsbdp.test.byte-array-conversion-tests" time="0.0008">
-    </testcase>
-    <testcase name="ipv4-addr-str-conversion-test-2" classname="dsbdp.test.byte-array-conversion-tests" time="0.0008">
-    </testcase>
-    <testcase name="int-to-byte-test-3" classname="dsbdp.test.byte-array-conversion-tests" time="0.0009">
-    </testcase>
-    <testcase name="int-to-byte-test-2" classname="dsbdp.test.byte-array-conversion-tests" time="0.0012">
+    <testcase name="load-dsl-test" classname="dsbdp.test.dsl-main" time="0.0328">
     </testcase>
     <system-err>
     </system-err>
