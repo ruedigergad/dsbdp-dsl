@@ -9,7 +9,7 @@ Thus, this readme is not fully updated yet.
 
 ### Latest available Version
 
-[![Clojars Project](https://img.shields.io/clojars/v/dsbdp.svg)](https://clojars.org/dsbdp)
+[![Clojars Project](https://img.shields.io/clojars/v/dsbdp-dsl.svg)](https://clojars.org/dsbdp-dsl)
 
 ### Continuous Integration
 
@@ -24,12 +24,12 @@ Thus, this readme is not fully updated yet.
 #### Detailed Test Results
 
 Detailed test results are available as well:
-[http://ruedigergad.github.io/dsbdp/test-results/html/](http://ruedigergad.github.io/dsbdp/test-results/html/)
+[http://ruedigergad.github.io/dsbdp-dsl/test-results/html/](http://ruedigergad.github.io/dsbdp/test-results/html/)
 
 ## API Docs
 
 API docs are available:
-http://ruedigergad.github.io/dsbdp/doc/
+http://ruedigergad.github.io/dsbdp-dsl/doc/
 
 ## License
 
