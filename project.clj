@@ -10,12 +10,12 @@
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["src-java"]
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]
-  :jvm-opts ~(let [java-major-version (->
-                                        (System/getProperty "java.version")
-                                        (clojure.string/split #"\.")
-                                        (first)
-                                        (java.lang.Integer/parseInt))]
-               (if (>= java-major-version 9)
+  :jvm-opts ~(let [java-version (->
+                                  (System/getProperty "java.version")
+                                  (clojure.string/split #"\.")
+                                  (second)
+                                  (java.lang.Integer/parseInt))]
+               (if (>= java-version 9)
                  ["--add-modules" "java.xml.bind"]
                  []))
   :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.3.5" :exclusions  [org.clojure/clojure]]]}}
