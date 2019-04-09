@@ -13,17 +13,13 @@ Thus, this readme is not fully updated yet.
 
 ### Continuous Integration
 
-[![Build Status TravisCI](https://travis-ci.org/ruedigergad/dsbdp.svg?branch=master)](https://travis-ci.org/ruedigergad/dsbdp)
+[![Build Status TravisCI](https://travis-ci.org/ruedigergad/dsbdp-dsl.svg?branch=master)](https://travis-ci.org/ruedigergad/dsbdp-dsl)
 
-[![Build Status CircleCI](https://circleci.com/gh/ruedigergad/dsbdp.svg?style=shield&circle-token=:circle-token)](https://circleci.com/gh/ruedigergad/dsbdp.svg?style=shield&circle-token=:circle-token)
+[![Build Status CircleCI](https://circleci.com/gh/ruedigergad/dsbdp-dsl.svg?style=svg)](https://circleci.com/gh/ruedigergad/dsbdp-dsl)
 
 ### Test Code Coverage
 
-[![Coverage Status](https://coveralls.io/repos/github/ruedigergad/dsbdp/badge.svg?branch=master)](https://coveralls.io/github/ruedigergad/dsbdp?branch=master)
-
-Please note that, because the sole purpose of the dsbdp.main namespace is to serve as entry point for running experiments from the command line, the dsbdp.main namespace was excluded for the calculation of the code coverage.
-
-Furthermore, please also note that there should be _no_ "queue-setup.cfg" file in the main project directory when executing the tests and that "lein clean" should be run before running "lein test".
+[![Coverage Status](https://coveralls.io/repos/github/ruedigergad/dsbdp-dsl/badge.svg?branch=master)](https://coveralls.io/github/ruedigergad/dsbdp-dsl?branch=master)
 
 #### Detailed Test Results
 
@@ -37,7 +33,7 @@ http://ruedigergad.github.io/dsbdp/doc/
 
 ## License
 
-Copyright © 2015, 2016 Ruediger Gad
+Copyright © 2015 - 2019 Ruediger Gad
 
 Distributed under the Eclipse Public License either version 1.0 or (at
 your option) any later version.
