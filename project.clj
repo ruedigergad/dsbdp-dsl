@@ -6,19 +6,14 @@
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [cli4clj "1.7.2"]
-                 [clj-assorted-utils "1.18.3"]]
+                 [clj-assorted-utils "1.18.3"]
+                 [javax.xml.bind/jaxb-api "2.4.0-b180830.0359"]
+                 [com.sun.xml.bind/jaxb-core "2.3.0.1"]
+                 [com.sun.xml.bind/jaxb-impl "2.3.2"]]
   :global-vars {*warn-on-reflection* true}
   :java-source-paths ["src-java"]
 ;  :javac-options     ["-target" "1.6" "-source" "1.6"]
-  :jvm-opts ~(let [java-version (->
-                                  (System/getProperty "java.version")
-                                  (clojure.string/split #"\.")
-                                  (second)
-                                  (java.lang.Integer/parseInt))]
-               (if (>= java-version 9)
-                 ["--add-modules" "java.xml.bind"]
-                 []))
-  :profiles  {:repl  {:dependencies  [[jonase/eastwood "0.3.5" :exclusions  [org.clojure/clojure]]]}}
+  :profiles {:repl  {:dependencies  [[jonase/eastwood "0.3.5" :exclusions  [org.clojure/clojure]]]}}
   :plugins [[lein-cloverage "1.0.6"]]
   :test2junit-output-dir "ghpages/test-results"
   :test2junit-run-ant true  
