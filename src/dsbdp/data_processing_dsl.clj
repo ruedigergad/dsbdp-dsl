@@ -119,7 +119,13 @@
           (list? rule-expression)
           (cond-> v
             (with-offsets? rule dsl-expression) (conj (prefix-rule-name (str (name rule-name) offset-suffix) nesting-level) (second rule-expression))
-            true (conj (prefix-rule-name rule-name nesting-level) (create-proc-sub-fn rule-expression input)))
+            true (conj
+                   (prefix-rule-name rule-name nesting-level)
+                   (create-proc-sub-fn
+                     (if (with-offsets? rule dsl-expression)
+                       (replace {2 (prefix-rule-name (str (name rule-name) offset-suffix) nesting-level)} rule-expression)
+                       rule-expression)
+                     input)))
 
           (and (vector? rule-expression) (every? vector? rule-expression))
           (let [nested-expr (create-let-expression
