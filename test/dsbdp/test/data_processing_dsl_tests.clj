@@ -584,7 +584,7 @@
                               "packet-length" 74, "packet-length__offset" 236,
                               "__offset-increment" 90}] }
         dsl-expression {:output-type :clj
-                        :with-offsets :flat
+                        :with-offsets :inline
                         :rules [['magic-number '(int32be 0)]
                                 ['snapshot-len '(int32be 16)]
                                 ['packets
@@ -612,7 +612,7 @@
                               "packet-length" 74, "packet-length__offset" 236,
                               "__offset-increment" 90}] }
         dsl-expression {:output-type :java
-                        :with-offsets :flat
+                        :with-offsets :inline
                         :rules [['magic-number '(int32be 0)]
                                 ['snapshot-len '(int32be 16)]
                                 ['packets
