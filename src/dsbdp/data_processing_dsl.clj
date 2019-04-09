@@ -16,6 +16,8 @@
 (def ^:dynamic *incremental-indicator-suffix* "#inc")
 (def ^:dynamic *verbose* false)
 
+(def offset-suffix "__offset")
+
 (defn- create-proc-sub-fn
   "Create a sub part of a processing function.
    The data-processing-definition will be processed recursively.
@@ -116,8 +118,8 @@
 
           (list? rule-expression)
           (cond-> v
-            true (conj (prefix-rule-name rule-name nesting-level) (create-proc-sub-fn rule-expression input))
-            (with-offsets? rule dsl-expression) (conj (prefix-rule-name (str (name rule-name) "__offset") nesting-level) (second rule-expression)))
+            (with-offsets? rule dsl-expression) (conj (prefix-rule-name (str (name rule-name) offset-suffix) nesting-level) (second rule-expression))
+            true (conj (prefix-rule-name rule-name nesting-level) (create-proc-sub-fn rule-expression input)))
 
           (and (vector? rule-expression) (every? vector? rule-expression))
           (let [nested-expr (create-let-expression
@@ -177,8 +179,8 @@
                          ~(name (first rule))
                          ~(prefix-rule-name (first rule) nesting-level)))
             (with-offsets? rule dsl-expression) (conj `(.put
-                                                        ~(str (name (first rule)) "__offset")
-                                                        ~(prefix-rule-name (str (name (first rule)) "__offset") nesting-level))))
+                                                        ~(str (name (first rule)) offset-suffix)
+                                                        ~(prefix-rule-name (str (name (first rule)) offset-suffix) nesting-level))))
 
           (cond-rule-expr? (second rule))
           (conj v
@@ -207,8 +209,8 @@
                           ~(name (first rule))
                           ~(prefix-rule-name (first rule) nesting-level)))
             (with-offsets? rule dsl-expression) (conj `(assoc
-                                                        ~(str (name (first rule)) "__offset")
-                                                        ~(prefix-rule-name (str (name (first rule)) "__offset") nesting-level))))
+                                                        ~(str (name (first rule)) offset-suffix)
+                                                        ~(prefix-rule-name (str (name (first rule)) offset-suffix) nesting-level))))
 
           (cond-rule-expr? (second rule))
           (conj v `(assoc
