@@ -1,5 +1,5 @@
-(defproject dsbdp-dsl "0.6.1-SNAPSHOT"
-;(defproject dsbdp-dsl "0.6.0"
+;(defproject dsbdp-dsl "0.7.1-SNAPSHOT"
+(defproject dsbdp-dsl "0.7.0"
   :description "Dynamic Stream and Batch Data Processing (dsbdp) - Domain Specific Language (DSL)"
   :url "https://github.com/ruedigergad/dsbdp"
   :license {:name "Eclipse Public License"
