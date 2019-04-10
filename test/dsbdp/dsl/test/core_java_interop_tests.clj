@@ -1,5 +1,5 @@
 ;;;
-;;;   Copyright 2017 Ruediger Gad
+;;;   Copyright 2017 - 2019 Ruediger Gad
 ;;;
 ;;;   This software is released under the terms of the Eclipse Public License 
 ;;;   (EPL) 1.0. You can find a copy of the EPL at: 
@@ -9,11 +9,11 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Unit tests for data processing DSL Java Interoperation"}
-  dsbdp.test.data-processing-dsl-java-interop-tests
+  dsbdp.dsl.test.core-java-interop-tests
   (:require [clojure.test :refer :all]
             [clojure.string :as string]
-            [dsbdp.experiment-helper :refer :all]) 
-  (:import (dsbdp DslHelper)
+            [dsbdp.dsl.experiment-helper :refer :all])
+  (:import (dsbdp.dsl DslHelper)
            (java.util ArrayList HashMap List Map)))
 
 

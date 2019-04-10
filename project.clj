@@ -21,5 +21,5 @@
   :html5-docs-ns-includes #"^dsbdp.*"
   :html5-docs-repository-url "https://github.com/ruedigergad/dsbdp-dsl/blob/master"
   :aot :all
-  :main dsbdp.dsl-main
+  :main dsbdp.dsl.main
   )

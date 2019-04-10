@@ -9,15 +9,15 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Main class for launching a test CLI."}
-  dsbdp.dsl-main
+  dsbdp.dsl.main
   (:require
     (cli4clj [cli :as cli])
     (clj-assorted-utils [util :as utils])
     (clojure
       [pprint :as pprint]
       [string :as string])
-    (dsbdp
-      [data-processing-dsl :as dsl]))
+    (dsbdp.dsl
+      [core :as dsl]))
   (:import
     (java.nio.file Files Paths)
     (javax.xml.bind DatatypeConverter))

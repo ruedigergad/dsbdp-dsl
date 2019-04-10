@@ -1,5 +1,5 @@
 ;;;
-;;;   Copyright 2015 Ruediger Gad
+;;;   Copyright 2015 - 2019 Ruediger Gad
 ;;;
 ;;;   This software is released under the terms of the Eclipse Public License 
 ;;;   (EPL) 1.0. You can find a copy of the EPL at: 
@@ -9,12 +9,12 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Helper that are primarily used during experiments"}
-  dsbdp.experiment-helper
+  dsbdp.dsl.experiment-helper
   (:require
     [clojure.walk :refer :all]
     [clojure.pprint :refer :all]
-    [dsbdp.byte-array-conversion :refer :all]
-    [dsbdp.data-processing-dsl :refer :all])
+    [dsbdp.dsl.byte-array-conversion :refer :all]
+    [dsbdp.dsl.core :refer :all])
   (:import
     (java.util HashMap Map)))
 

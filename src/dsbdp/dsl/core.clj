@@ -1,5 +1,5 @@
 ;;;
-;;;   Copyright 2015 Ruediger Gad
+;;;   Copyright 2015 - 2019 Ruediger Gad
 ;;;
 ;;;   This software is released under the terms of the Eclipse Public License 
 ;;;   (EPL) 1.0. You can find a copy of the EPL at: 
@@ -9,8 +9,8 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "DSL for processing data"}
-  dsbdp.data-processing-dsl
-  (:require [dsbdp.byte-array-conversion :refer :all]
+  dsbdp.dsl.core
+  (:require [dsbdp.dsl.byte-array-conversion :refer :all]
             [clojure.pprint :refer :all]))
 
 (def ^:dynamic *incremental-indicator-suffix* "#inc")
@@ -37,8 +37,8 @@
                     (conj v (ns-resolve 'clojure.core s) 'input)
                   (ns-resolve 'clojure.core s)
                     (conj v (ns-resolve 'clojure.core s))
-                  (ns-resolve 'dsbdp.byte-array-conversion s)
-                    (conj v (ns-resolve 'dsbdp.byte-array-conversion s) 'input)
+                  (ns-resolve 'dsbdp.dsl.byte-array-conversion s)
+                    (conj v (ns-resolve 'dsbdp.dsl.byte-array-conversion s) 'input)
                   :default
                     (do
                       (when *verbose*

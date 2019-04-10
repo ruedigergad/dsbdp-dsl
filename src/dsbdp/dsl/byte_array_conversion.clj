@@ -1,5 +1,5 @@
 ;;;
-;;;   Copyright 2015 Ruediger Gad
+;;;   Copyright 2015 - 2019 Ruediger Gad
 ;;;
 ;;;   This software is released under the terms of the Eclipse Public License 
 ;;;   (EPL) 1.0. You can find a copy of the EPL at: 
@@ -9,7 +9,7 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Helper functions for converting byte arrays into other data types/representations"}
-  dsbdp.byte-array-conversion
+  dsbdp.dsl.byte-array-conversion
   (:import
     (dsbdp ByteArrayHelper)
     (java.text SimpleDateFormat)

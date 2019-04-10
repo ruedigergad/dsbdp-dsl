@@ -1,5 +1,5 @@
 ;;;
-;;;   Copyright 2017, Ruediger Gad
+;;;   Copyright 2017 - 2019, Ruediger Gad
 ;;;
 ;;;   This software is released under the terms of the Eclipse Public License 
 ;;;   (EPL) 1.0. You can find a copy of the EPL at: 
@@ -9,9 +9,9 @@
 (ns
   ^{:author "Ruediger Gad",
     :doc "Java Interop for using the DSL from within Java."} 
-  dsbdp.DslHelper
+  dsbdp.dsl.DslHelper
   (:import (java.io StringWriter))
-  (:require [dsbdp.data-processing-dsl :refer :all]
+  (:require [dsbdp.dsl.core :refer :all]
             [clojure.pprint :refer :all])
   (:gen-class
    :methods [^:static [generateProcessingFn [Object] clojure.lang.IFn]
