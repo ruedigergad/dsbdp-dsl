@@ -626,3 +626,61 @@
     (is (instance? java.util.ArrayList (.get result "packets")))
     (is (= expected result))))
 
+(deftest pcap-file-nested-packet-sequence-processing-with-cond-and-offsets-test
+  (let [pcap-raw-data (Files/readAllBytes (Paths/get "test/data/pcap_three_packets_icmp_dns_http.pcap" (into-array [""])))
+        expected {"magic-number" 2712847316,
+                  "magic-number__offset" 0,
+                  "snapshot-len" 262144,
+                  "snapshot-len__offset" 16,
+                  "packets" [{"capture-length" 98, "packet-length" 98, "__offset-increment" 114,
+                              "capture-length__offset" 32, "packet-length__offset" 36,
+                              "data" {"eth-dst" "E8:DE:27:59:0E:AD", "eth-src" "0E:AD:B4:74:9F:FA",
+                                      "eth-dst__offset" 40, "eth-src__offset" 44,
+                                      "data" {"proto-id" 1, "ip-dst" "10.0.0.230", "ip-src" "149.20.4.69",
+                                              "proto-id__offset" 63, "ip-dst__offset" 66, "ip-src__offset" 70,
+                                              "data" {"type" "Echo Request"}}}}
+                             {"capture-length" 70, "packet-length" 70, "__offset-increment" 86,
+                              "capture-length__offset" 146, "packet-length__offset" 150,
+                              "data" {"eth-dst" "E8:DE:27:59:0E:AD", "eth-src" "0E:AD:B4:74:9F:FA",
+                                      "eth-dst__offset" 154, "eth-src__offset" 158,
+                                      "data" {"proto-id" 17, "ip-dst" "10.0.0.230", "ip-src" "10.0.0.1",
+                                              "proto-id__offset" 177, "ip-dst__offset" 180, "ip-src__offset" 184,
+                                              "data" {"dst" 53, "dst__offset" 190, "src" 43471, "src__offset" 188}}}}
+                             {"capture-length" 74, "packet-length" 74, "__offset-increment" 90,
+                              "capture-length__offset" 232, "packet-length__offset" 236,
+                              "data" {"eth-dst" "E8:DE:27:59:0E:AD", "eth-src" "0E:AD:B4:74:9F:FA",
+                                      "eth-dst__offset" 240, "eth-src__offset" 244,
+                                      "data" {"proto-id" 6, "ip-dst" "10.0.0.230", "ip-src" "199.204.44.194",
+                                              "proto-id__offset" 263, "ip-dst__offset" 266, "ip-src__offset" 270,
+                                              "data" {"dst" 80, "src" 49526, "flags" 74, "ack-no" 0, "seq-no" 1034137073
+                                                      "src__offset" 274, "dst__offset" 276, "ack-no__offset" 282,
+                                                      "flags__offset" 232, "seq-no__offset" 278}}}}]}
+        dsl-expression {:output-type :clj
+                        :with-offsets :inline
+                        :rules [['magic-number '(int32be 0)]
+                                ['snapshot-len '(int32be 16)]
+                                ['packets
+                                 '([capture-length (int32be (+ offset 8))]
+                                   [packet-length (int32be (+ offset 12))]
+                                   [__offset-increment (+ 16 __1_capture-length)]
+                                   [data [[eth-dst (eth-mac-addr-str (+ offset 16))]
+                                          [eth-src (eth-mac-addr-str (+ offset 20))]
+                                          [data [[proto-id (int8 (+ offset 39))]
+                                                 [ip-dst (ipv4-addr-str (+ offset 42))]
+                                                 [ip-src (ipv4-addr-str (+ offset 46))]
+                                                 [data [(= __3_proto-id 1) [[type (condp = (int8 (+ offset 50))
+                                                                                    0 "Echo Reply"
+                                                                                    3 "Destination Unreachable"
+                                                                                    8 "Echo Request")]]
+                                                        (= __3_proto-id 6) [[dst (int16 (+ offset 52))]
+                                                                            [src (int16 (+ offset 50))]
+                                                                            [flags (int8 (+ offset 8))]
+                                                                            [ack-no (int32 (+ offset 58))]
+                                                                            [seq-no (int32 (+ offset 54))]]
+                                                        (= __3_proto-id 17) [[dst (int16 (+ offset 52))]
+                                                                            [src (int16 (+ offset 50))]]]]]]]])
+                                 {:initial-offset 24}]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn pcap-raw-data)]
+    (is (map? result))
+    (is (= expected result))))
