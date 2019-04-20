@@ -163,3 +163,130 @@
 ;        result (data-processing-fn input-data)]
 ;    (is (instance? Map result))
 ;    (is (= expected result))))
+
+(deftest admnet-2017-dsl-pcap-file-test
+  (let [expected {"dst" "FF:FE:FD:F2:F1:F0",
+                  "data" {"len" 249,
+                          "dst" "127.0.0.1",
+                          "data" {"dst" 61481,
+                                  "src" 55522,
+                                  "flags" #{"PSH" "ACK"},
+                                  "flags-value" 24,
+                                  }
+                          "src" "127.0.0.1",
+                          "protocol-id" 6}
+                  "src" "01:02:03:04:05:06",
+                  "off" 14}
+        dsl-expression-str (str
+                            "{:output-type :java-map"
+                            " :rules [[off (cond"
+                            "			      (= 2 '(int32be 0)) 4"
+                            "				  (and"
+                            "					(or"
+                            "					  (= 0 '(int16 0))"
+                            "					  (= 4 '(int16 0)))"
+                            "					(= 1 '(int16 2))"
+                            "					(= 0x800 '(int16 14))) 16"
+                            "				  :default 14)]"
+                            "		   [dst (eth-mac-addr-str 0)]"
+                            "		   [src (eth-mac-addr-str 6)]"
+                            "		   [data [[len (int16 (+ off 2))]"
+                            "				  [src (ipv4-addr-str (+ off 12))]"
+                            "				  [dst (ipv4-addr-str (+ off 16))]"
+                            "				  [protocol-id (int8 (+ off 9))]"
+                            "				  [data [(= 17 __1_protocol-id)"
+                            "						   [[src (int16 (+ off 20))]"
+                            "							[dst (int16 (+ off 22))]]"
+                            "						 (= 6 __1_protocol-id)"
+                            "						   [[src (int16 (+ off 20))]"
+                            "							[dst (int16 (+ off 22))]"
+                            "							[flags-value (int8 (+ off 33))]"
+                            "							[flags (reduce-kv"
+                            "									 #=(eval"
+                            "										 `(fn [r# k# v#]"
+                            "											(cond"
+                            "											  (> (bit-and ~'__2_flags-value (bit-shift-left 1 k#)) 0)"
+                            "												(conj r# v#)"
+                            "											  :default r#)))"
+                            "									 #{}"
+                            "									 [\"FIN\" \"SYN\" \"RST\" \"PSH\" \"ACK\" \"URG\" \"ECE\" \"CWR\"])]]"
+                            "						 (= 1 __1_protocol-id)"
+                            "						   [[type (condp = (int8 (+ off 20))"
+                            "									0 \"Echo Reply\""
+                            "									3 \"Destination Unreachable\""
+                            "									8 \"Echo Request\""
+                            "								   (str \"Unknown ICMP Type:\" (int8 (+ off 20))))]"
+                            "							[seq-no (int16 (+ off 26))]]]]]]]}")
+        data-processing-fn (DslHelper/generateProcessingFn dsl-expression-str)
+        result (data-processing-fn pcap-tcp-byte-array-test-data-without-pcap-header)]
+    (is (instance? java.util.Map result))
+    (is (= expected result))))
+
+(deftest admnet-2017-dsl-pcap-file-with-offsets-test
+  (let [expected {"dst" "FF:FE:FD:F2:F1:F0",
+                  "dst__offset" 0,
+                  "data" {"protocol-id__offset" 23,
+                          "len" 249,
+                          "dst" "127.0.0.1",
+                          "dst__offset" 30,
+                          "data" {"dst" 61481,
+                                  "dst__offset" 36,
+                                  "src" 55522,
+                                  "flags" #{"PSH" "ACK"},
+                                  "src__offset" 34,
+                                  "flags-value" 24,
+                                  "flags-value__offset" 47},
+                          "src" "127.0.0.1",
+                          "protocol-id" 6,
+                          "src__offset" 26,
+                          "len__offset" 16},
+                  "off__offset" false,
+                  "src" "01:02:03:04:05:06",
+                  "src__offset" 6,
+                  "off" 14}
+        dsl-expression-str (str
+                            "{:output-type :java-map"
+                            " :with-offsets :inline"
+                            " :rules [[off (cond"
+                            "			      (= 2 '(int32be 0)) 4"
+                            "				  (and"
+                            "					(or"
+                            "					  (= 0 '(int16 0))"
+                            "					  (= 4 '(int16 0)))"
+                            "					(= 1 '(int16 2))"
+                            "					(= 0x800 '(int16 14))) 16"
+                            "				  :default 14)]"
+                            "		   [dst (eth-mac-addr-str 0)]"
+                            "		   [src (eth-mac-addr-str 6)]"
+                            "		   [data [[len (int16 (+ off 2))]"
+                            "				  [src (ipv4-addr-str (+ off 12))]"
+                            "				  [dst (ipv4-addr-str (+ off 16))]"
+                            "				  [protocol-id (int8 (+ off 9))]"
+                            "				  [data [(= 17 __1_protocol-id)"
+                            "						   [[src (int16 (+ off 20))]"
+                            "							[dst (int16 (+ off 22))]]"
+                            "						 (= 6 __1_protocol-id)"
+                            "						   [[src (int16 (+ off 20))]"
+                            "							[dst (int16 (+ off 22))]"
+                            "							[flags-value (int8 (+ off 33))]"
+                            "							[flags (reduce-kv"
+                            "									 #=(eval"
+                            "										 `(fn [r# k# v#]"
+                            "											(cond"
+                            "											  (> (bit-and ~'__2_flags-value (bit-shift-left 1 k#)) 0)"
+                            "												(conj r# v#)"
+                            "											  :default r#)))"
+                            "									 #{}"
+                            "									 [\"FIN\" \"SYN\" \"RST\" \"PSH\" \"ACK\" \"URG\" \"ECE\" \"CWR\"])]]"
+                            "						 (= 1 __1_protocol-id)"
+                            "						   [[type (condp = (int8 (+ off 20))"
+                            "									0 \"Echo Reply\""
+                            "									3 \"Destination Unreachable\""
+                            "									8 \"Echo Request\""
+                            "								   (str \"Unknown ICMP Type:\" (int8 (+ off 20))))]"
+                            "							[seq-no (int16 (+ off 26))]]]]]]]}")
+        data-processing-fn (DslHelper/generateProcessingFn dsl-expression-str)
+        result (data-processing-fn pcap-tcp-byte-array-test-data-without-pcap-header)]
+    (is (instance? java.util.Map result))
+    (is (= expected result))))
+
