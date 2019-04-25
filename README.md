@@ -2,9 +2,6 @@
 
 # Dynamic Stream and Batch Data Processing (dsbdp) - Domain Specific Language (DSL)
 
-Please note that, right now, this is a work-in-progress on extracting the DSL part from dsbdp.
-Thus, this readme is not fully updated yet.
-
 ## Status
 
 ### Latest available Version
