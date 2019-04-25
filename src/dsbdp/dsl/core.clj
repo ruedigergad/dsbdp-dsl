@@ -82,6 +82,7 @@
         offset (second rule-expression)]
     (and
       (:with-offsets dsl-expression)
+      (<= (count rule-expression) 2)
       (not (.startsWith rule-name "__"))
       (or (number? offset) (list? offset)))))
 
@@ -309,7 +310,7 @@
                              (println "Unknown output type:" output-type)
                              (println "Defaulting to :java-map as output type.")
                              java-out-format-fn))
-;        _ (println "Created data processing function vector from DSL:" fn-body-vec)
+;        _ (println "Created data processing function vector from DSL:" output-format-fn)
         fn-body (create-let-expression input-sym rules output-format-fn output-sym 0 dsl-expression)
 ;        _ (println "Created data processing function body:" fn-body)
 ;        _ (pprint fn-body)

@@ -180,13 +180,13 @@
         dsl-expression-str (str
                             "{:output-type :java-map"
                             " :rules [[off (cond"
-                            "			      (= 2 '(int32be 0)) 4"
+                            "			      (= 2 (int32be 0)) 4"
                             "				  (and"
                             "					(or"
-                            "					  (= 0 '(int16 0))"
-                            "					  (= 4 '(int16 0)))"
-                            "					(= 1 '(int16 2))"
-                            "					(= 0x800 '(int16 14))) 16"
+                            "					  (= 0 (int16 0))"
+                            "					  (= 4 (int16 0)))"
+                            "					(= 1 (int16 2))"
+                            "					(= 0x800 (int16 14))) 16"
                             "				  :default 14)]"
                             "		   [dst (eth-mac-addr-str 0)]"
                             "		   [src (eth-mac-addr-str 6)]"
@@ -240,7 +240,6 @@
                           "protocol-id" 6,
                           "src__offset" 26,
                           "len__offset" 16},
-                  "off__offset" false,
                   "src" "01:02:03:04:05:06",
                   "src__offset" 6,
                   "off" 14}
@@ -248,13 +247,13 @@
                             "{:output-type :java-map"
                             " :with-offsets :inline"
                             " :rules [[off (cond"
-                            "			      (= 2 '(int32be 0)) 4"
+                            "			      (= 2 (int32be 0)) 4"
                             "				  (and"
                             "					(or"
-                            "					  (= 0 '(int16 0))"
-                            "					  (= 4 '(int16 0)))"
-                            "					(= 1 '(int16 2))"
-                            "					(= 0x800 '(int16 14))) 16"
+                            "					  (= 0 (int16 0))"
+                            "					  (= 4 (int16 0)))"
+                            "					(= 1 (int16 2))"
+                            "					(= 0x800 (int16 14))) 16"
                             "				  :default 14)]"
                             "		   [dst (eth-mac-addr-str 0)]"
                             "		   [src (eth-mac-addr-str 6)]"
