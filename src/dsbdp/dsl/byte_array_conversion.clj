@@ -27,8 +27,10 @@
 
 (defn int8
   "Get the byte at the index idx in the byte-array ba."
-  [ba idx]
-  (ByteArrayHelper/getInt8 ba idx))
+  ([ba idx]
+   (ByteArrayHelper/getInt8 ba idx))
+  ([ba idx-bytes idx-bits]
+   (ByteArrayHelper/getInt8 ba idx-bytes idx-bits)))
 
 (defn int16
   "Get the Int16 value of the two bytes starting at index idx in the byte-array ba."

@@ -685,3 +685,15 @@
     (is (map? result))
     (is (= expected result))))
 
+(deftest byte-array-int8-bit-offset-test
+  (let [expected {"a" 1, "b" 128, "c" 192, "d" 6, "e" 3}
+        dsl-expression {:output-type :clj
+                        :rules [['a '(int8 0 0)]
+                                ['b '(int8 0 1)]
+                                ['c '(int8 0 2)]
+                                ['d '(int8 0 7)]
+                                ['e '(int8 0 8)]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn (byte-array (map byte [1 3])))]
+    (is (= expected result))))
+

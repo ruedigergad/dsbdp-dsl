@@ -76,7 +76,6 @@
 ])))
 
 
-
 (def sample-pcap-processing-definition-rules
   [['timestamp '(timestamp-str-be 0) :string]
    ['capture-length '(int32be 8)]

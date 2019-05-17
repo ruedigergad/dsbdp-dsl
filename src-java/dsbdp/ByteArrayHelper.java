@@ -67,6 +67,21 @@ public class ByteArrayHelper {
         return array[index] & 0xFF;
     }
 
+    public static int getInt8(byte[] array, int indexBytes, int indexBits) {
+        int additionalByteShift = indexBits / 8;
+        int bitShifts = indexBits % 8;
+
+        if (bitShifts == 0) {
+            return array[additionalByteShift];
+        }
+
+        int lowerMask = (((int) Math.pow(2, 8 - bitShifts)) - 1) << bitShifts;
+        int upperMask = ((int) Math.pow(2, bitShifts)) - 1;
+        int lowerByte = array[indexBytes + additionalByteShift] & lowerMask;
+        int upperByte = array[indexBytes + additionalByteShift + 1] & upperMask;
+        return lowerByte + ((int) Math.pow(2, 8 - bitShifts)) * upperByte;
+    }
+
     public static int getInt4L(byte[] array, int index) {
         return array[index] & 0x0F;
     }
