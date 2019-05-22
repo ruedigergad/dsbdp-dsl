@@ -75,10 +75,35 @@ public class ByteArrayHelper {
             return array[additionalByteShift];
         }
 
-        int lowerMask = (((int) Math.pow(2, 8 - bitShifts)) - 1) << bitShifts;
+        int lowerMask = ((int) Math.pow(2, 8 - bitShifts)) - 1;
+        int lowerByte = (array[indexBytes + additionalByteShift] >> bitShifts) & lowerMask;
+
         int upperMask = ((int) Math.pow(2, bitShifts)) - 1;
-        int lowerByte = array[indexBytes + additionalByteShift] & lowerMask;
         int upperByte = array[indexBytes + additionalByteShift + 1] & upperMask;
+
+        return lowerByte + ((int) Math.pow(2, 8 - bitShifts)) * upperByte;
+    }
+
+    public static int getInt8x(byte[] array, int indexBytes, int indexBits, int length) {
+        int additionalByteShift = indexBits / 8;
+        int byteShifts = indexBytes + additionalByteShift;
+        int bitShifts = indexBits % 8;
+
+        if (bitShifts == 0) {
+            return array[byteShifts] & (0xFF >> (8 - length));
+        }
+
+        if (bitShifts + length <= 8) {
+            int mask = (int) Math.pow(2, length) - 1;
+            return (array[byteShifts] >> bitShifts) & mask;
+        }
+
+        int lowerMask = ((int) Math.pow(2, 8 - bitShifts)) - 1;
+        int lowerByte = (array[byteShifts] >> bitShifts) & lowerMask;
+
+        int upperMask = ((int) Math.pow(2, length - (8 - bitShifts))) - 1;
+        int upperByte = array[byteShifts + 1] & upperMask;
+
         return lowerByte + ((int) Math.pow(2, 8 - bitShifts)) * upperByte;
     }
 

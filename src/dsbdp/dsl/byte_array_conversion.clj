@@ -32,6 +32,11 @@
   ([ba idx-bytes idx-bits]
    (ByteArrayHelper/getInt8 ba idx-bytes idx-bits)))
 
+(defn int8x
+  "Get data from byte array at the given byte and bit offset with the given length."
+  [ba idx-bytes idx-bits length]
+  (ByteArrayHelper/getInt8x ba idx-bytes idx-bits length))
+
 (defn int16
   "Get the Int16 value of the two bytes starting at index idx in the byte-array ba."
   [ba idx]

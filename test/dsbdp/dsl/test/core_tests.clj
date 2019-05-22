@@ -685,15 +685,34 @@
     (is (map? result))
     (is (= expected result))))
 
+;;;
+;;; Tests for Byte-level Access with Bit Offset
+;;;
 (deftest byte-array-int8-bit-offset-test
-  (let [expected {"a" 1, "b" 128, "c" 192, "d" 6, "e" 3}
+  (let [expected {"a" 1, "b" 128, "c" 192, "d" 6, "e" 3, "f" 192, "g" 8}
         dsl-expression {:output-type :clj
                         :rules [['a '(int8 0 0)]
                                 ['b '(int8 0 1)]
                                 ['c '(int8 0 2)]
                                 ['d '(int8 0 7)]
-                                ['e '(int8 0 8)]]}
+                                ['e '(int8 0 8)]
+                                ['f '(int8 1 2)]
+                                ['g '(int8 3 2)]]}
         data-processing-fn (create-proc-fn dsl-expression)
-        result (data-processing-fn (byte-array (map byte [1 3])))]
+        result (data-processing-fn (byte-array (map byte [1 3 -1 32 0])))]
+    (is (= expected result))))
+
+(deftest byte-array-int8x-bit-offset-test
+  (let [expected {"a" 1, "b" 3, "c" 255, "d" 1, "e" 3, "f" 3, "g" 4}
+        dsl-expression {:output-type :clj
+                        :rules [['a '(int8x 0 0 1)]
+                                ['b '(int8x 0 0 2)]
+                                ['c '(int8x 0 0 8)]
+                                ['d '(int8x 0 6 1)]
+                                ['e '(int8x 0 6 2)]
+                                ['f '(int8x 0 6 8)]
+                                ['g '(int8x 1 6 3)]]}
+        data-processing-fn (create-proc-fn dsl-expression)
+        result (data-processing-fn (byte-array (map byte [-1 0 -1])))]
     (is (= expected result))))
 
