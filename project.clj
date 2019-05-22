@@ -5,8 +5,8 @@
   :license {:name "Eclipse Public License"
             :url "http://www.eclipse.org/legal/epl-v10.html"}
   :dependencies [[org.clojure/clojure "1.9.0"]
-                 [cli4clj "1.7.2"]
-                 [clj-assorted-utils "1.18.3"]
+                 [cli4clj "1.7.5"]
+                 [clj-assorted-utils "1.18.5"]
                  [javax.xml.bind/jaxb-api "2.4.0-b180830.0359"]
                  [com.sun.xml.bind/jaxb-core "2.3.0.1"]
                  [com.sun.xml.bind/jaxb-impl "2.3.2"]]
